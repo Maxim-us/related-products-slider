@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Related Product Slider</title>
+	<link rel="stylesheet" href="./css/related-product-slider.css">
+
+	<style>
+		.mx-test_wrap {
+			width: 100%;
+			max-width: 700px;
+			margin: 30px auto;
+			border: 1px solid #333;
+		}
+
+	</style>
+</head>
+<body>
+
+<div class="mx-test_wrap">
+	
+	<div class="mx-product-slider">
+		<div>
+			<img src="./img/slide1.jpg" alt="">
+		</div>
+		<div>
+			<img src="./img/slide2.jpg" alt="">
+		</div>
+		<div>
+			<img src="./img/slide3.jpg" alt="">
+		</div>
+	</div>
+
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<script src="./js/related-product-slider.js"></script>
+<!-- <script src="./js/main.js"></script> -->
+
+<script>
+	
+	$( document ).ready( function() {
+
+		$( '.mx-product-slider' ).relatedProducts();
+
+	} );
+
+</script>
+	
+</body>
+</html>

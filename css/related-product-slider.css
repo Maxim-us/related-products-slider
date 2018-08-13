@@ -1,0 +1,41 @@
+/* Basic style */
+.mx-product-slider {
+	/*overflow: hidden;*/
+	width: 100%;
+}
+.mx-related-products-slider {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	/*overflow: hidden;*/
+	width: 100%;
+}
+.mx-related-products-slider .mx-slide-item {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	z-index: 777;
+}
+.mx-related-products-slider .mx-slide-item > img {
+	width: 100%;
+}
+.mx-related-products-slider .mx-visible-next-slide {
+	z-index: 778;
+}
+.mx-related-products-slider .mx-visible-slide {
+	z-index: 779;
+}
+
+/*Navigation*/
+nav.mx-navigation-arrows {
+	position: absolute;
+    z-index: 779;
+    width: 100%;
+}
+a.mx-navigation-arrow-prev {
+	float: left;
+}
+a.mx-navigation-arrow-next {
+	float: right;
+}
