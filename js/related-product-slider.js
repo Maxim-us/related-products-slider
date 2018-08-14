@@ -16,10 +16,11 @@
 	* Default configuration of the slider.
 	*/
 	$.defaultConfig = {
-		'nav'				: true,
-		'autoplay'			: true,
-		'slideInterval'		: 2000,
-		'slideSpeed'		: 1000
+		'nav'				: true, 	// Set the "Next" and "Previous" arrows
+		'autoplay'			: true,		// Scroll slider automatically
+		'slideInterval'		: 2000,		// Slider scroll interval
+		'slideSpeed'		: 500,		// Slider scrolling speed
+		'vertical'			: false		// Vertical movement
 
 	};
 
@@ -53,6 +54,8 @@
 
 		// save the data object
 		var saveData = {
+
+			// list of classes used in the plugin
 			'classes': {
 				// general
 				'mainClass'			: 'mx-related-products-slider',
@@ -62,11 +65,23 @@
 				'visibleItem' 		: 'mx-visible-slide',
 				'nextVisibleItem'	: 'mx-visible-next-slide',
 
+				// owerflow class
+				'overflowHide'	: 'mx-overflow-hidden',
+
 				// navigation
 				'navigationWrap' 	: 'mx-navigation-arrows',
 				'prevBtn'			: 'mx-navigation-arrow-prev',
 				'nextBtn'			: 'mx-navigation-arrow-next'
-			}
+			},
+
+			// number of slides
+			'countElems'			: 0,
+
+			// Check whether the slide moves
+			'keySlideMotion'		: true,
+
+			// set up vertical scroll slider
+			'direction'			: 'left'
 		};
 
 		// console.log( saveData.classes.slideItem );
@@ -91,13 +106,29 @@
 
 				}
 
+				// number of slides
+				this.countElements();
+
+				// set slider direction
+				if( settings.vertical ) {
+
+					saveData.direction = 'top';
+
+				}
 
 				// console.log( settings.nav );
 
 			},
 
+			// get the number of items
+			countElements: 		function() {
+
+				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;
+
+			},
+
 			// loop
-			movementInLoop: function() {
+			movementInLoop: 	function() {
 
 			},
 
@@ -111,6 +142,9 @@
 				
 				// set the visible slide
 				$( root ).children( 'div' ).first().addClass( saveData.classes.visibleItem );
+
+				// set slider height
+				this.setSliderHeight();
 
 			},
 
@@ -168,104 +202,201 @@
 			* Triggers
 			*/
 			// get the next slide
-			nextSlide: 		function() {
+			nextSlide: 			function() {
 
-				var _this = this;
+				var _this 						= this;
 
-				$( root ).on( 'click', '.' + saveData.classes.nextBtn, function( e ) {					
+				// set up animation function
+				var optionsAmimateCurrentSlide 	= {};
+				var optionsAmimateNextSlide 	= {};
 
-					e.preventDefault();
+				$( root ).on( 'click', '.' + saveData.classes.nextBtn, function( e ) {
 
-					// move the current slide
-					$( root ).find( '.' + saveData.classes.visibleItem )
-					.animate( {'left': '-100%'}, settings.slideSpeed, function() {
+					if( saveData.keySlideMotion === true ) {
 
-						$( this ).removeClass( saveData.classes.visibleItem );
+						// disable nav
+						saveData.keySlideMotion 	= false;
 
-						$( this ).attr( 'style', '' );
+						e.preventDefault();
 
-					} );
-			
-					// find next slide and move it
-					var nextSlide = _this.findNextSlide( '.' + saveData.classes.visibleItem );
+						// move the current slide
+						optionsAmimateCurrentSlide[saveData.direction] = '-100%';
 
-					console.log( nextSlide );
+						$( root ).find( '.' + saveData.classes.visibleItem )
+						.animate( optionsAmimateCurrentSlide, settings.slideSpeed, function() {
 
-					nextSlide.css( 'left', '50%' );
+							$( this ).removeClass( saveData.classes.visibleItem );
 
-					nextSlide.addClass( saveData.classes.nextVisibleItem );					
+							$( this ).attr( 'style', '' );
 
-					nextSlide.animate( {'left': '0'}, settings.slideSpeed, function() {
+						} );
+				
+						// find next slide and move it
+						var nextSlide = _this.findNextSlide( '.' + saveData.classes.visibleItem );
 
-						$( this ).removeClass( saveData.classes.nextVisibleItem )
-						.addClass( saveData.classes.visibleItem );
+						nextSlide.css( saveData.direction, '50%' );
 
-						$( this ).attr( 'style', '' );
+						nextSlide.addClass( saveData.classes.nextVisibleItem );					
 
-					} );
+						optionsAmimateNextSlide[saveData.direction] = '0';
+						nextSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
+
+							$( this ).removeClass( saveData.classes.nextVisibleItem )
+							.addClass( saveData.classes.visibleItem );
+
+							$( this ).attr( 'style', '' );
+
+							// enable nav
+							saveData.keySlideMotion = true;
+
+						} );
+
+					}
 
 				} );
 
 			},
 
 			// get the previous slide
-			prevSlide: 		function() {
+			prevSlide: 				function() {
+
+				var _this = this;
+
+				// set up animation function
+				var optionsAmimateCurrentSlide 	= {};
+				var optionsAmimateNextSlide 	= {};
 
 				$( root ).on( 'click', '.' + saveData.classes.prevBtn, function( e ) {
 
-					e.preventDefault();
-					console.log( 'prevBtn' );
+					if( saveData.keySlideMotion === true ) {
+
+						// disable nav
+						saveData.keySlideMotion = false;
+
+						e.preventDefault();
+
+						// move the current slide
+						optionsAmimateCurrentSlide[saveData.direction] = '100%';
+
+						$( root ).find( '.' + saveData.classes.visibleItem )
+						.animate( optionsAmimateCurrentSlide, settings.slideSpeed, function() {
+
+							$( this ).removeClass( saveData.classes.visibleItem );
+
+							$( this ).attr( 'style', '' );
+
+						} );
+
+						// find prev slide and move it
+						var prevSlide = _this.findPrevSlide( '.' + saveData.classes.visibleItem );
+
+						prevSlide.css( saveData.direction, '-50%' );
+
+						prevSlide.addClass( saveData.classes.nextVisibleItem );					
+
+						optionsAmimateNextSlide[saveData.direction] = '0';
+						prevSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
+
+							$( this ).removeClass( saveData.classes.nextVisibleItem )
+							.addClass( saveData.classes.visibleItem );
+
+							$( this ).attr( 'style', '' );
+
+							// enable nav
+							saveData.keySlideMotion = true;
+
+						} );
+
+					}
 
 				} );
 
 			},
 
-			/*
-			* find the previous slide
-			* var slide - the current slide
-			* 	use: $( slide )
-			*/ 
-			findNextSlide: 	function( slide ) {
-
-				var countElems 			= $( root ).find( '.' + saveData.classes.slideItem ).length;
-
-				var indexCurrentElem 	= $( slide ).index();
-
-				var returnElement 		= $( slide ).next();
-
-				if( countElems === indexCurrentElem + 1 ) {
-
-					returnElement = $( root ).find( '.' + saveData.classes.slideItem ).eq(0);
-
-				} else{
-
-					returnElement = $( slide ).next();
-
-				}
-
-				console.log( returnElement );
-
-				// console.log( indexCurrentElem );
-
-
-				// return next slide
-				return returnElement;
-
-			},
-
-			// get a certain slide
-			// certainSlide: 		function() {
-
-			// },
-
 			/***************************
-			* Turn on the children slider
+			****************************
+			*	Help functions
 			*/
-			// childrenSlider: 	function( box ) {
 
-			// 	box.childrenProductSlider();
+				/***************************
+				* Calculate the height of the slider
+				*/
+				setSliderHeight: 		function() {
 
-			// }
+					$( root ).removeClass( saveData.classes.overflowHide );
+
+					var heightSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
+
+					$( root ).css( 'height', heightSlider + 'px' );
+
+					$( root ).addClass( saveData.classes.overflowHide );
+
+				},
+
+				/*
+				* find the previous slide
+				* var slide - the current slide
+				* 	use: $( slide )
+				*/
+				findPrevSlide: 		function( slide ) {
+
+					var indexCurrentElem 	= $( slide ).index();
+
+					var returnElement 		= $( slide ).prev();				
+
+					if( indexCurrentElem === 0 ) {
+
+						returnElement 		= $( root ).find( '.' + saveData.classes.slideItem ).eq( saveData.countElems - 1 );
+
+					} else{
+
+						returnElement 		= $( slide ).prev();
+
+					}
+
+					return returnElement;				
+
+				},
+
+				/*
+				* find the next slide
+				* var slide - the current slide
+				* 	use: $( slide )
+				*/ 
+				findNextSlide: 		function( slide ) {
+
+					var indexCurrentElem 	= $( slide ).index();
+
+					var returnElement 		= $( slide ).next();
+
+					if( saveData.countElems === indexCurrentElem + 1 ) {
+
+						returnElement 		= $( root ).find( '.' + saveData.classes.slideItem ).eq(0);
+
+					} else{
+
+						returnElement 		= $( slide ).next();
+
+					}
+
+					// return next slide
+					return returnElement;
+
+				},
+
+				// get a certain slide
+				// certainSlide: 	function() {
+
+				// },
+
+				/***************************
+				* Turn on the children slider
+				*/
+				// childrenSlider: 	function( box ) {
+
+				// 	box.childrenProductSlider();
+
+				// }
 
 
 		}

@@ -1,13 +1,11 @@
 /* Basic style */
 .mx-product-slider {
-	/*overflow: hidden;*/
 	width: 100%;
 }
 .mx-related-products-slider {
 	position: relative;
 	margin: 0;
 	padding: 0;
-	/*overflow: hidden;*/
 	width: 100%;
 }
 .mx-related-products-slider .mx-slide-item {
@@ -25,6 +23,9 @@
 }
 .mx-related-products-slider .mx-visible-slide {
 	z-index: 779;
+}
+.mx-overflow-hidden {
+	overflow: hidden;
 }
 
 /*Navigation*/
