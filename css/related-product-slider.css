@@ -1,13 +1,13 @@
 /* Basic style */
-.mx-product-slider {
-	width: 100%;
-}
+.mx-product-slider,
 .mx-related-products-slider {
 	position: relative;
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	overflow: hidden;
 }
+.mx-product-slider > div,
 .mx-related-products-slider .mx-slide-item {
 	position: absolute;
 	top: 0px;
@@ -15,6 +15,7 @@
 	width: 100%;
 	z-index: 777;
 }
+.mx-product-slider > div > img,
 .mx-related-products-slider .mx-slide-item > img {
 	width: 100%;
 }
@@ -23,9 +24,6 @@
 }
 .mx-related-products-slider .mx-visible-slide {
 	z-index: 779;
-}
-.mx-overflow-hidden {
-	overflow: hidden;
 }
 
 /*Navigation*/

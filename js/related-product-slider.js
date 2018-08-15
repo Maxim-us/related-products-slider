@@ -18,8 +18,8 @@
 	$.defaultConfig = {
 		'nav'				: true, 	// Set the "Next" and "Previous" arrows
 		'autoplay'			: true,		// Scroll slider automatically
-		'slideInterval'		: 2000,		// Slider scroll interval
-		'slideSpeed'		: 500,		// Slider scrolling speed
+		'slideInterval'		: 5000,		// Slider scroll interval
+		'slideSpeed'		: 1000,		// Slider scrolling speed
 		'vertical'			: false		// Vertical movement
 
 	};
@@ -81,10 +81,13 @@
 			'keySlideMotion'		: true,
 
 			// set up vertical scroll slider
-			'direction'			: 'left'
+			'direction'			: 'left',
+
+			// interval movement
+			'interval'			: null
 		};
 
-		// console.log( saveData.classes.slideItem );
+		// console.log( saveData.interval );
 
 		// engine of plugin
 		var enginePlugin = {
@@ -116,7 +119,8 @@
 
 				}
 
-				// console.log( settings.nav );
+				// autoplay
+				this.autoplay();
 
 			},
 
@@ -124,11 +128,6 @@
 			countElements: 		function() {
 
 				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;
-
-			},
-
-			// loop
-			movementInLoop: 	function() {
 
 			},
 
@@ -169,167 +168,110 @@
 
 				// events
 				// prev slide
-				this.prevSlide();
+				this.prevSlideEvent();
 
 				// next slide
-				this.nextSlide();
+				this.nextSlideEvent();
+
+			},
+
+			// create dots
+			dotsBox: 			function() {
 
 			},
 
 			/***************************
 			* Interaction with the user.
 			*/
-			// click the "previous" button
+			// "previous" button
 			prevBtn: 			function() {
 
 				$( '.' + saveData.classes.navigationWrap ).append( '<a href="#" class="' + saveData.classes.prevBtn + '">Prev</a>' );
 
 			},
 
-			// click the "next" button
+			// "next" button
 			nextBtn: 			function() {
 
 				$( '.' + saveData.classes.navigationWrap ).append( '<a href="#" class="' + saveData.classes.nextBtn + '">Next</a>' );
 				
 			},			
 
-			// click on the dots
-			dotsBtn: 			function() {
+			// dots buttons
+			dotsBtns: 			function() {
 
 			},
 
 			/***************************
-			* Triggers
+			* Targets
 			*/
 			// get the next slide
-			nextSlide: 			function() {
+			nextSlideEvent: 			function() {
 
-				var _this 						= this;
-
-				// set up animation function
-				var optionsAmimateCurrentSlide 	= {};
-				var optionsAmimateNextSlide 	= {};
+				var _this = this;				
 
 				$( root ).on( 'click', '.' + saveData.classes.nextBtn, function( e ) {
 
-					if( saveData.keySlideMotion === true ) {
+					e.preventDefault();
 
-						// disable nav
-						saveData.keySlideMotion 	= false;
+					// Scroll the slider forward
+					_this.scrollForward( _this );
 
-						e.preventDefault();
-
-						// move the current slide
-						optionsAmimateCurrentSlide[saveData.direction] = '-100%';
-
-						$( root ).find( '.' + saveData.classes.visibleItem )
-						.animate( optionsAmimateCurrentSlide, settings.slideSpeed, function() {
-
-							$( this ).removeClass( saveData.classes.visibleItem );
-
-							$( this ).attr( 'style', '' );
-
-						} );
-				
-						// find next slide and move it
-						var nextSlide = _this.findNextSlide( '.' + saveData.classes.visibleItem );
-
-						nextSlide.css( saveData.direction, '50%' );
-
-						nextSlide.addClass( saveData.classes.nextVisibleItem );					
-
-						optionsAmimateNextSlide[saveData.direction] = '0';
-						nextSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
-
-							$( this ).removeClass( saveData.classes.nextVisibleItem )
-							.addClass( saveData.classes.visibleItem );
-
-							$( this ).attr( 'style', '' );
-
-							// enable nav
-							saveData.keySlideMotion = true;
-
-						} );
-
-					}
+					// clear the interval and run a new one
+					clearInterval( saveData.interval );
+					_this.autoplay();
 
 				} );
 
 			},
 
 			// get the previous slide
-			prevSlide: 				function() {
+			prevSlideEvent: 			function() {
 
-				var _this = this;
-
-				// set up animation function
-				var optionsAmimateCurrentSlide 	= {};
-				var optionsAmimateNextSlide 	= {};
+				var _this = this;				
 
 				$( root ).on( 'click', '.' + saveData.classes.prevBtn, function( e ) {
 
-					if( saveData.keySlideMotion === true ) {
+					e.preventDefault();
 
-						// disable nav
-						saveData.keySlideMotion = false;
+					// Scroll the slider backwards
+					_this.scrollBack( _this );
 
-						e.preventDefault();
-
-						// move the current slide
-						optionsAmimateCurrentSlide[saveData.direction] = '100%';
-
-						$( root ).find( '.' + saveData.classes.visibleItem )
-						.animate( optionsAmimateCurrentSlide, settings.slideSpeed, function() {
-
-							$( this ).removeClass( saveData.classes.visibleItem );
-
-							$( this ).attr( 'style', '' );
-
-						} );
-
-						// find prev slide and move it
-						var prevSlide = _this.findPrevSlide( '.' + saveData.classes.visibleItem );
-
-						prevSlide.css( saveData.direction, '-50%' );
-
-						prevSlide.addClass( saveData.classes.nextVisibleItem );					
-
-						optionsAmimateNextSlide[saveData.direction] = '0';
-						prevSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
-
-							$( this ).removeClass( saveData.classes.nextVisibleItem )
-							.addClass( saveData.classes.visibleItem );
-
-							$( this ).attr( 'style', '' );
-
-							// enable nav
-							saveData.keySlideMotion = true;
-
-						} );
-
-					}
+					// clear the interval and run a new one
+					clearInterval( saveData.interval );
+					_this.autoplay();
+					
 
 				} );
+
+			},
+
+			// autoplay
+			autoplay: 			function() {
+
+				var _this = this;
+
+				saveData.interval = setInterval( function() {
+
+					_this.scrollForward( _this );
+
+				}, settings.slideInterval );
 
 			},
 
 			/***************************
 			****************************
 			*	Help functions
-			*/
+			*/				
 
-				/***************************
+				/*
 				* Calculate the height of the slider
 				*/
 				setSliderHeight: 		function() {
 
-					$( root ).removeClass( saveData.classes.overflowHide );
-
 					var heightSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
 
 					$( root ).css( 'height', heightSlider + 'px' );
-
-					$( root ).addClass( saveData.classes.overflowHide );
 
 				},
 
@@ -381,6 +323,103 @@
 
 					// return next slide
 					return returnElement;
+
+				},
+
+				/*
+				* Treat the event
+				*/
+				scrollForward: 		function( _this ) {
+
+					// set up animation function
+					var optionsAmimateCurrentSlide 	= {};
+					var optionsAmimateNextSlide 	= {};
+
+					if( saveData.keySlideMotion === true ) {
+
+						// disable nav
+						saveData.keySlideMotion = false;						
+
+						// move the current slide
+						optionsAmimateCurrentSlide[saveData.direction] = '-100%';
+
+						$( root ).find( '.' + saveData.classes.visibleItem )
+						.animate( optionsAmimateCurrentSlide, settings.slideSpeed, function() {
+
+							$( this ).removeClass( saveData.classes.visibleItem );
+
+							$( this ).attr( 'style', '' );
+
+						} );
+				
+						// find next slide and move it
+						var nextSlide = _this.findNextSlide( '.' + saveData.classes.visibleItem );
+
+						nextSlide.css( saveData.direction, '50%' );
+
+						nextSlide.addClass( saveData.classes.nextVisibleItem );					
+
+						optionsAmimateNextSlide[saveData.direction] = '0';
+						nextSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
+
+							$( this ).removeClass( saveData.classes.nextVisibleItem )
+							.addClass( saveData.classes.visibleItem );
+
+							$( this ).attr( 'style', '' );
+
+							// enable nav
+							saveData.keySlideMotion = true;
+
+						} );
+
+					}
+
+				},
+
+				scrollBack: 		function( _this ) {
+
+					if( saveData.keySlideMotion === true ) {
+
+						// set up animation function
+						var optionsAmimateCurrentSlide 	= {};
+						var optionsAmimateNextSlide 	= {};
+
+						// disable nav
+						saveData.keySlideMotion 	= false;						
+
+						// move the current slide
+						optionsAmimateCurrentSlide[saveData.direction] = '100%';
+
+						$( root ).find( '.' + saveData.classes.visibleItem )
+						.animate( optionsAmimateCurrentSlide, settings.slideSpeed, function() {
+
+							$( this ).removeClass( saveData.classes.visibleItem );
+
+							$( this ).attr( 'style', '' );
+
+						} );
+
+						// find prev slide and move it
+						var prevSlide = _this.findPrevSlide( '.' + saveData.classes.visibleItem );
+
+						prevSlide.css( saveData.direction, '-50%' );
+
+						prevSlide.addClass( saveData.classes.nextVisibleItem );					
+
+						optionsAmimateNextSlide[saveData.direction] = '0';
+						prevSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
+
+							$( this ).removeClass( saveData.classes.nextVisibleItem )
+							.addClass( saveData.classes.visibleItem );
+
+							$( this ).attr( 'style', '' );
+
+							// enable nav
+							saveData.keySlideMotion = true;
+
+						} );
+
+					}
 
 				},
 
