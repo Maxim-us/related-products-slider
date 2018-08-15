@@ -16,11 +16,42 @@
 	* Default configuration of the slider.
 	*/
 	$.defaultConfig = {
-		'nav'				: true, 	// Set the "Next" and "Previous" arrows
-		'autoplay'			: true,		// Scroll slider automatically
-		'slideInterval'		: 5000,		// Slider scroll interval
-		'slideSpeed'		: 1000,		// Slider scrolling speed
-		'vertical'			: false		// Vertical movement
+
+		'nav'				: true, 	/*
+										* 	Set the "Next" and "Previous" arrows
+										* 	Type: 		Boolean 
+										* 	Default: 	true
+										*/
+
+		'autoplay'			: true,		/*
+										* 	Scroll slider automatically
+										* 	Type: 		Boolean 
+										* 	Default: 	true
+										*/
+
+		'slideInterval'		: 5000,		/*
+										* 	Slider scroll interval
+										* 	Type: 		Number 
+										* 	Default: 	5000
+										*/ 
+
+		'slideSpeed'		: 1000,		/*
+										* 	Slider scrolling speed
+										* 	Type: 		Number 
+										* 	Default: 	1000
+										*/
+
+		'vertical'			: false,	/*
+										* 	Vertical movement
+										* 	Type: 		Boolean 
+										* 	Default: 	false
+										*/
+
+		'dots'				: true		/*
+										* 	Set the dots
+										* 	Type: 		Boolean 
+										* 	Default: 	true
+										*/
 
 	};
 
@@ -71,7 +102,12 @@
 				// navigation
 				'navigationWrap' 	: 'mx-navigation-arrows',
 				'prevBtn'			: 'mx-navigation-arrow-prev',
-				'nextBtn'			: 'mx-navigation-arrow-next'
+				'nextBtn'			: 'mx-navigation-arrow-next',
+
+				// dots
+				'dotsWrap'			: 'mx-dots-wrap',
+				'dotItem'			: 'mx-dot-item',
+				'dotItemActive'		: 'mx-dot-item-active'
 			},
 
 			// number of slides
@@ -87,7 +123,7 @@
 			'interval'			: null
 		};
 
-		// console.log( saveData.interval );
+		// console.log( saveData.classes.slideItem );
 
 		// engine of plugin
 		var enginePlugin = {
@@ -99,15 +135,7 @@
 			init: 			function() {
 
 				// run the skeleton construction
-				this.skeletonSlider();
-
-				// create navigation arrows
-				if( settings.nav ) {
-
-					// create wrap
-					this.navigationArrows();
-
-				}
+				this.skeletonSlider();				
 
 				// number of slides
 				this.countElements();
@@ -119,8 +147,12 @@
 
 				}
 
-				// autoplay
-				this.autoplay();
+				// set autoplay
+				if( settings.autoplay ) {
+
+					this.autoplay();
+
+				}				
 
 			},
 
@@ -142,6 +174,21 @@
 				// set the visible slide
 				$( root ).children( 'div' ).first().addClass( saveData.classes.visibleItem );
 
+				// create navigation arrows
+				if( settings.nav ) {
+
+					// create wrap
+					this.navigationArrows();
+
+				}
+
+				// set dots
+				if( settings.dots ) {
+
+					this.dotsBox();
+
+				}
+
 				// set slider height
 				this.setSliderHeight();
 
@@ -153,10 +200,10 @@
 				var _this = this;		
 
 				// create wrap
-				$( root ).append( '<nav class="' + saveData.classes.navigationWrap + '"></nav>' );				
+				$( root ).append( '<nav class="' + saveData.classes.navigationWrap + '"></nav>' );
 
 				// create btns
-				$( '.' + saveData.classes.navigationWrap ).ready( function(){
+				$( '.' + saveData.classes.navigationWrap ).ready( function() {
 
 					// create prev button
 					_this.prevBtn();
@@ -178,10 +225,37 @@
 			// create dots
 			dotsBox: 			function() {
 
+				var _this = this;
+
+				// create dots wrap
+				$( root ).append( '<nav class="' + saveData.classes.dotsWrap + '"></nav>' );
+
+				// create btns
+				$( '.' + saveData.classes.dotsWrap ).ready( function() {
+
+					for( var i = 1; i <= saveData.countElems; i++ ) {
+
+						var activeItem = '';
+
+						if( i === 1 ) {
+
+							activeItem = saveData.classes.dotItemActive;
+
+						}
+
+						$( '.' + saveData.classes.dotsWrap ).append( _this.dotBtn( i, activeItem ) );
+
+					}
+
+				} );
+
+				// events
+				this.clickOnDot();
+
 			},
 
-			/***************************
-			* Interaction with the user.
+			/*
+			* Create skeleton objects
 			*/
 			// "previous" button
 			prevBtn: 			function() {
@@ -197,16 +271,18 @@
 				
 			},			
 
-			// dots buttons
-			dotsBtns: 			function() {
+			// create dot
+			dotBtn: 			function( number, activeItem ) {
+
+				return '<a href="#" class="' + saveData.classes.dotItem + ' ' + activeItem + '">' + number + '</a>';
 
 			},
 
 			/***************************
-			* Targets
+			* Interaction with the user.
 			*/
-			// get the next slide
-			nextSlideEvent: 			function() {
+			// click the "Next" button
+			nextSlideEvent: 	function() {
 
 				var _this = this;				
 
@@ -218,15 +294,21 @@
 					_this.scrollForward( _this );
 
 					// clear the interval and run a new one
-					clearInterval( saveData.interval );
-					_this.autoplay();
+					// if autorun is activated
+					if( settings.autoplay ) {
+
+						clearInterval( saveData.interval );
+
+						_this.autoplay();
+
+					}
 
 				} );
 
 			},
 
-			// get the previous slide
-			prevSlideEvent: 			function() {
+			// click the "Previous" button
+			prevSlideEvent: 	function() {
 
 				var _this = this;				
 
@@ -238,24 +320,48 @@
 					_this.scrollBack( _this );
 
 					// clear the interval and run a new one
-					clearInterval( saveData.interval );
-					_this.autoplay();
-					
+					// if autorun is activated
+					if( settings.autoplay ) {
+
+						clearInterval( saveData.interval );
+						
+						_this.autoplay();
+
+					}					
 
 				} );
 
-			},
+			},			
 
-			// autoplay
-			autoplay: 			function() {
+			// click on the dot
+			clickOnDot: 	function() {
 
-				var _this = this;
+				var _this = this;				
 
-				saveData.interval = setInterval( function() {
+				$( root ).on( 'click', '.' + saveData.classes.dotItem, function( e ) {
 
-					_this.scrollForward( _this );
+					e.preventDefault();
 
-				}, settings.slideInterval );
+					if( !$( this ).hasClass( saveData.classes.dotItemActive ) ) {
+
+						var indexSlide = $( this ).index();
+
+						// find a certain slide
+						_this.findSlide( indexSlide );
+
+						// clear the interval and run a new one
+						// if autorun is activated
+						if( settings.autoplay ) {
+
+							clearInterval( saveData.interval );
+							
+							_this.autoplay();
+
+						}
+
+					}					
+
+				} )
 
 			},
 
@@ -284,7 +390,7 @@
 
 					var indexCurrentElem 	= $( slide ).index();
 
-					var returnElement 		= $( slide ).prev();				
+					var returnElement 		= $( slide ).prev( '.' + saveData.classes.slideItem );				
 
 					if( indexCurrentElem === 0 ) {
 
@@ -292,7 +398,7 @@
 
 					} else{
 
-						returnElement 		= $( slide ).prev();
+						returnElement 		= $( slide ).prev( '.' + saveData.classes.slideItem );
 
 					}
 
@@ -309,7 +415,7 @@
 
 					var indexCurrentElem 	= $( slide ).index();
 
-					var returnElement 		= $( slide ).next();
+					var returnElement 		= $( slide ).next( '.' + saveData.classes.slideItem );
 
 					if( saveData.countElems === indexCurrentElem + 1 ) {
 
@@ -317,7 +423,7 @@
 
 					} else{
 
-						returnElement 		= $( slide ).next();
+						returnElement 		= $( slide ).next( '.' + saveData.classes.slideItem );
 
 					}
 
@@ -338,7 +444,7 @@
 					if( saveData.keySlideMotion === true ) {
 
 						// disable nav
-						saveData.keySlideMotion = false;						
+						saveData.keySlideMotion 	= false;						
 
 						// move the current slide
 						optionsAmimateCurrentSlide[saveData.direction] = '-100%';
@@ -367,6 +473,13 @@
 
 							$( this ).attr( 'style', '' );
 
+							// if dots are enabled
+							if( settings.dots ) {
+
+								_this.setActiveDot( nextSlide.index() );
+
+							}
+
 							// enable nav
 							saveData.keySlideMotion = true;
 
@@ -378,11 +491,11 @@
 
 				scrollBack: 		function( _this ) {
 
-					if( saveData.keySlideMotion === true ) {
+					// set up animation function
+					var optionsAmimateCurrentSlide 	= {};
+					var optionsAmimateNextSlide 	= {};
 
-						// set up animation function
-						var optionsAmimateCurrentSlide 	= {};
-						var optionsAmimateNextSlide 	= {};
+					if( saveData.keySlideMotion === true ) {						
 
 						// disable nav
 						saveData.keySlideMotion 	= false;						
@@ -414,6 +527,13 @@
 
 							$( this ).attr( 'style', '' );
 
+							// if dots are enabled
+							if( settings.dots ) {
+
+								_this.setActiveDot( prevSlide.index() );
+
+							}
+
 							// enable nav
 							saveData.keySlideMotion = true;
 
@@ -423,10 +543,87 @@
 
 				},
 
-				// get a certain slide
-				// certainSlide: 	function() {
+				// autoplay
+				autoplay: 			function() {
 
-				// },
+					var _this = this;
+
+					saveData.interval = setInterval( function() {
+
+						_this.scrollForward( _this );
+
+					}, settings.slideInterval );
+
+				},
+
+				/*
+				* Dots settings
+				*/
+				/*
+				* set an active dot
+				* var currentSlide - slide index
+				*/ 
+				setActiveDot: 		function( currentSlide ) {
+
+					$( '.' + saveData.classes.dotItem )
+					.removeClass( saveData.classes.dotItemActive )
+					.eq( currentSlide )
+					.addClass( saveData.classes.dotItemActive );
+
+				},
+
+				// get a certain slide
+				findSlide: 			function( index ) {
+
+					var _this = this;			
+
+					// set up animation function
+					var optionsAmimateCurrentSlide 	= {};
+					var optionsAmimateNextSlide 	= {};
+
+					if( saveData.keySlideMotion === true ) {
+
+						// disable nav
+						saveData.keySlideMotion 	= false;						
+
+						// move the current slide
+						optionsAmimateCurrentSlide[saveData.direction] = '-100%';
+
+						$( root ).find( '.' + saveData.classes.visibleItem )
+						.animate( optionsAmimateCurrentSlide, settings.slideSpeed, function() {
+
+							$( this ).removeClass( saveData.classes.visibleItem );
+
+							$( this ).attr( 'style', '' );
+
+						} );
+				
+						// find certain slide and move it
+						var certainSlide = $( root ).find( '.' + saveData.classes.slideItem ).eq( index );
+
+						certainSlide.css( saveData.direction, '50%' );
+
+						certainSlide.addClass( saveData.classes.nextVisibleItem );					
+
+						optionsAmimateNextSlide[saveData.direction] = '0';
+						certainSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
+
+							$( this ).removeClass( saveData.classes.nextVisibleItem )
+							.addClass( saveData.classes.visibleItem );
+
+							$( this ).attr( 'style', '' );
+							
+							// set the active class to the dot
+							_this.setActiveDot( certainSlide.index() );
+
+							// enable nav
+							saveData.keySlideMotion = true;
+
+						} );
+
+					}
+
+				},
 
 				/***************************
 				* Turn on the children slider

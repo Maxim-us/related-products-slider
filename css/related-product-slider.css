@@ -6,6 +6,10 @@
 	padding: 0;
 	width: 100%;
 	overflow: hidden;
+	height: 0;
+	-webkit-transition: height 0.7s;
+    -o-transition: height 0.7s;
+    transition: height 0.7s;
 }
 .mx-product-slider > div,
 .mx-related-products-slider .mx-slide-item {
@@ -37,4 +41,26 @@ a.mx-navigation-arrow-prev {
 }
 a.mx-navigation-arrow-next {
 	float: right;
+}
+
+/*dots*/
+nav.mx-dots-wrap {
+	position: absolute;
+	bottom: 20px;
+	z-index: 779;
+	width: 100%;
+	max-width: 400px;
+	text-align: center;
+}
+a.mx-dot-item {
+	background: #fff;
+	width: 20px;
+	height: 20px;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
+	margin: 0px 5px;
+	display: inline-block; 
+}
+a.mx-dot-item.mx-dot-item-active {
+	background: #333;
 }
