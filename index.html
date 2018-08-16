@@ -4,13 +4,15 @@
 	<meta charset="UTF-8">
 	<title>Related Product Slider</title>
 	<link rel="stylesheet" href="./css/related-product-slider.css">
+	<link rel="stylesheet" href="./css/animate.css">
 
 	<style>
+		body{
+			margin: 0;
+		}
 		.mx-test_wrap {
 			width: 100%;
-			max-width: 700px;
-			margin: 30px auto;
-			border: 1px solid #333;
+			margin: 0;
 		}
 
 	</style>
@@ -19,17 +21,47 @@
 
 <div class="mx-test_wrap">
 	
+	<!-- .mx-product-slider -->
 	<div class="mx-product-slider">
+		
+		<!-- item 1 -->
 		<div>
-			<img src="./img/slide1.jpg" alt="">
+			<img src="./img/_slide1.jpg" alt="">
+
+			<!-- banner -->
+			<div class="mx-slide-banner">
+				<a href="#">
+					<img src="./img/banner.png" alt="" />
+				</a>
+			</div>
 		</div>
+
+		<!-- item 2 -->
 		<div>
-			<img src="./img/slide2.jpg" alt="">
+			<img src="./img/_slide2.jpg" alt="">
+
+			<!-- banner -->
+			<div class="mx-slide-banner">
+				<a href="#">
+					<img src="./img/banner.png" alt="">
+				</a>
+			</div>
 		</div>
+		
+		<!-- item 3 -->
 		<div>
-			<img src="./img/slide3.jpg" alt="">
-		</div>
+			<img src="./img/_slide3.jpg" alt="">
+
+			<!-- banner -->
+			<div class="mx-slide-banner">
+				<a href="#">
+					<img src="./img/banner.png" alt="">
+				</a>
+			</div>
+		</div>		
+	
 	</div>
+	<!-- .mx-product-slider -->
 
 </div>
 
@@ -38,6 +70,10 @@
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
   crossorigin="anonymous"></script>
 <script src="./js/related-product-slider.js"></script>
+<script src="./js/banners.js"></script>
+<script src="./js/product-slider.js"></script>
+
+
 <!-- <script src="./js/main.js"></script> -->
 
 <script>
@@ -49,6 +85,10 @@
 			// 'autoplay': false,
 			// 'dots': false,
 			// 'nav': false
+			// 'banners': {
+			// 	'enable': false
+			// }
+			// 'slideInterval'		: 20000
 		} );
 
 	} );

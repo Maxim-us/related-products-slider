@@ -1,11 +1,11 @@
 /****************************************************
 * ###################################################
 * #                                                 #
-* #                                                 #
+* #              Author: Marko Maksym               #
 * M                                                 M
-* #               Main Product Slider               #
-* #                                                 #
-* X                                                 X
+* #               MAIN PRODUCT SLIDER               #
+* #            This plugin is a container           #
+* X               of all child plugins              X
 * #                                                 #
 * #                                                 #
 * ###################################################
@@ -18,42 +18,109 @@
 	$.defaultConfig = {
 
 		'nav'				: true, 	/*
-										* 	Set the "Next" and "Previous" arrows
+										* 	SET THE "NEXT" AND "PREVIOUS" ARROWS
 										* 	Type: 		Boolean 
 										* 	Default: 	true
 										*/
 
 		'autoplay'			: true,		/*
-										* 	Scroll slider automatically
+										* 	SCROLL SLIDER AUTOMATICALLY
 										* 	Type: 		Boolean 
 										* 	Default: 	true
 										*/
 
-		'slideInterval'		: 5000,		/*
-										* 	Slider scroll interval
+		'slideInterval'		: 4000,		/*
+										* 	SLIDER SCROLL INTERVAL
 										* 	Type: 		Number 
 										* 	Default: 	5000
 										*/ 
 
 		'slideSpeed'		: 1000,		/*
-										* 	Slider scrolling speed
+										* 	SLIDER SCROLLING SPEED
 										* 	Type: 		Number 
 										* 	Default: 	1000
 										*/
 
 		'vertical'			: false,	/*
-										* 	Vertical movement
+										* 	VERTICAL MOVEMENT
 										* 	Type: 		Boolean 
 										* 	Default: 	false
 										*/
 
-		'dots'				: true		/*
-										* 	Set the dots
+		'dots'				: true,		/*
+										* 	SET THE DOTS
 										* 	Type: 		Boolean 
 										* 	Default: 	true
 										*/
 
+		'banners'			: {
+
+			'enable' 			: true,			/*
+												* 	ENABLE BANNERS
+												* 	Type: 		Boolean 
+												* 	Default: 	true
+												*/
+
+			'position' 			: '', 			/*
+												* 	SET THE BANNER POSITION
+												* 	Type: 				String 
+												* 	Default: 			'topRight'
+												*
+												* 	Possible options : 	'topLeft'
+												*						'topRight'
+												*						'bottomLeft'
+												*						'bottomRight'
+												*/
+
+			'animated' 			: 'slideInUp',	/*
+												* 	SET THE TYPE OF ANIMATION
+												* 	Type: 				String 
+												* 	Default: 			'slideInUp'
+												*	More animation types can be found
+												*	on the official site:
+												*	https://daneden.github.io/animate.css/
+												*/
+
+			'eachBannerAnimated' : [			/*
+												*	SET A SPECIFIC ANIMATION FOR EACH SLIDE 		*/
+				/*1 slide has:*/ 'slideInDown',	/*	Type: 				Array 						*/
+				/*2 slide has:*/ 'slideInLeft'	/*	Specify a specific animation for each slide.	*/
+												/*	The names of the animations are 				*/
+												/*	comma separated. For example:					*/
+												/*	'eachBannerAnimated' : ['slideInDown',			*/
+												/*		'slideInLeft',								*/
+												/*		'slideInRight']								*/				
+
+			],
+
+			'durationAnimation' : 'fast',		/*
+												* 	SET ANIMATION DURATION
+												* 	Type: 				String 
+												* 	Default: 			'fast'
+												*
+												*	Possible options : 	'slow'		= 2s
+												*						'slower'	= 3s
+												*						'fast'		= 800ms
+												*						'faster'	= 500ms
+												*/
+
+			'delayAnimation'	: 500,			/*
+												* 	SET ANIMATION DELAY
+												* 	Type: 				Number 
+												* 	Default: 			500
+												*/
+
+			'infiniteAnimation' : true			/*
+												* 	SET AN ENDLESS ANIMATION CYCLE
+												* 	Type: 				Boolean 
+												* 	Default: 			false
+												*/
+			
+		}
+
 	};
+
+	// settings.banners.animated
 
 	/***************************
 	* Basic Plugin Authoring.
@@ -97,7 +164,7 @@
 				'nextVisibleItem'	: 'mx-visible-next-slide',
 
 				// owerflow class
-				'overflowHide'	: 'mx-overflow-hidden',
+				'overflowHide'		: 'mx-overflow-hidden',
 
 				// navigation
 				'navigationWrap' 	: 'mx-navigation-arrows',
@@ -107,7 +174,12 @@
 				// dots
 				'dotsWrap'			: 'mx-dots-wrap',
 				'dotItem'			: 'mx-dot-item',
-				'dotItemActive'		: 'mx-dot-item-active'
+				'dotItemActive'		: 'mx-dot-item-active',
+
+				// HELPERS
+				// display none
+				'displayNone' 		: 'mx-display-none'
+
 			},
 
 			// number of slides
@@ -117,28 +189,40 @@
 			'keySlideMotion'		: true,
 
 			// set up vertical scroll slider
-			'direction'			: 'left',
+			'direction'				: 'left',
 
 			// interval movement
-			'interval'			: null
+			'interval'				: null,
+
+			/*
+			* Banners
+			*/
+			// banner wrap class
+			'bannerItemClass' 		: 'mx-slide-banner'
 		};
 
-		// console.log( saveData.classes.slideItem );
+		// console.log( saveData.classes.visibleItem );
 
-		// engine of plugin
+		/***************************
+		*
+		*  == ENGINE OF PLUGIN ==
+		*
+		***************************/
 		var enginePlugin = {
-
-			/***************************
-			* Initialize the slider and check which features will be enabled.
-			*/
+			
+			/*****************************************************************
+			*
+			* INITIALIZE THE SLIDER AND CHECK WHICH FEATURES WILL BE ENABLED
+			*
+			******************************************************************/
 			// initialize
 			init: 			function() {
 
 				// run the skeleton construction
-				this.skeletonSlider();				
+				this.skeletonSlider();
 
 				// number of slides
-				this.countElements();
+				this.countElements();			
 
 				// set slider direction
 				if( settings.vertical ) {
@@ -148,24 +232,54 @@
 				}
 
 				// set autoplay
-				if( settings.autoplay ) {
+				if( settings.autoplay && saveData.countElems > 1 ) {
 
 					this.autoplay();
 
-				}				
+				}
+
+				// resize function
+				this.resizeWindow();
+
+				/*
+				* Banners
+				*/
+				if( settings.banners.enable ) {
+
+					// enable banners
+					this.enableBanners();
+
+					// animation activation
+					if( settings.banners.animated ) {
+
+						this.initAnimation();
+
+						var _this = this;
+
+						setTimeout( function() {
+
+							_this.enableAnimated( $( '.' + saveData.classes.visibleItem ) );
+
+						},settings.banners.delayAnimation );
+
+					}
+
+				}
 
 			},
 
 			// get the number of items
 			countElements: 		function() {
 
-				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;
+				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;				
 
 			},
 
 			/***************************
-			* Build the slider skeleton
-			*/
+			*
+			* BUILD THE SLIDER SKELETON
+			*
+			***************************/
 			skeletonSlider: 	function() {
 
 				// add classes
@@ -174,8 +288,11 @@
 				// set the visible slide
 				$( root ).children( 'div' ).first().addClass( saveData.classes.visibleItem );
 
+				// check number of elements
+				var countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;
+
 				// create navigation arrows
-				if( settings.nav ) {
+				if( settings.nav && countElems > 1 ) {
 
 					// create wrap
 					this.navigationArrows();
@@ -183,11 +300,11 @@
 				}
 
 				// set dots
-				if( settings.dots ) {
+				if( settings.dots && countElems > 1 ) {
 
 					this.dotsBox();
 
-				}
+				}				
 
 				// set slider height
 				this.setSliderHeight();
@@ -260,27 +377,29 @@
 			// "previous" button
 			prevBtn: 			function() {
 
-				$( '.' + saveData.classes.navigationWrap ).append( '<a href="#" class="' + saveData.classes.prevBtn + '">Prev</a>' );
+				$( '.' + saveData.classes.navigationWrap ).append( '<button class="' + saveData.classes.prevBtn + '">Prev</button>' );
 
 			},
 
 			// "next" button
 			nextBtn: 			function() {
 
-				$( '.' + saveData.classes.navigationWrap ).append( '<a href="#" class="' + saveData.classes.nextBtn + '">Next</a>' );
+				$( '.' + saveData.classes.navigationWrap ).append( '<button class="' + saveData.classes.nextBtn + '">Next</button>' );
 				
 			},			
 
 			// create dot
 			dotBtn: 			function( number, activeItem ) {
 
-				return '<a href="#" class="' + saveData.classes.dotItem + ' ' + activeItem + '">' + number + '</a>';
+				return '<button class="' + saveData.classes.dotItem + ' ' + activeItem + '">' + number + '</button>';
 
 			},
-
+			
 			/***************************
-			* Interaction with the user.
-			*/
+			*
+			* INTERACTION WITH THE USER
+			*
+			***************************/
 			// click the "Next" button
 			nextSlideEvent: 	function() {
 
@@ -365,10 +484,24 @@
 
 			},
 
+			resizeWindow: 	function() {
+
+				var _this = this;
+
+				$( window ).resize( function() {
+
+					// set slider height
+					_this.setSliderHeight();
+
+				} );
+
+			},
+
 			/***************************
-			****************************
-			*	Help functions
-			*/				
+			*
+			*      HELP FUNCTIONS
+			*
+			***************************/				
 
 				/*
 				* Calculate the height of the slider
@@ -377,7 +510,18 @@
 
 					var heightSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
 
-					$( root ).css( 'height', heightSlider + 'px' );
+					var heightWindow = $( window ).innerHeight();
+
+					// check height of the window
+					if( heightWindow >= 650 && heightSlider > heightWindow ) {						
+
+						$( root ).css( 'height', heightWindow + 'px' );
+
+					} else {
+
+						$( root ).css( 'height', heightSlider + 'px' );
+
+					}
 
 				},
 
@@ -456,6 +600,9 @@
 
 							$( this ).attr( 'style', '' );
 
+							// enable nav
+							saveData.keySlideMotion = true;
+
 						} );
 				
 						// find next slide and move it
@@ -480,8 +627,16 @@
 
 							}
 
-							// enable nav
-							saveData.keySlideMotion = true;
+							// animation banner							
+							if( settings.banners.enable && settings.banners.animated ) {
+
+								setTimeout( function() {
+
+									_this.enableAnimated( nextSlide );
+
+								},settings.banners.delayAnimation );
+
+							}
 
 						} );
 
@@ -510,6 +665,9 @@
 
 							$( this ).attr( 'style', '' );
 
+							// enable nav
+							saveData.keySlideMotion = true;
+
 						} );
 
 						// find prev slide and move it
@@ -534,8 +692,16 @@
 
 							}
 
-							// enable nav
-							saveData.keySlideMotion = true;
+							// animation banner							
+							if( settings.banners.enable && settings.banners.animated ) {			
+
+								setTimeout( function() {
+
+									_this.enableAnimated( prevSlide );
+
+								},settings.banners.delayAnimation );
+
+							}
 
 						} );
 
@@ -596,6 +762,9 @@
 
 							$( this ).attr( 'style', '' );
 
+							// enable nav
+							saveData.keySlideMotion = true;
+
 						} );
 				
 						// find certain slide and move it
@@ -616,8 +785,16 @@
 							// set the active class to the dot
 							_this.setActiveDot( certainSlide.index() );
 
-							// enable nav
-							saveData.keySlideMotion = true;
+							// animation banner
+							if( settings.banners.enable && settings.banners.animated ) {
+
+								setTimeout( function() {
+
+									_this.enableAnimated( certainSlide );
+
+								},settings.banners.delayAnimation );
+
+							}
 
 						} );
 
@@ -625,58 +802,127 @@
 
 				},
 
-				/***************************
-				* Turn on the children slider
-				*/
-				// childrenSlider: 	function( box ) {
+			
+			/***************************************************************
+			*
+			*    TURN ON THE BANNESR
+			*
+			***************************/
+			enableBanners: 	function() {
 
-				// 	box.childrenProductSlider();
+				$( root ).find( '.' + saveData.bannerItemClass ).bannerProduct( {
 
-				// }
+					'position': settings.banners.position
 
+				} );
+
+			},
+
+			/*
+			* Enable animation of banners
+			* var element - This is a certain slide
+			* 	use: element.find()
+			*/
+			enableAnimated: function( element ) {
+
+				// set a specific animation for each slide
+				if( Array.isArray( settings.banners.eachBannerAnimated ) ) {
+
+					var index = element.index();
+
+					// if index exists
+					if( settings.banners.eachBannerAnimated[index] !== undefined ) {
+
+						// console.log( settings.banners.eachBannerAnimated[index] );
+						// set infinite animation
+						if( settings.banners.infiniteAnimation ) {
+
+							$( root ).find( '.' + saveData.bannerItemClass + ' img' )
+							.removeClass( settings.banners.eachBannerAnimated[index] );
+
+							$( root ).find( '.' + saveData.bannerItemClass + ' img' )
+							.addClass( saveData.classes.displayNone );
+					
+						}
+
+						element.find( '.' + saveData.bannerItemClass + ' img' )
+						.removeClass( saveData.classes.displayNone );
+						
+						element.find( '.' + saveData.bannerItemClass + ' img' )
+						.addClass( settings.banners.eachBannerAnimated[index] );
+
+					// if index does not exist
+					} else {
+
+						// set infinite animation
+						if( settings.banners.infiniteAnimation ) {
+
+							$( root ).find( '.' + saveData.bannerItemClass + ' img' )
+							.removeClass( settings.banners.animated );
+
+							$( root ).find( '.' + saveData.bannerItemClass + ' img' )
+							.addClass( saveData.classes.displayNone );
+					
+						}
+
+						// console.log( settings.banners.animated );
+						element.find( '.' + saveData.bannerItemClass + ' img' )
+						.removeClass( saveData.classes.displayNone );
+						
+						element.find( '.' + saveData.bannerItemClass + ' img' )
+						.addClass( settings.banners.animated );							
+
+					}
+
+				} else {
+
+					// set infinite animation
+					if( settings.banners.infiniteAnimation ) {
+
+						$( root ).find( '.' + saveData.bannerItemClass + ' img' )
+						.removeClass( settings.banners.animated );
+
+						$( root ).find( '.' + saveData.bannerItemClass + ' img' )
+						.addClass( saveData.classes.displayNone );
+				
+					}
+
+					element.find( '.' + saveData.bannerItemClass + ' img' )
+					.removeClass( saveData.classes.displayNone );
+					
+					element.find( '.' + saveData.bannerItemClass + ' img' )
+					.addClass( settings.banners.animated );
+
+				}	
+
+			},
+
+			initAnimation: function() {
+
+				$( root ).find( '.' + saveData.bannerItemClass + ' img' )
+				.addClass( saveData.classes.displayNone + ' animated ' + settings.banners.durationAnimation );
+
+			}
+
+			/*****************************
+			*
+			* TURN ON THE CHILDREN SLIDER
+			*
+			*****************************/
+			// childrenSlider: 	function() {
+
+			// 	// ...
+
+			// },
 
 		}
 
 		/***************************
-		* Run Plugin
-		*/
+		*
+		*        RUN PLUGIN
+		*
+		***************************/
 		enginePlugin.init();
-
-	}
-
-} )( jQuery );
-
-/****************************************************
-* ###################################################
-* #                                                 #
-* #                                                 #
-* M                                                 M
-* #             Children Product Slider             #  
-* #                                                 #
-* X                                                 X
-* #                                                 #
-* #                                                 #
-* ###################################################
-*/
-;( function( $ ) {
-
-	$.fn.childrenProductSlider = function( options ) {
-
-		$.defaultConfigChild = {};
-
-		var settings = $.extend( {}, $.defaultConfigChild, options );
-
-		// each element
-		return this.each( function() {
-
-			// run function
-			MxChildrenProductSlider( this, settings );
-
-		}  );
-
-	}
-
-	function MxChildrenProductSlider( root, settings ){
 
 	}
 

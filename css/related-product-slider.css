@@ -36,11 +36,13 @@ nav.mx-navigation-arrows {
     z-index: 779;
     width: 100%;
 }
-a.mx-navigation-arrow-prev {
+button.mx-navigation-arrow-prev {
 	float: left;
+	cursor: pointer;
 }
-a.mx-navigation-arrow-next {
+button.mx-navigation-arrow-next {
 	float: right;
+	cursor: pointer;
 }
 
 /*dots*/
@@ -52,15 +54,68 @@ nav.mx-dots-wrap {
 	max-width: 400px;
 	text-align: center;
 }
-a.mx-dot-item {
+button.mx-dot-item {
 	background: #fff;
 	width: 20px;
 	height: 20px;
 	-webkit-border-radius: 50%;
 	        border-radius: 50%;
 	margin: 0px 5px;
-	display: inline-block; 
+	display: inline-block;
+	cursor: pointer;
 }
-a.mx-dot-item.mx-dot-item-active {
+button.mx-dot-item.mx-dot-item-active {
 	background: #333;
+}
+
+/*banner*/
+.mx-slide-banner {
+	position: absolute;    
+    width: 100%;
+    max-width: 992px;
+    z-index: 888;
+    height: 50%;
+}
+	/*top - left*/
+	.mx-banner-top-left {
+		top: 40px;
+		left: 70px;
+		text-align: left;
+	}
+
+	/*top - right*/
+	.mx-banner-top-right {
+		top: 40px;
+    	right: 70px;
+        text-align: right;
+	}
+
+	/*bottom - left*/
+	.mx-banner-bottom-left {
+		bottom: 60px;
+		left: 70px;
+		text-align: left;
+	}
+
+	/*bottom - right*/
+	.mx-banner-bottom-right {
+		bottom: 60px;
+		right: 70px;
+		text-align: right;
+	}
+
+
+
+.mx-slide-banner img {
+	height: 100%;	
+}
+
+/*help classes*/
+.mx-display-none {
+	display: none;
+}
+
+/*media*/
+@media only screen and ( max-width: 1220px ) {
+
 }
