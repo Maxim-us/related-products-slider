@@ -31,24 +31,53 @@
 }
 
 /*Navigation*/
-nav.mx-navigation-arrows {
+nav.mx-navigation-wrap-prev {
+    position: absolute;
+    z-index: 779;
+    display: inline-block;
+    top: 50%;
+    left: 0;
+    margin-top: -80px;
+}
+nav.mx-navigation-wrap-next {
 	position: absolute;
     z-index: 779;
-    width: 100%;
+    display: inline-block;
+    top: 50%;
+    right: 0;
+    margin-top: -80px;
+}
+nav.mx-navigation-wrap-prev button,
+nav.mx-navigation-wrap-next button{
+	width: 100px;
+	height: 200px;	
+    border: none;
+    outline: none;
+    font-size: 0;    
+    background-position: center;
+    background-repeat: no-repeat;
+	cursor: pointer;
+	background-color: transparent;
+	-webkit-transition: background-color 0.7s;
+    -o-transition: background-color 0.7s;
+    transition: background-color 0.7s;
+}
+nav.mx-navigation-wrap-prev button:hover,
+nav.mx-navigation-wrap-next button:hover {
+	background-color: rgba(51, 51, 51, 0.69);
 }
 button.mx-navigation-arrow-prev {
 	float: left;
-	cursor: pointer;
+	background-image: url(../img/main-arrow-prev.png);
 }
 button.mx-navigation-arrow-next {
-	float: right;
-	cursor: pointer;
+	float: right;	
+	background-image: url(../img/main-arrow-next.png);
 }
 
 /*dots*/
 nav.mx-dots-wrap {
 	position: absolute;
-	bottom: 20px;
 	z-index: 779;
 	width: 100%;
 	max-width: 400px;
@@ -66,6 +95,33 @@ button.mx-dot-item {
 }
 button.mx-dot-item.mx-dot-item-active {
 	background: #333;
+}
+/*positon of dots box*/
+nav.mx-dots-wrap.mx-dots-position-top-left {
+	top: 20px;
+	left: 0px;
+}
+nav.mx-dots-wrap.mx-dots-position-top-center {
+	top: 20px;
+	left: 0px;
+	max-width: 100%;
+}
+nav.mx-dots-wrap.mx-dots-position-top-right {
+	top: 40px;
+	right: 0px;
+}
+nav.mx-dots-wrap.mx-dots-position-bottom-left {
+	bottom: 40px;
+	left: 0px;
+}
+nav.mx-dots-wrap.mx-dots-position-bottom-center {
+	bottom: 40px;
+	left: 0px;
+	max-width: 100%;
+}
+nav.mx-dots-wrap.mx-dots-position-bottom-right {
+	bottom: 40px;
+	right: 0px;
 }
 
 /*banner*/
@@ -104,8 +160,6 @@ button.mx-dot-item.mx-dot-item-active {
 		text-align: right;
 	}
 
-
-
 .mx-slide-banner img {
 	height: 100%;	
 }
@@ -116,6 +170,13 @@ button.mx-dot-item.mx-dot-item-active {
 }
 
 /*media*/
-@media only screen and ( max-width: 1220px ) {
+@media only screen and ( max-width: 1400px ) {
 
+	nav.mx-navigation-wrap-prev button,
+	nav.mx-navigation-wrap-next button {
+		width: 75px;
+		height: 170px;
+		-webkit-background-size: 26px;
+		background-size: 26px;
+	} 
 }

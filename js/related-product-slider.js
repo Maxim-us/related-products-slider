@@ -17,41 +17,64 @@
 	*/
 	$.defaultConfig = {
 
-		'nav'				: true, 	/*
-										* 	SET THE "NEXT" AND "PREVIOUS" ARROWS
-										* 	Type: 		Boolean 
-										* 	Default: 	true
-										*/
+		'nav'				: true, 		/*
+											* 	SET THE "NEXT" AND "PREVIOUS" ARROWS
+											* 	Type: 		Boolean 
+											* 	Default: 	true
+											*/
 
-		'autoplay'			: true,		/*
-										* 	SCROLL SLIDER AUTOMATICALLY
-										* 	Type: 		Boolean 
-										* 	Default: 	true
-										*/
+		'autoplay'			: true,			/*
+											* 	SCROLL SLIDER AUTOMATICALLY
+											* 	Type: 		Boolean 
+											* 	Default: 	true
+											*/
 
-		'slideInterval'		: 6000,		/*
-										* 	SLIDER SCROLL INTERVAL
-										* 	Type: 		Number 
-										* 	Default: 	5000
-										*/ 
+		'slideInterval'		: 8000,			/*
+											* 	SLIDER SCROLL INTERVAL
+											* 	Type: 		Number 
+											* 	Default: 	8000
+											*/ 
 
-		'slideSpeed'		: 1000,		/*
-										* 	SLIDER SCROLLING SPEED
-										* 	Type: 		Number 
-										* 	Default: 	1000
-										*/
+		'slideSpeed'		: 1000,			/*
+											* 	SLIDER SCROLLING SPEED
+											* 	Type: 		Number 
+											* 	Default: 	1000
+											*/
 
-		'vertical'			: false,	/*
-										* 	VERTICAL MOVEMENT
-										* 	Type: 		Boolean 
-										* 	Default: 	false
-										*/
+		'vertical'			: false,		/*
+											* 	VERTICAL MOVEMENT
+											* 	Type: 		Boolean 
+											* 	Default: 	false
+											*/
 
-		'dots'				: true,		/*
-										* 	SET THE DOTS
-										* 	Type: 		Boolean 
-										* 	Default: 	true
-										*/
+		'dots'				: true,			/*
+											* 	SET THE DOTS
+											* 	Type: 		Boolean 
+											* 	Default: 	true
+											*/
+
+		'dotsPosition' 		: 'bottomLeft',/*
+											* 	SET THE POSITION OF THE POINTS
+											* 	Type: 				String 
+											* 	Default: 			'bottomLeft'
+											*
+											* 	Possible options : 	'topLeft'
+											*						'topCenter'
+											*						'topRight'
+											*						'bottomLeft'
+											*						'bottomCenter'
+											*						'bottomRight'
+											*/
+
+		'dotsWrapWidth' 	: 400,			/*
+											* 	SET THE WIDTH OF THE WRAPPER DOTS
+											* 	Type: 		Number 
+											* 	Default: 	400
+											*	Units of measurement - pixels
+											*		(Default width = 400px)
+											*	If 0 is set, the width will be 100%.
+											*	In this case, the points will always be centered
+											*/
 
 		/***************************
 		* Banner settings
@@ -164,7 +187,8 @@
 				'overflowHide'		: 'mx-overflow-hidden',
 
 				// navigation
-				'navigationWrap' 	: 'mx-navigation-arrows',
+				'navigationWrapPrev': 'mx-navigation-wrap-prev',
+				'navigationWrapNext': 'mx-navigation-wrap-next',
 				'prevBtn'			: 'mx-navigation-arrow-prev',
 				'nextBtn'			: 'mx-navigation-arrow-next',
 
@@ -172,12 +196,24 @@
 				'dotsWrap'			: 'mx-dots-wrap',
 				'dotItem'			: 'mx-dot-item',
 				'dotItemActive'		: 'mx-dot-item-active',
+				'dotsPosition'		: {
+
+					'topLeft'			: 'mx-dots-position-top-left',
+					'topCenter'			: 'mx-dots-position-top-center',
+					'topRight'			: 'mx-dots-position-top-right',
+					'bottomLeft'		: 'mx-dots-position-bottom-left',
+					'bottomCenter'		: 'mx-dots-position-bottom-center',
+					'bottomRight'		: 'mx-dots-position-bottom-right'
+
+				},
 
 				// HELPERS
 				// display none
 				'displayNone' 		: 'mx-display-none'
 
 			},
+
+			'dotsWrapWidth'			: 400,
 
 			// number of slides
 			'countElems'			: 0,
@@ -198,7 +234,7 @@
 			'bannerItemClass' 		: 'mx-slide-banner'
 		};
 
-		// console.log( saveData.classes.visibleItem );
+		// console.log( saveData.classes.dotsPosition.bottomLeft );
 
 		/***************************
 		*
@@ -311,21 +347,26 @@
 			// navigation arrows
 			navigationArrows: 	function() {
 
-						
-
 				// create wrap
-				$( root ).append( '<nav class="' + saveData.classes.navigationWrap + '"></nav>' );
+				$( root ).append( '<nav class="' + saveData.classes.navigationWrapPrev + '"></nav>' );
+
+				$( root ).append( '<nav class="' + saveData.classes.navigationWrapNext + '"></nav>' );
 
 				// create btns
-				$( '.' + saveData.classes.navigationWrap ).ready( function() {
+				$( '.' + saveData.classes.navigationWrapPrev ).ready( function() {
 
 					// create prev button
 					ENGINEPLUGIN.prevBtn();
 
+				} );
+
+				// create btns
+				$( '.' + saveData.classes.navigationWrapNext ).ready( function() {
+
 					// create next button
 					ENGINEPLUGIN.nextBtn();
 
-				} );
+				} );					
 
 				// events
 				// prev slide
@@ -339,10 +380,39 @@
 			// create dots
 			dotsBox: 			function() {
 
-				
+				// position of wrap of dots
+				var positionDots = saveData.classes.dotsPosition.bottomLeft;
+
+				$.each( saveData.classes.dotsPosition, function( key, value ) {
+
+					if( key === settings.dotsPosition ) {
+
+						positionDots = value;
+
+					}
+
+				} );
+
+				// width of dots wrap
+				var widthDotsWrap = saveData.dotsWrapWidth + 'px';
+
+				// check is number
+				if( $.isNumeric( settings.dotsWrapWidth ) ) {
+
+					if( settings.dotsWrapWidth === 0 ) {
+
+						widthDotsWrap = '100%';
+
+					} else {
+
+						widthDotsWrap = settings.dotsWrapWidth + 'px';
+
+					}					
+
+				}
 
 				// create dots wrap
-				$( root ).append( '<nav class="' + saveData.classes.dotsWrap + '"></nav>' );
+				$( root ).append( '<nav class="' + saveData.classes.dotsWrap + ' ' + positionDots + '" style="max-width:' + widthDotsWrap + ';"></nav>' );
 
 				// create btns
 				$( '.' + saveData.classes.dotsWrap ).ready( function() {
@@ -374,14 +444,14 @@
 			// "previous" button
 			prevBtn: 			function() {
 
-				$( '.' + saveData.classes.navigationWrap ).append( '<button class="' + saveData.classes.prevBtn + '">Prev</button>' );
+				$( '.' + saveData.classes.navigationWrapPrev ).append( '<button class="' + saveData.classes.prevBtn + '">Prev</button>' );
 
 			},
 
 			// "next" button
 			nextBtn: 			function() {
 
-				$( '.' + saveData.classes.navigationWrap ).append( '<button class="' + saveData.classes.nextBtn + '">Next</button>' );
+				$( '.' + saveData.classes.navigationWrapNext ).append( '<button class="' + saveData.classes.nextBtn + '">Next</button>' );
 				
 			},			
 

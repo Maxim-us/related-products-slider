@@ -16,16 +16,16 @@
 	$.fn.bannerProduct = function( options ) {
 
 		$.defaultConfigBanner = {
-			'position' 		: 'topRight'		/*
-												* 	Set the banner position
-												* 	Type: 				String 
-												* 	Default: 			'topRight'
-												*
-												* 	Possible options : 	'topLeft'
-												*						'topRight'
-												*						'bottomLeft'
-												*						'bottomRight'
-												*/
+			'position' 		: 'topRight'	/*
+											* 	Set the banner position
+											* 	Type: 				String 
+											* 	Default: 			'topRight'
+											*
+											* 	Possible options : 	'topLeft'
+											*						'topRight'
+											*						'bottomLeft'
+											*						'bottomRight'
+											*/
 			
 		};
 
@@ -97,8 +97,6 @@
 				} )
 
 				$( root ).addClass( bannerClass );
-
-				console.log(bannerClass);
 
 			}			
 
