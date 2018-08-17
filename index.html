@@ -34,6 +34,30 @@
 					<img src="./img/banner.png" alt="" />
 				</a>
 			</div>
+
+			<!-- Related products slider -->
+			<ul class="mx-related-products">
+				<li>
+					<a href="#">
+						<img src="./img/product1.png" alt="">
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="./img/product2.png" alt="">
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="./img/product3.png" alt="">
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="./img/product4.png" alt="">
+					</a>
+				</li>
+			</ul>
 		</div>
 
 		<!-- item 2 -->
@@ -65,6 +89,7 @@
 
 </div>
 
+<!-- scripts -->
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -82,7 +107,7 @@
 
 		$( '.mx-product-slider' ).relatedProducts( {
 			'vertical': true,
-			// 'autoplay': false,
+			'autoplay': false,
 			// 'dots': false,
 			//'nav': false,
 			// 'slideInterval'		: 20000,
@@ -91,7 +116,7 @@
 			// 'eachBannerAnimated': ['zoomInUp', 'slideInLeft', 'rotateInUpLeft'],
 			// 'bannerDurationAnimation': 'fast',
 			// 'bannerDelayAnimation': 2000,
-			// 'bannerInfiniteAnimation': false
+			'bannerInfiniteAnimation': true,
 			// 'dotsPosition': 'bottomRight',
 			'dotsWrapWidth': 600
 		} );

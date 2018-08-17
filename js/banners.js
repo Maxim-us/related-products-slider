@@ -17,7 +17,7 @@
 
 		$.defaultConfigBanner = {
 			'position' 		: 'topRight'	/*
-											* 	Set the banner position
+											* 	SET THE BANNER POSITION
 											* 	Type: 				String 
 											* 	Default: 			'topRight'
 											*

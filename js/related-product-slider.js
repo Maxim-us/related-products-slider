@@ -132,11 +132,20 @@
 													* 	Default: 			500
 													*/
 
-			'bannerInfiniteAnimation' 	: true		/*
+			'bannerInfiniteAnimation' 	: false,	/*
 													* 	SET AN ENDLESS ANIMATION CYCLE
 													* 	Type: 				Boolean 
 													* 	Default: 			false
-													*/			
+													*/
+
+		/***************************
+		* Related products slider 
+		*/
+			'productSlider'				: true		/*
+													* 	Enable child slider products 
+													* 	Type: 				Boolean 
+													* 	Default: 			true
+													*/
 
 	};
 
@@ -231,7 +240,13 @@
 			* Banners
 			*/
 			// banner wrap class
-			'bannerItemClass' 		: 'mx-slide-banner'
+			'bannerItemClass' 		: 'mx-slide-banner',
+
+			/*
+			* Related products slider 
+			*/
+			'childSliderClass' 		: 'mx-related-products'
+
 		};
 
 		// console.log( saveData.classes.dotsPosition.bottomLeft );
@@ -296,6 +311,16 @@
 						},settings.bannerDelayAnimation );
 
 					}
+
+				}
+
+
+				/*
+				* Related products slider
+				*/
+				if( settings.productSlider ) {
+
+					this.enableRelatedProductsSlider();
 
 				}
 
@@ -407,7 +432,7 @@
 
 						widthDotsWrap = settings.dotsWrapWidth + 'px';
 
-					}					
+					}
 
 				}
 
@@ -957,18 +982,18 @@
 				$( root ).find( '.' + saveData.bannerItemClass + ' img' )
 				.addClass( saveData.classes.displayNone + ' animated ' + settings.bannerDurationAnimation );
 
-			}
+			},
 
 			/*****************************
 			*
 			* TURN ON THE CHILDREN SLIDER
 			*
 			*****************************/
-			// childrenSlider: 	function() {
+			enableRelatedProductsSlider: 	function() {
 
-			// 	// ...
+				$( root ).find( '.' + saveData.childSliderClass ).childrenProductSlider();
 
-			// },
+			},
 
 		}
 
