@@ -66,7 +66,7 @@
 		*  == BANNER MAIN FUNCTION ==
 		*
 		*****************************/
-		var bannerMain = {
+		var BANNERMAIN = {
 
 			// initialization
 			init: 			function() {
@@ -98,12 +98,14 @@
 
 				$( root ).addClass( bannerClass );
 
+				console.log(bannerClass);
+
 			}			
 
 		}
 
 		// run
-		bannerMain.init();
+		BANNERMAIN.init();
 
 	}
 
