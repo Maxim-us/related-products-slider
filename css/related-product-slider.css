@@ -90,17 +90,28 @@ nav.mx-dots-wrap {
 	text-align: center;
 }
 button.mx-dot-item {
-	background: #fff;
-	width: 20px;
-	height: 20px;
-	-webkit-border-radius: 50%;
-	        border-radius: 50%;
-	margin: 0px 5px;
-	display: inline-block;
-	cursor: pointer;
+	background: transparent;
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    margin: 0px 5px;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid #fff;
+    font-size: 0;
+    outline: none;
+    -webkit-box-shadow: -1px 2px 5px -1px rgba(0,0,0,0.32);
+	-moz-box-shadow: -1px 2px 5px -1px rgba(0,0,0,0.32);
+	box-shadow: -1px 2px 5px -1px rgba(0,0,0,0.32);
+    -webkit-transition: 0.3s all ease;
+    transition: 0.3s all ease;
+}
+button.mx-dot-item:hover {
+	border: 2px solid #757373;
 }
 button.mx-dot-item.mx-dot-item-active {
-	background: #333;
+    border: 2px solid #757373;
 }
 
 /*positon of dots box*/
@@ -183,18 +194,65 @@ nav.mx-dots-wrap.mx-dots-position-bottom-right {
 	position: absolute;	
 	z-index: 888;
 	overflow: hidden;
-	border: 1px solid #333;
 	width: 100%;
+	height: 290px;
+}
+
+/*wrapper*/
+.mx-related-product-wrap-box {
+	position: relative;
+	height: 100%;
+	text-align: center;
+}
+.mx-related-products-slider ul.mx-related-products li {
+	float: left;
+	height: 100%;
+}
+.mx-related-products-slider ul.mx-related-products li a {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+    height: 100%;
+}
+.mx-related-products-slider ul.mx-related-products li img {
+    height: 86%;
+    -webkit-align-self: flex-end;
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+    -webkit-transition: height 0.3s;
+    -o-transition: height 0.3s;
+    transition: height 0.3s;
+}
+.mx-related-products-slider ul.mx-related-products li img:hover {
+	height: 100%;
+	-webkit-transition: height 0.3s;
+    -o-transition: height 0.3s;
+    transition: height 0.3s;
 }
 /*position of slider*/
 .mx-related-products-slider ul.mx-related-products.mx-related-product-top-left {
 	top: 0px;
 	left: 0px;
 }
+	.mx-related-products-slider ul.mx-related-products.mx-related-product-top-left li img {
+	    -webkit-align-self: flex-start;
+	    -ms-flex-item-align: start;
+	    align-self: flex-start;
+	}
+
 .mx-related-products-slider ul.mx-related-products.mx-related-product-top-right {
 	top: 0px;
 	right: 0px;
 }
+	.mx-related-products-slider ul.mx-related-products.mx-related-product-top-right li img {
+	    -webkit-align-self: flex-start;
+	    -ms-flex-item-align: start;
+	    align-self: flex-start;
+	}
+
 .mx-related-products-slider ul.mx-related-products.mx-related-product-bottom-left {
 	bottom: 0px;
 	left: 0px;
@@ -204,13 +262,48 @@ nav.mx-dots-wrap.mx-dots-position-bottom-right {
 	right: 0px;
 }
 
-/*wrapper*/
-.mx-related-product-wrap-box {
-	position: relative;
+/*nav*/
+nav.mx-next-button-relation-slider,
+nav.mx-prev-button-relation-slider {
+	position: absolute;
+	top: 45%;
+    width: 45px;
+    height: 80px;
+    margin-top: -40px;
+    cursor: pointer;
+    -webkit-transition: background-color 0.7s;
+    -o-transition: background-color 0.7s;
+    transition: background-color 0.7s;
 }
-.mx-related-products-slider ul.mx-related-products li {
-	float: left;
+nav.mx-next-button-relation-slider:hover,
+nav.mx-prev-button-relation-slider:hover {
+	background-color: rgba(51, 51, 51, 0.69);
 }
+nav.mx-next-button-relation-slider button,
+nav.mx-prev-button-relation-slider button {
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	background: transparent;
+	background-position: center;
+	background-repeat: no-repeat;
+	font-size: 0;
+	cursor: pointer;
+}
+nav.mx-next-button-relation-slider {
+	right: 0px;
+}
+	nav.mx-next-button-relation-slider button {
+		background-image: url(../img/related-slider-arrow-next.png);
+	}
+
+nav.mx-prev-button-relation-slider {
+	left: 0px;
+}
+	nav.mx-prev-button-relation-slider button {
+		background-image: url(../img/related-slider-arrow-prev.png);
+	}
 
 /*
 * Help classes

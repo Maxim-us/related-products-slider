@@ -98,8 +98,8 @@
 
 			'bannerAnimated'		: 'slideInUp',	/*
 													* 	SET THE TYPE OF ANIMATION
-													* 	Type: 				String 
-													* 	Default: 			'slideInUp'
+													* 	Type: 				String 		| Bollean
+													* 	Default: 			'slideInUp' | false
 													*	More animation types can be found
 													*	on the official site:
 													*	https://daneden.github.io/animate.css/
@@ -141,15 +141,89 @@
 		/***************************
 		* Related products slider 
 		*/
-			'productSlider'				: true		/*
+			'productSliderEnable'		: true,		/*
 													* 	Enable child slider products 
 													* 	Type: 				Boolean 
 													* 	Default: 			true
 													*/
 
+			'productPositionSlider' : 'bottomRight',/*
+													* 	SET THE SLIDER POSITION
+													* 	Type: 				String 
+													* 	Default: 			'topRight'
+													*
+													* 	Possible options : 	'topLeft'
+													*						'topRight'
+													*						'bottomLeft'
+													*						'bottomRight'
+													*/
+
+			'productSlideSpeed'			: 2000, 	/*
+													* 	SLIDER SCROLLING SPEED
+													* 	Type: 		Number 
+													* 	Default: 	1000
+													*/
+
+			'productNumberVisible'		: 3,		/*
+													* 	SET THE NUMBER OF VISIBLE SLIDES
+													* 	Type: 		Number 
+													* 	Default: 	3
+													*/
+
+			'productSliderAnimated'		: 'rotateIn',/*
+													* 	SET THE TYPE OF ANIMATION
+													* 	Type: 				String 		| Bollean
+													* 	Default: 			'slideInUp' | false
+													*	More animation types can be found
+													*	on the official site:
+													*	https://daneden.github.io/animate.css/
+													*/
+
+			'productDurationAnimation' 	: 'fast',	/*
+													* 	SET ANIMATION DURATION
+													* 	Type: 				String 
+													* 	Default: 			'fast'
+													*
+													*	Possible options : 	'slow'		= 2s
+													*						'slower'	= 3s
+													*						'fast'		= 800ms
+													*						'faster'	= 500ms
+													*/
+
+			'productDelayAnimation'		: 500,		/*
+													* 	SET ANIMATION DELAY
+													* 	Type: 				Number 
+													* 	Default: 			500
+													*/
+
+			'productEachSliderAnimated'  : [		/*
+													*	SET A SPECIFIC ANIMATION FOR EACH SLIDER		*/
+				/*1 slide has:*/ 'slideInDown',		/*	Type: 				Array 						*/
+				/*2 slide has:*/ 'slideInLeft'		/*	Specify a specific animation for each slide.	*/
+													/*	The names of the animations are 				*/
+			],										/*	comma separated. For example:					*/
+													/*	'eachBannerAnimated' : ['slideInDown',			*/
+													/*		'slideInLeft',								*/
+													/*		'slideInRight']								*/	
+
+			'productInfiniteAnimation' 	: false,		/*
+													* 	SET AN ENDLESS ANIMATION CYCLE
+													* 	Type: 				Boolean 
+													* 	Default: 			false
+													*/
+
+			'productWidthSlider'		: 900,		/*
+													* 	SET THE WIDTH OF THE SLIDER
+													* 	Type: 		Number 
+													* 	Default: 	900
+													*	Units of measurement - pixels
+													*		(Default width = 900px)
+													*	If 0 is set, the width will be 100%.
+													*/
+
 	};
 
-	// settings.bannerAnimated
+	// settings.productSliderAnimated
 
 	/***************************
 	* Basic Plugin Authoring.
@@ -245,11 +319,13 @@
 			/*
 			* Related products slider 
 			*/
-			'childSliderClass' 		: 'mx-related-products'
+			'childSliderClass' 		: 'mx-related-products',
+
+			'enableScroll' 			: true
 
 		};
 
-		// console.log( saveData.classes.dotsPosition.bottomLeft );
+		// console.log( saveData.childSliderClass );
 
 		/***************************
 		*
@@ -300,13 +376,11 @@
 					// animation activation
 					if( settings.bannerAnimated ) {
 
-						this.initAnimation();
-
-						
+						this.initAnimation();						
 
 						setTimeout( function() {
 
-							ENGINEPLUGIN.enableAnimated( $( '.' + saveData.classes.visibleItem ) );
+							ENGINEPLUGIN.enableBannerAnimated( $( '.' + saveData.classes.visibleItem ) );
 
 						},settings.bannerDelayAnimation );
 
@@ -318,11 +392,14 @@
 				/*
 				* Related products slider
 				*/
-				if( settings.productSlider ) {
+				if( settings.productSliderEnable ) {
 
 					this.enableRelatedProductsSlider();
 
 				}
+
+				// check mouse enter
+				this.mouseEnterOnElements();
 
 			},
 
@@ -587,7 +664,7 @@
 			*
 			*      HELP FUNCTIONS
 			*
-			***************************/				
+			***************************/
 
 				/*
 				* Calculate the height of the slider
@@ -713,14 +790,32 @@
 
 							}
 
-							// animation banner							
+							/*
+							* animation banner
+							*/
 							if( settings.bannerEnable && settings.bannerAnimated ) {
 
 								setTimeout( function() {
 
-									ENGINEPLUGIN.enableAnimated( nextSlide );
+									ENGINEPLUGIN.enableBannerAnimated( nextSlide );
 
 								},settings.bannerDelayAnimation );
+
+							}
+
+							/*
+							* run product animation
+							*/
+							if( settings.productSliderEnable && settings.productSliderAnimated ) {
+
+
+								setTimeout( function() {
+
+									var productSlider = nextSlide.find( '.' + saveData.childSliderClass );
+
+									ENGINEPLUGIN.enableProductsAnimated( productSlider );
+
+								},settings.productDelayAnimation );
 
 							}
 
@@ -778,14 +873,32 @@
 
 							}
 
-							// animation banner							
+							/*
+							* animation banner
+							*/						
 							if( settings.bannerEnable && settings.bannerAnimated ) {			
 
 								setTimeout( function() {
 
-									ENGINEPLUGIN.enableAnimated( prevSlide );
+									ENGINEPLUGIN.enableBannerAnimated( prevSlide );
 
 								},settings.bannerDelayAnimation );
+
+							}
+
+							/*
+							* run product animation
+							*/
+							if( settings.productSliderEnable && settings.productSliderAnimated ) {
+
+
+								setTimeout( function() {
+
+									var productSlider = prevSlide.find( '.' + saveData.childSliderClass );
+
+									ENGINEPLUGIN.enableProductsAnimated( productSlider );
+								
+								},settings.productDelayAnimation );
 
 							}
 
@@ -798,11 +911,40 @@
 				// autoplay
 				autoplay: 			function() {					
 
-					saveData.interval = setInterval( function() {
+					saveData.interval = setInterval( function() {						
 
-						ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
+						// Verify that the cursor is pointing to the slider on related products
+						if( saveData.enableScroll === true ) {
+
+							ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
+
+						}
 
 					}, settings.slideInterval );
+
+				},
+
+				mouseEnterOnElements: function() {
+
+					if( settings.autoplay === true ) {
+
+						$( root ).find( '.' + saveData.childSliderClass )
+						.mouseenter( function() {
+
+							saveData.enableScroll = false;
+
+						} )
+						.mouseleave( function() {
+
+							clearInterval( saveData.interval );
+
+							saveData.enableScroll = true;
+
+							ENGINEPLUGIN.autoplay();
+
+						} );
+
+					}
 
 				},
 
@@ -867,14 +1009,32 @@
 							// set the active class to the dot
 							ENGINEPLUGIN.setActiveDot( certainSlide.index() );
 
-							// animation banner
+							/*
+							* animation banner
+							*/
 							if( settings.bannerEnable && settings.bannerAnimated ) {
 
 								setTimeout( function() {
 
-									ENGINEPLUGIN.enableAnimated( certainSlide );
+									ENGINEPLUGIN.enableBannerAnimated( certainSlide );
 
 								},settings.bannerDelayAnimation );
+
+							}
+
+							/*
+							* run product animation
+							*/
+							if( settings.productSliderEnable && settings.productSliderAnimated ) {
+
+
+								setTimeout( function() {
+
+									var productSlider = certainSlide.find( '.' + saveData.childSliderClass );
+
+									ENGINEPLUGIN.enableProductsAnimated( productSlider );
+								
+								},settings.productDelayAnimation );
 
 							}
 
@@ -905,7 +1065,7 @@
 			* var element - This is a certain slide
 			* 	use: element.find()
 			*/
-			enableAnimated: function( element ) {
+			enableBannerAnimated: function( element ) {
 
 				// set a specific animation for each slide
 				if( Array.isArray( settings.eachBannerAnimated ) ) {
@@ -991,9 +1151,146 @@
 			*****************************/
 			enableRelatedProductsSlider: 	function() {
 
-				$( root ).find( '.' + saveData.childSliderClass ).childrenProductSlider();
+				$( root ).find( '.' + saveData.childSliderClass ).childrenProductSlider( {
+
+					'numberVisibleItems': 	settings.productNumberVisible,
+					'widthSlider' 		: 	settings.productWidthSlider,
+					'position' 			: 	settings.productPositionSlider,
+					'slideSpeed'		: 	settings.productSlideSpeed
+
+				} );
+
+				if( settings.productSliderEnable && settings.productSliderAnimated ) {	
+
+					// initialization
+					this.initProductsAnimation();
+
+					// animation
+					var findFirstSlide = $( root ).find( '.' + saveData.classes.slideItem ).first();
+
+					var firstElement = findFirstSlide.find( '.' + saveData.childSliderClass );
+
+					// run product animation
+					setTimeout( function() {
+
+						ENGINEPLUGIN.enableProductsAnimated( firstElement );
+					
+					},settings.productDelayAnimation );
+
+				}
 
 			},
+
+			/*
+			* Enable animation of related products
+			* var element - This is a certain slide
+			* 	use: element.find()
+			*/
+			enableProductsAnimated: 		function( element ) {
+
+				var delay = 400;
+
+				var el = 0;
+
+				// set a specific animation for each product slider
+				if( Array.isArray( settings.productEachSliderAnimated ) ) {
+
+					var index = element.parent().index();
+
+					// if index exists
+					if( settings.productEachSliderAnimated[index] !== undefined ) {
+
+						// set infinite animation
+						if( settings.productInfiniteAnimation ){
+
+							$( root ).find( '.' + saveData.childSliderClass + ' img' )
+							.removeClass( settings.productEachSliderAnimated[index] );
+
+							$( root ).find( '.' + saveData.childSliderClass + ' img' )
+							.addClass( saveData.classes.displayNone );
+
+						}
+
+						element.find( 'img' ).each( function() {
+
+							setTimeout( function() {
+
+								element.find( 'img' ).eq( el ).removeClass( saveData.classes.displayNone );
+
+								element.find( 'img' ).eq( el ).addClass( settings.productEachSliderAnimated[index] );
+
+								el += 1;
+
+							}, delay );
+
+							delay += 400;
+
+						} );
+
+
+					// if index does not exist
+					} else {
+
+						// set infinite animation
+						if( settings.productInfiniteAnimation ){
+
+							$( root ).find( '.' + saveData.childSliderClass + ' img' )
+							.removeClass( settings.productSliderAnimated );
+
+							$( root ).find( '.' + saveData.childSliderClass + ' img' )
+							.addClass( saveData.classes.displayNone );
+
+						}
+
+						element.find( 'img' ).each( function() {
+
+							setTimeout( function() {
+
+								element.find( 'img' ).eq( el ).removeClass( saveData.classes.displayNone );
+
+								element.find( 'img' ).eq( el ).addClass( settings.productSliderAnimated );
+
+								el += 1;
+
+							}, delay );
+
+							delay += 400;
+
+						} );
+
+					}
+
+				} else {
+
+					element.find( 'img' ).each( function() {
+
+						setTimeout( function() {
+
+							console.log( el );
+
+							element.find( 'img' ).eq( el ).removeClass( saveData.classes.displayNone );
+
+							element.find( 'img' ).eq( el ).addClass( settings.productSliderAnimated );
+
+							el += 1;
+
+						}, delay );
+
+						delay += 400;
+
+					} );
+
+				}
+
+			},
+
+			// initialization animation
+			initProductsAnimation: 			function() {
+
+				$( root ).find( '.' + saveData.childSliderClass + ' img')
+				.addClass( saveData.classes.displayNone + ' animated ' + settings.productDurationAnimation );
+
+			}
 
 		}
 

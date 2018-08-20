@@ -39,10 +39,16 @@
 											*	If 0 is set, the width will be 100%.
 											*/
 
-			'numberVisibleItems'	: 3		/*
+			'numberVisibleItems'	: 3,	/*
 											* 	SET THE NUMBER OF VISIBLE SLIDES
 											* 	Type: 		Number 
 											* 	Default: 	3
+											*/
+
+			'slideSpeed'			: 1000 /*
+											* 	SLIDER SCROLLING SPEED
+											* 	Type: 		Number 
+											* 	Default: 	1000
 											*/
 
 		};
@@ -89,7 +95,11 @@
 				'slidesWrapper'		: 'mx-related-product-wrap-box',
 
 				// class for everyone slide
-				'slideClass'		: 'mx-related-product-slide'
+				'slideClass'		: 'mx-related-product-slide',
+
+				// navigation
+				'nextButton'		: 'mx-next-button-relation-slider',
+				'prevButton'		: 'mx-prev-button-relation-slider'
 
 			},
 
@@ -109,11 +119,20 @@
 			'numberVisibleItems'	: 3,
 
 			// number of all items
-			'numberAllItems'	: 0
+			'numberAllItems'		: 0,
+
+			// variable navigation buttons
+			'saveDias'				: 0,
+
+			'countSteps'			: 0,
+
+			'currentStep'			: 0,			
+
+			'slideKey'				: true
 
 		};
 
-		// saveData.classes.slideClass
+		// saveData.numberVisibleItems
 
 		/***************************
 		*
@@ -130,6 +149,12 @@
 
 				// run the skeleton construction
 				this.skeletonChildSlider();
+
+				// get the number of steps to slip
+				this.getCountSteps();
+
+				// navigation event
+				this.navigationEvents();
 
 			},
 
@@ -151,6 +176,14 @@
 
 				// everyone slide
 				this.everySlide();
+
+				// set navigation
+				if( saveData.numberAllItems > saveData.numberVisibleItems ) {
+
+					this.setNavBtnNext();
+					this.setNavBtnPrev();
+
+				}
 
 			},
 
@@ -229,6 +262,71 @@
 
 			},
 
+			// set the navigation of slider
+			setNavBtnNext: 		function() {
+
+				// append next button
+				$( root ).append( '<nav class="' + saveData.classes.nextButton + '"><button>Next</button></nav>' );
+				
+			},
+
+			setNavBtnPrev: 		function() {
+
+				// append prev buttton
+				$( root ).append( '<nav class="' + saveData.classes.prevButton + ' mx-display-none"><button>Prev</button></nav>' );
+
+			},
+
+			/***************************
+			*
+			* INTERACTION WITH THE USER
+			*
+			***************************/
+			navigationEvents: 		function() {
+
+				this.nextSlideEvent();
+
+				this.prevSlideEvent();
+
+			},
+
+				nextSlideEvent: 		function() {
+
+					$( root ).on( 'click', '.' + saveData.classes.nextButton, function() {
+
+						if( saveData.slideKey === true ) {
+
+							saveData.slideKey = false;
+
+							ENGINECHILDPLUGIN.scrollForward();
+
+							ENGINECHILDPLUGIN.checkVisibleButtons();
+
+						}						
+
+					} );
+
+				},
+
+				prevSlideEvent: 		function() {
+
+					$( root ).on( 'click', '.' + saveData.classes.prevButton, function() {
+
+						if( saveData.slideKey === true ) {
+
+							saveData.slideKey = false;
+
+							ENGINECHILDPLUGIN.scrollBack();
+
+							ENGINECHILDPLUGIN.checkVisibleButtons();
+
+						}
+
+					} );
+
+				},
+
+
 			/***************************
 			*
 			*      HELP FUNCTIONS
@@ -279,7 +377,80 @@
 
 					} );					
 
-				}
+				},
+
+				// get the number of steps to slip
+				getCountSteps: 		function() {
+
+					saveData.countSteps = saveData.numberAllItems - saveData.numberVisibleItems;
+
+				},
+
+				// navigation events
+				scrollForward: 		function() {					
+
+					if( saveData.currentStep < saveData.countSteps ) {
+
+						saveData.currentStep += 1;
+
+						saveData.saveDias = saveData.saveDias - saveData.saveWidthOneSlide;						
+
+						$( root ).find( '.' + saveData.classes.slidesWrapper )
+						.animate( { 'margin-left': saveData.saveDias + 'px' }, settings.slideSpeed, function() {
+
+							saveData.slideKey = true;
+
+						} );
+
+					}							
+
+				},
+
+				scrollBack: 		function() {
+
+					if( saveData.currentStep > 0 ) {
+
+						saveData.currentStep -= 1;
+
+						saveData.saveDias = saveData.saveDias + saveData.saveWidthOneSlide;
+
+						$( root ).find( '.' + saveData.classes.slidesWrapper )
+						.animate( { 'margin-left': saveData.saveDias + 'px' }, settings.slideSpeed, function() {
+
+							saveData.slideKey = true;
+
+						} );
+
+					}
+
+				},
+
+				checkVisibleButtons: 	function() {
+
+					setTimeout( function() {
+
+						if( saveData.currentStep === saveData.countSteps ) {
+
+							$( root ).find( '.' + saveData.classes.nextButton ).addClass( 'mx-display-none' );
+
+						}	else {
+
+							$( root ).find( '.' + saveData.classes.nextButton ).removeClass( 'mx-display-none' );
+
+						}
+						if( saveData.currentStep === 0 ) {
+
+							$( root ).find( '.' + saveData.classes.prevButton ).addClass( 'mx-display-none' );
+
+						} else {
+
+							$( root ).find( '.' + saveData.classes.prevButton ).removeClass( 'mx-display-none' );
+
+						}
+
+					}, settings.slideSpeed - 100 );					
+
+				},
 
 		};
 
