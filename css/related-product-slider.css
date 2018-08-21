@@ -311,6 +311,9 @@ nav.mx-prev-button-relation-slider {
 .mx-display-none {
 	display: none;
 }
+.mx-opacity-0 {
+	opacity: 0;
+}
 
 /*media*/
 @media only screen and ( max-width: 1400px ) {

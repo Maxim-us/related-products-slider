@@ -76,6 +76,12 @@
 											*	In this case, the points will always be centered
 											*/
 
+		'mouseDrag'			: true,			/*
+											* 	MOUSE DRAG ENABLED
+											* 	Type: 		Boolean 
+											* 	Default: 	true
+											*/
+
 		/***************************
 		* Banner settings
 		*/
@@ -158,7 +164,7 @@
 													*						'bottomRight'
 													*/
 
-			'productSlideSpeed'			: 2000, 	/*
+			'productSlideSpeed'			: 1000, 	/*
 													* 	SLIDER SCROLLING SPEED
 													* 	Type: 		Number 
 													* 	Default: 	1000
@@ -223,7 +229,7 @@
 
 	};
 
-	// settings.productSliderAnimated
+	// settings.productDelayAnimation
 
 	/***************************
 	* Basic Plugin Authoring.
@@ -290,6 +296,8 @@
 
 				},
 
+				'mouseDragClass'	: 'mx-mouse-drag-slide',
+
 				// HELPERS
 				// display none
 				'displayNone' 		: 'mx-display-none'
@@ -325,7 +333,7 @@
 
 		};
 
-		// console.log( saveData.childSliderClass );
+		// console.log( saveData.classes.slideItem );
 
 		/***************************
 		*
@@ -365,6 +373,13 @@
 				// resize function
 				this.resizeWindow();
 
+				// Mouse drag enabled
+				if( settings.mouseDrag ) {
+
+					this.mouseDragSlider();
+
+				}
+
 				/*
 				* Banners
 				*/
@@ -386,8 +401,11 @@
 
 					}
 
-				}
+				} else {
 
+					$( root ).find( '.' + saveData.bannerItemClass ).addClass( saveData.classes.displayNone );
+
+				}
 
 				/*
 				* Related products slider
@@ -396,6 +414,10 @@
 
 					this.enableRelatedProductsSlider();
 
+				} else {
+
+					$( root ).find( '.' + saveData.childSliderClass ).addClass( saveData.classes.displayNone );
+					
 				}
 
 				// check mouse enter
@@ -569,6 +591,19 @@
 			* INTERACTION WITH THE USER
 			*
 			***************************/
+			// Mouse drag enabled
+			mouseDragSlider: 	function() {
+
+				$( root ).find( '.' + saveData.classes.slideItem ).addClass( saveData.classes.mouseDragClass );
+
+				$( root ).on( 'mousedown', '.' + saveData.classes.slideItem, function() {
+
+					console.log( this );
+
+				} );
+
+			},
+
 			// click the "Next" button
 			nextSlideEvent: 	function() {								
 
@@ -1282,6 +1317,9 @@
 
 				}
 
+				// animate arrow
+				this.animationNavArrow( element );
+
 			},
 
 			// initialization animation
@@ -1289,6 +1327,32 @@
 
 				$( root ).find( '.' + saveData.childSliderClass + ' img')
 				.addClass( saveData.classes.displayNone + ' animated ' + settings.productDurationAnimation );
+
+			},
+
+			// animation for nav arrow
+			animationNavArrow: 				function( element ) {
+
+				// set infinite animation
+				if( settings.productInfiniteAnimation ){
+
+					$( root ).find( '.mx-next-button-relation-slider' ).addClass( 'mx-opacity-0' );
+
+					$( root ).find( '.mx-prev-button-relation-slider' ).addClass( 'mx-opacity-0' );
+
+				}
+
+				setTimeout( function() {
+
+					element.find( '.mx-next-button-relation-slider' )
+					.removeClass( 'mx-opacity-0' )
+					.addClass( 'animated fast slideInRight' );
+
+					element.find( '.mx-prev-button-relation-slider' )
+					.removeClass( 'mx-opacity-0' )
+					.addClass( 'animated fast slideInLeft' );
+
+				}, settings.productDelayAnimation );
 
 			}
 

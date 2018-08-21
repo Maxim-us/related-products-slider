@@ -99,7 +99,12 @@
 
 				// navigation
 				'nextButton'		: 'mx-next-button-relation-slider',
-				'prevButton'		: 'mx-prev-button-relation-slider'
+				'prevButton'		: 'mx-prev-button-relation-slider',
+
+				// HELPERS
+				// display none
+				'displayNone' 		: 'mx-display-none',
+				'opacity0'	 		: 'mx-opacity-0'
 
 			},
 
@@ -132,7 +137,7 @@
 
 		};
 
-		// saveData.numberVisibleItems
+		// saveData.classes.displayNone
 
 		/***************************
 		*
@@ -266,14 +271,14 @@
 			setNavBtnNext: 		function() {
 
 				// append next button
-				$( root ).append( '<nav class="' + saveData.classes.nextButton + '"><button>Next</button></nav>' );
+				$( root ).append( '<nav class="' + saveData.classes.nextButton + ' ' + saveData.classes.opacity0 + '"><button>Next</button></nav>' );
 				
 			},
 
 			setNavBtnPrev: 		function() {
 
 				// append prev buttton
-				$( root ).append( '<nav class="' + saveData.classes.prevButton + ' mx-display-none"><button>Prev</button></nav>' );
+				$( root ).append( '<nav class="' + saveData.classes.prevButton + ' ' + saveData.classes.displayNone + ' ' + saveData.classes.opacity0 + '"><button>Prev</button></nav>' );
 
 			},
 
@@ -431,20 +436,20 @@
 
 						if( saveData.currentStep === saveData.countSteps ) {
 
-							$( root ).find( '.' + saveData.classes.nextButton ).addClass( 'mx-display-none' );
+							$( root ).find( '.' + saveData.classes.nextButton ).addClass( saveData.classes.displayNone );
 
 						}	else {
 
-							$( root ).find( '.' + saveData.classes.nextButton ).removeClass( 'mx-display-none' );
+							$( root ).find( '.' + saveData.classes.nextButton ).removeClass( saveData.classes.displayNone );
 
 						}
 						if( saveData.currentStep === 0 ) {
 
-							$( root ).find( '.' + saveData.classes.prevButton ).addClass( 'mx-display-none' );
+							$( root ).find( '.' + saveData.classes.prevButton ).addClass( saveData.classes.displayNone );
 
 						} else {
 
-							$( root ).find( '.' + saveData.classes.prevButton ).removeClass( 'mx-display-none' );
+							$( root ).find( '.' + saveData.classes.prevButton ).removeClass( saveData.classes.displayNone );
 
 						}
 
