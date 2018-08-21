@@ -296,7 +296,8 @@
 
 				},
 
-				'mouseDragClass'	: 'mx-mouse-drag-slide',
+				// mouseDrag
+				'mouseDragClass'		: 'mx-mouse-drag-slide',
 
 				// HELPERS
 				// display none
@@ -329,11 +330,33 @@
 			*/
 			'childSliderClass' 		: 'mx-related-products',
 
-			'enableScroll' 			: true
+			'enableScroll' 			: true,
+
+			'widthOfSlider'			: 0,
+
+			'heightOfSlider'		: 0,
+
+			/*
+			* mouseDrag
+			*/
+			'mouseDragOptions'		: {
+
+				'boundingClient'		: {},
+
+				'mouseDragKey'			: false,
+
+				'startPointX'			: 0,
+
+				// set up vertical scroll slider
+				'direction'				: 'left',
+
+				'offsetElement'			: 'clientX'
+
+			}
 
 		};
 
-		// console.log( saveData.classes.slideItem );
+		// console.log( saveData.mouseDragOptions.direction );
 
 		/***************************
 		*
@@ -594,11 +617,54 @@
 			// Mouse drag enabled
 			mouseDragSlider: 	function() {
 
+				// get bounding client rect
+				$( root ).ready( function() {
+
+					ENGINEPLUGIN.initMouseDrag();
+
+				} );
+
+				// add mouseDrag class
 				$( root ).find( '.' + saveData.classes.slideItem ).addClass( saveData.classes.mouseDragClass );
 
-				$( root ).on( 'mousedown', '.' + saveData.classes.slideItem, function() {
+				// mouse down
+				$( root ).on( 'mousedown', '.' + saveData.classes.slideItem, function( e ) {					
 
-					console.log( this );
+					saveData.mouseDragOptions.mouseDragKey = true;
+
+					// save the first position of the cursor
+					saveData.mouseDragOptions.startPointX = e[saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
+
+					// mouse move
+					$( root ).on( 'mousemove', function( event ) {						
+
+						if( saveData.mouseDragOptions.mouseDragKey === true ) {
+
+							// slide motion function
+							ENGINEPLUGIN.slideMotionDrag( event );
+
+						}
+
+					} );
+
+				} );
+
+				// mouse up
+				$( document ).on( 'mouseup', function() {
+				
+					// if autorun is activated
+					if( settings.autoplay ) {
+
+						clearInterval( saveData.interval );
+
+						ENGINEPLUGIN.autoplay();
+
+					}
+
+					saveData.mouseDragOptions.mouseDragKey = false;					
+
+					// save the first position of the cursor
+					saveData.mouseDragOptions.startPointX = 0;
 
 				} );
 
@@ -630,8 +696,6 @@
 
 			// click the "Previous" button
 			prevSlideEvent: 	function() {
-
-								
 
 				$( root ).on( 'click', '.' + saveData.classes.prevBtn, function( e ) {
 
@@ -1301,7 +1365,7 @@
 
 						setTimeout( function() {
 
-							console.log( el );
+							// console.log( el );
 
 							element.find( 'img' ).eq( el ).removeClass( saveData.classes.displayNone );
 
@@ -1353,6 +1417,90 @@
 					.addClass( 'animated fast slideInLeft' );
 
 				}, settings.productDelayAnimation );
+
+			},
+
+			/*
+			* Mouse drag
+			*/
+			// User move the slider with the mouse cursor
+			slideMotionDrag: 			function( e ) {
+
+				// if autorun is activated
+				if( settings.autoplay ) {
+
+					clearInterval( saveData.interval );
+
+					ENGINEPLUGIN.autoplay();
+
+				}
+
+				var getSizeSlider = 'widthOfSlider';
+
+				if( saveData.mouseDragOptions.direction === 'top' ) {
+
+					getSizeSlider = 'heightOfSlider';
+
+				}
+
+				var currentPosition = e[saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
+
+				if( currentPosition > saveData.mouseDragOptions.startPointX ) {
+
+					var percentPosition = ( 100 * ( currentPosition - saveData.mouseDragOptions.startPointX ) ) / saveData[getSizeSlider];
+
+					if( percentPosition > 40 ) {
+
+						// Scroll the slider backwards
+						ENGINEPLUGIN.scrollBack( ENGINEPLUGIN );
+
+						percentPosition = 0;
+
+						saveData.mouseDragOptions.startPointX = currentPosition;						
+
+					}					
+
+				} else if( currentPosition < saveData.mouseDragOptions.startPointX ) {
+
+					var percentPosition = ( 100 * ( saveData.mouseDragOptions.startPointX - currentPosition ) ) / saveData[getSizeSlider];
+
+					if( percentPosition > 40 ) {
+
+						// Scroll the slider forward
+						ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
+
+						percentPosition = 0;
+
+						saveData.mouseDragOptions.startPointX = currentPosition;						
+
+					}					
+
+				} else {
+					// ...
+				}
+
+			},
+
+			// Get bounding client rect
+			initMouseDrag: 		function() {
+
+				// get offset
+				saveData.mouseDragOptions.boundingClient = $( root ).offset();
+
+				// get width of slide
+				saveData.widthOfSlider = $( root ).innerWidth();
+
+				// get height of slide
+				saveData.heightOfSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
+
+				// get slider direction
+				if( settings.vertical ) {
+
+					saveData.mouseDragOptions.offsetElement = 'clientY';
+
+					saveData.mouseDragOptions.direction 	= 'top';
+
+				}
 
 			}
 
