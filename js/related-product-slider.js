@@ -196,8 +196,26 @@
 
 			'productNumberVisible'		: 3,		/*
 													* 	SET THE NUMBER OF VISIBLE SLIDES
-													* 	Type: 		Number 
+													* 	Type: 		Number | Object
 													* 	Default: 	3
+													*
+													*	Possible options :
+													*	'productNumberVisible' : {
+													*		// breakpoint from 0 up
+													*		0	: 	{
+													*			'items': 1
+													*		},
+													*
+													*		// breakpoint from 768 up
+													*		768	: 	{
+													*			'items': 2
+													*		},
+													*
+													*		// breakpoint from 992 up
+													*		992	: 	{
+													*			'items': 3
+													*		}
+													*	},
 													*/
 
 			'productSliderAnimated'		: 'rotateIn',/*
@@ -249,6 +267,12 @@
 													*	Units of measurement - pixels
 													*		(Default width = 900px)
 													*	If 0 is set, the width will be 100%.
+													*/
+
+			'responsive'				: {}		/*
+													* 	SET CERTAIN STYLES DEPENDING ON SCREEN SIZE
+													* 	Type: 		Object 
+													* 	Default: 	{}
 													*/
 
 	};
