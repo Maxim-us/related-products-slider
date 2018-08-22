@@ -59,9 +59,14 @@
 				</li>
 				<li>
 					<a href="#">
-						<img src="./img/slide-1/product5.png" alt="">
+						<img src="./img/slide-1/product6.png" alt="">
 					</a>
 				</li>
+				<li>
+					<a href="#">
+						<img src="./img/slide-1/product5.png" alt="">
+					</a>
+				</li>				
 			</ul>
 		</div>
 
@@ -128,12 +133,7 @@
 					<a href="#">
 						<img src="./img/slide-3/product1.png" alt="">
 					</a>
-				</li>
-				<li>
-					<a href="#">
-						<img src="./img/slide-3/product2.png" alt="">
-					</a>
-				</li>
+				</li>				
 				<li>
 					<a href="#">
 						<img src="./img/slide-3/product3.png" alt="">
@@ -147,6 +147,11 @@
 				<li>
 					<a href="#">
 						<img src="./img/slide-3/product5.png" alt="">
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="./img/slide-3/product2.png" alt="">
 					</a>
 				</li>
 				<li>
@@ -179,11 +184,12 @@
 	$( document ).ready( function() {
 
 		$( '.mx-product-slider' ).relatedProducts( {
-			//'vertical': true,
-			//'autoplay': false,
+			'vertical': true,
+			// 'autoplay': false,
 			// 'dots': false,
+			'dotsPosition': 'topLeft',
 			//'nav': false,
-			// 'slideInterval'		: 20000,
+			// 'slideInterval'		: 4000,
 			// 'bannerPosition': 'bottomRight',
 			//'bannerEnable':false,
 			//'bannerAnimated': false,
@@ -195,6 +201,12 @@
 			// 'dotsPosition': 'bottomRight',
 			'dotsWrapWidth': 600,
 			// 'productSliderEnable'		: false,
+			'bannerWrapWidth'		: 600,
+
+			// 'dotsColor'			: 'green',
+			// 'slideSpeed': 			5000
+
+			// 'dotsActiveColor'	: 'red'
 		} );
 
 	} );

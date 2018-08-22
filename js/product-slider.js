@@ -45,10 +45,10 @@
 											* 	Default: 	3
 											*/
 
-			'slideSpeed'			: 1000 /*
+			'slideSpeed'			: 600 /*
 											* 	SLIDER SCROLLING SPEED
 											* 	Type: 		Number 
-											* 	Default: 	1000
+											* 	Default: 	600
 											*/
 
 		};
@@ -307,6 +307,8 @@
 
 							ENGINECHILDPLUGIN.checkVisibleButtons();
 
+							$( root ).find( '.' + saveData.classes.prevButton ).removeClass( saveData.classes.displayNone );
+
 						}						
 
 					} );
@@ -436,24 +438,24 @@
 
 						if( saveData.currentStep === saveData.countSteps ) {
 
-							$( root ).find( '.' + saveData.classes.nextButton ).addClass( saveData.classes.displayNone );
+							$( root ).find( '.' + saveData.classes.nextButton ).addClass( saveData.classes.opacity0 );
 
 						}	else {
 
-							$( root ).find( '.' + saveData.classes.nextButton ).removeClass( saveData.classes.displayNone );
+							$( root ).find( '.' + saveData.classes.nextButton ).removeClass( saveData.classes.opacity0 );
 
 						}
 						if( saveData.currentStep === 0 ) {
 
-							$( root ).find( '.' + saveData.classes.prevButton ).addClass( saveData.classes.displayNone );
+							$( root ).find( '.' + saveData.classes.prevButton ).addClass( saveData.classes.opacity0 );
 
 						} else {
 
-							$( root ).find( '.' + saveData.classes.prevButton ).removeClass( saveData.classes.displayNone );
+							$( root ).find( '.' + saveData.classes.prevButton ).removeClass( saveData.classes.opacity0 );
 
 						}
 
-					}, settings.slideSpeed - 100 );					
+					}, settings.slideSpeed / 2 );					
 
 				},
 

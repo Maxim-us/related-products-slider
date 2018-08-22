@@ -156,28 +156,28 @@ nav.mx-dots-wrap.mx-dots-position-bottom-right {
 	.mx-banner-top-left {
 		top: 40px;
 		left: 70px;
-		text-align: left;
+		text-align: center;
 	}
 
 	/*top - right*/
 	.mx-banner-top-right {
 		top: 40px;
     	right: 70px;
-        text-align: right;
+        text-align: center;
 	}
 
 	/*bottom - left*/
 	.mx-banner-bottom-left {
 		bottom: 60px;
 		left: 70px;
-		text-align: left;
+		text-align: center;
 	}
 
 	/*bottom - right*/
 	.mx-banner-bottom-right {
 		bottom: 60px;
 		right: 70px;
-		text-align: right;
+		text-align: center;
 	}
 
 .mx-slide-banner img {
@@ -306,7 +306,8 @@ nav.mx-prev-button-relation-slider {
 	}
 
 /*mouseDrag*/
-.mx-mouse-drag-slide img {
+.mx-mouse-drag-slide img,
+.mx-mouse-drag-slide a {
 	user-select: none;
 	-ms-user-select: none;
 	-webkit-user-select: none;
@@ -314,6 +315,11 @@ nav.mx-prev-button-relation-slider {
 	-moz-user-select: none;
 	-webkit-touch-callout: none;
 	-webkit-user-drag: none;
+	-webkit-user-drag: none;
+	-khtml-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	user-drag: none;
 }
 
 /*

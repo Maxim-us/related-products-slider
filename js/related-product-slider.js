@@ -47,10 +47,23 @@
 											* 	Default: 	false
 											*/
 
+		// Dots
 		'dots'				: true,			/*
 											* 	SET THE DOTS
 											* 	Type: 		Boolean 
 											* 	Default: 	true
+											*/
+
+		'dotsColor'			: '#ffffff',	/*
+											* 	SET THE DOTS COLOR
+											* 	Type: 		String 
+											* 	Default: 	'#ffffff'
+											*/
+
+		'dotsActiveColor'	: '#757373',	/*
+											* 	SET THE COLOR OF THE ACTIVE POINT
+											* 	Type: 		String 
+											* 	Default: 	'#757373'
 											*/
 
 		'dotsPosition' 		: 'bottomLeft',/*
@@ -76,6 +89,7 @@
 											*	In this case, the points will always be centered
 											*/
 
+		// MouseDrag
 		'mouseDrag'			: true,			/*
 											* 	MOUSE DRAG ENABLED
 											* 	Type: 		Boolean 
@@ -144,6 +158,16 @@
 													* 	Default: 			false
 													*/
 
+			'bannerWrapWidth'			: 900,		/*
+													* 	SET THE WIDTH OF THE WRAPPER DOTS
+													* 	Type: 		Number 
+													* 	Default: 	900
+													*	Units of measurement - pixels
+													*		(Default width = 900px)
+													*	If 0 is set, the width will be 100%.
+													*	In this case, the points will always be centered
+													*/
+
 		/***************************
 		* Related products slider 
 		*/
@@ -164,10 +188,10 @@
 													*						'bottomRight'
 													*/
 
-			'productSlideSpeed'			: 1000, 	/*
+			'productSlideSpeed'			: 600, 	/*
 													* 	SLIDER SCROLLING SPEED
 													* 	Type: 		Number 
-													* 	Default: 	1000
+													* 	Default: 	600
 													*/
 
 			'productNumberVisible'		: 3,		/*
@@ -229,7 +253,7 @@
 
 	};
 
-	// settings.productDelayAnimation
+	// settings.dotsActiveColor
 
 	/***************************
 	* Basic Plugin Authoring.
@@ -350,13 +374,22 @@
 				// set up vertical scroll slider
 				'direction'				: 'left',
 
-				'offsetElement'			: 'clientX'
+				'offsetElement'			: 'clientX',
+
+			},
+
+			/*
+			* Style wraps
+			*/
+			'styleTagId'				: {
+
+				// dots
+				'dots'				: 'mxDotsStyle'
+
 
 			}
 
 		};
-
-		// console.log( saveData.mouseDragOptions.direction );
 
 		/***************************
 		*
@@ -527,6 +560,33 @@
 			// create dots
 			dotsBox: 			function() {
 
+				// create style wrap
+				$( root ).before( '<style id="' + saveData.styleTagId.dots + '"></style>' );
+
+				$( '#' + saveData.styleTagId.dots ).ready( function() {
+
+					// create style
+
+						// active class
+						var styleDots = '.' + saveData.classes.dotItemActive + '{';
+
+							styleDots += 'border: 2px solid ' + settings.dotsActiveColor + ' !important;';
+
+						styleDots += '}';
+
+						styleDots += 'button.' + saveData.classes.dotItem + '{';
+
+							styleDots += 'border: 2px solid ' + settings.dotsColor + ';';
+
+						styleDots += '}';					
+
+					$( '#' + saveData.styleTagId.dots ).append( styleDots );
+
+				} );				
+
+				// $( '.' + saveData.classes.dotItemActive ).
+				// .css( 'border', '2px solid ' + settings.dotsActiveColor );
+
 				// position of wrap of dots
 				var positionDots = saveData.classes.dotsPosition.bottomLeft;
 
@@ -628,7 +688,15 @@
 				$( root ).find( '.' + saveData.classes.slideItem ).addClass( saveData.classes.mouseDragClass );
 
 				// mouse down
-				$( root ).on( 'mousedown', '.' + saveData.classes.slideItem, function( e ) {					
+				$( root ).on( 'mousedown', function( e ) {
+
+					// clear the interval and run a new one
+					// if autorun is stop
+					if( settings.autoplay ) {
+
+						clearInterval( saveData.interval );
+
+					}
 
 					saveData.mouseDragOptions.mouseDragKey = true;
 
@@ -636,35 +704,29 @@
 					saveData.mouseDragOptions.startPointX = e[saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
 
 					// mouse move
-					$( root ).on( 'mousemove', function( event ) {						
+					$( root ).on( 'mousemove', ENGINEPLUGIN.slideMotionDrag );
 
-						if( saveData.mouseDragOptions.mouseDragKey === true ) {
-
-							// slide motion function
-							ENGINEPLUGIN.slideMotionDrag( event );
-
-						}
-
-					} );
 
 				} );
 
 				// mouse up
 				$( document ).on( 'mouseup', function() {
 				
-					// if autorun is activated
-					if( settings.autoplay ) {
-
-						clearInterval( saveData.interval );
-
-						ENGINEPLUGIN.autoplay();
-
-					}
+					$( root ).off( 'mousemove', ENGINEPLUGIN.slideMotionDrag );
 
 					saveData.mouseDragOptions.mouseDragKey = false;					
 
 					// save the first position of the cursor
 					saveData.mouseDragOptions.startPointX = 0;
+
+					// if autorun is activated
+					if( settings.autoplay ) {
+						
+						clearInterval( saveData.interval );
+
+						ENGINEPLUGIN.autoplay();
+
+					}
 
 				} );
 
@@ -678,17 +740,7 @@
 					e.preventDefault();
 
 					// Scroll the slider forward
-					ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
-
-					// clear the interval and run a new one
-					// if autorun is activated
-					if( settings.autoplay ) {
-
-						clearInterval( saveData.interval );
-
-						ENGINEPLUGIN.autoplay();
-
-					}
+					ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );					
 
 				} );
 
@@ -702,17 +754,7 @@
 					e.preventDefault();
 
 					// Scroll the slider backwards
-					ENGINEPLUGIN.scrollBack( ENGINEPLUGIN );
-
-					// clear the interval and run a new one
-					// if autorun is activated
-					if( settings.autoplay ) {
-
-						clearInterval( saveData.interval );
-						
-						ENGINEPLUGIN.autoplay();
-
-					}					
+					ENGINEPLUGIN.scrollBack( ENGINEPLUGIN );									
 
 				} );
 
@@ -1015,17 +1057,21 @@
 						// Verify that the cursor is pointing to the slider on related products
 						if( saveData.enableScroll === true ) {
 
-							ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
+							if( saveData.keySlideMotion === true ) {
+
+								ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
+
+							}							
 
 						}
 
-					}, settings.slideInterval );
+					}, settings.slideInterval );					
 
 				},
 
 				mouseEnterOnElements: function() {
 
-					if( settings.autoplay === true ) {
+					if( settings.autoplay ) {
 
 						$( root ).find( '.' + saveData.childSliderClass )
 						.mouseenter( function() {
@@ -1153,7 +1199,9 @@
 
 				$( root ).find( '.' + saveData.bannerItemClass ).bannerProduct( {
 
-					'position': settings.bannerPosition
+					'position'	: settings.bannerPosition,
+
+					'wrapWidth'	: settings.bannerWrapWidth
 
 				} );
 
@@ -1365,8 +1413,6 @@
 
 						setTimeout( function() {
 
-							// console.log( el );
-
 							element.find( 'img' ).eq( el ).removeClass( saveData.classes.displayNone );
 
 							element.find( 'img' ).eq( el ).addClass( settings.productSliderAnimated );
@@ -1426,57 +1472,55 @@
 			// User move the slider with the mouse cursor
 			slideMotionDrag: 			function( e ) {
 
-				// if autorun is activated
-				if( settings.autoplay ) {
+				if( saveData.keySlideMotion === true ) {
 
-					clearInterval( saveData.interval );
+					if( saveData.mouseDragOptions.mouseDragKey === true ) {
 
-					ENGINEPLUGIN.autoplay();
+						var getSizeSlider = 'widthOfSlider';
 
-				}
+						if( saveData.mouseDragOptions.direction === 'top' ) {
 
-				var getSizeSlider = 'widthOfSlider';
+							getSizeSlider = 'heightOfSlider';
 
-				if( saveData.mouseDragOptions.direction === 'top' ) {
+						}
 
-					getSizeSlider = 'heightOfSlider';
+						var currentPosition = e[saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
 
-				}
+						if( currentPosition > saveData.mouseDragOptions.startPointX ) {
 
-				var currentPosition = e[saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
+							var percentPosition = ( 100 * ( currentPosition - saveData.mouseDragOptions.startPointX ) ) / saveData[getSizeSlider];
 
-				if( currentPosition > saveData.mouseDragOptions.startPointX ) {
+							if( percentPosition > 40 ) {
 
-					var percentPosition = ( 100 * ( currentPosition - saveData.mouseDragOptions.startPointX ) ) / saveData[getSizeSlider];
+								// Scroll the slider backwards
+								ENGINEPLUGIN.scrollBack( ENGINEPLUGIN );
 
-					if( percentPosition > 40 ) {
+								percentPosition = 0;
 
-						// Scroll the slider backwards
-						ENGINEPLUGIN.scrollBack( ENGINEPLUGIN );
+								saveData.mouseDragOptions.startPointX = currentPosition;
 
-						percentPosition = 0;
+							}					
 
-						saveData.mouseDragOptions.startPointX = currentPosition;						
+						} else if( currentPosition < saveData.mouseDragOptions.startPointX ) {
 
-					}					
+							var percentPosition = ( 100 * ( saveData.mouseDragOptions.startPointX - currentPosition ) ) / saveData[getSizeSlider];
 
-				} else if( currentPosition < saveData.mouseDragOptions.startPointX ) {
+							if( percentPosition > 40 ) {
 
-					var percentPosition = ( 100 * ( saveData.mouseDragOptions.startPointX - currentPosition ) ) / saveData[getSizeSlider];
+								// Scroll the slider forward
+								ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
 
-					if( percentPosition > 40 ) {
+								percentPosition = 0;
 
-						// Scroll the slider forward
-						ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
+								saveData.mouseDragOptions.startPointX = currentPosition;						
 
-						percentPosition = 0;
+							}
 
-						saveData.mouseDragOptions.startPointX = currentPosition;						
+						} else {
+							// ...
+						}
+					}
 
-					}					
-
-				} else {
-					// ...
 				}
 
 			},
