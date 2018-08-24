@@ -133,7 +133,10 @@
 
 			'currentStep'			: 0,			
 
-			'slideKey'				: true
+			'slideKey'				: true,
+
+			// perion resize
+			'setTimeOut'			: null
 
 		};
 
@@ -331,8 +334,14 @@
 
 				$( window ).resize( function() {
 
-					// 
-					ENGINECHILDPLUGIN.setWidthSlider();
+					clearTimeout( saveData.setTimeOut );
+
+					saveData.setTimeOut = setTimeout( function() {
+
+						// 
+						ENGINECHILDPLUGIN.setWidthSlider();
+
+					},500 );
 
 				} );
 

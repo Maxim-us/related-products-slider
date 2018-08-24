@@ -184,12 +184,12 @@
 	$( document ).ready( function() {
 
 		$( '.mx-product-slider' ).relatedProducts( {
-			'vertical': true,
+			// 'vertical': true,
 			// 'autoplay': false,
 			// 'dots': false,
 			'dotsPosition': 'topLeft',
 			//'nav': false,
-			// 'slideInterval'		: 4000,
+			'slideInterval'		: 4000,
 			// 'bannerPosition': 'bottomRight',
 			//'bannerEnable':false,
 			//'bannerAnimated': false,
@@ -221,6 +221,21 @@
 					'items': 3
 				}
 			},
+
+			'responsive': 	{
+				0	: 	{
+					'nav'		: 	true,
+					'vertical'	:	false
+				},
+				768	: 	{
+					'nav'		: 	true,
+					// 'vertical'	:	false
+				},
+				992	: 	{
+					'nav'		: 	false,
+					// 'vertical'	:	true
+				},
+			}
 		} );
 
 	} );

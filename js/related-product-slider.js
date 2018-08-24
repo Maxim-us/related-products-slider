@@ -273,6 +273,7 @@
 													* 	SET CERTAIN STYLES DEPENDING ON SCREEN SIZE
 													* 	Type: 		Object 
 													* 	Default: 	{}
+													*	Note: An object must have at least one property.
 													*/
 
 	};
@@ -411,7 +412,10 @@
 				'dots'				: 'mxDotsStyle'
 
 
-			}
+			},
+
+			// perion resize
+			'setTimeOut'			: null
 
 		};
 
@@ -430,6 +434,9 @@
 			// initialize
 			init: 			function() {
 
+				// overwrite variables
+				this.overwriteVariables();
+
 				// run the skeleton construction
 				this.skeletonSlider();
 
@@ -437,11 +444,10 @@
 				this.countElements();			
 
 				// set slider direction
-				if( settings.vertical ) {
+				this.setSliderDirection();
 
-					saveData.direction = 'top';
-
-				}
+				// create navigation arrows
+				this.navigationArrows();
 
 				// set autoplay
 				if( settings.autoplay && saveData.countElems > 1 ) {
@@ -501,7 +507,7 @@
 				}
 
 				// check mouse enter
-				this.mouseEnterOnElements();
+				this.mouseEnterOnElements();				
 
 			},
 
@@ -526,18 +532,10 @@
 				$( root ).children( 'div' ).first().addClass( saveData.classes.visibleItem );
 
 				// check number of elements
-				var countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;
-
-				// create navigation arrows
-				if( settings.nav && countElems > 1 ) {
-
-					// create wrap
-					this.navigationArrows();
-
-				}
+				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;				
 
 				// set dots
-				if( settings.dots && countElems > 1 ) {
+				if( settings.dots && saveData.countElems > 1 ) {
 
 					this.dotsBox();
 
@@ -551,33 +549,42 @@
 			// navigation arrows
 			navigationArrows: 	function() {
 
-				// create wrap
-				$( root ).append( '<nav class="' + saveData.classes.navigationWrapPrev + '"></nav>' );
+				// dynamic remove
+				$( root ).find( '.' + saveData.classes.navigationWrapPrev ).remove();
 
-				$( root ).append( '<nav class="' + saveData.classes.navigationWrapNext + '"></nav>' );
+				$( root ).find( '.' + saveData.classes.navigationWrapNext ).remove();
 
-				// create btns
-				$( '.' + saveData.classes.navigationWrapPrev ).ready( function() {
+				if( saveData.nav && saveData.countElems > 1 ) {
 
-					// create prev button
-					ENGINEPLUGIN.prevBtn();
+					// create wrap
+					$( root ).append( '<nav class="' + saveData.classes.navigationWrapPrev + '"></nav>' );
 
-				} );
+					$( root ).append( '<nav class="' + saveData.classes.navigationWrapNext + '"></nav>' );
 
-				// create btns
-				$( '.' + saveData.classes.navigationWrapNext ).ready( function() {
+					// create btns
+					$( '.' + saveData.classes.navigationWrapPrev ).ready( function() {
 
-					// create next button
-					ENGINEPLUGIN.nextBtn();
+						// create prev button
+						ENGINEPLUGIN.prevBtn();
 
-				} );					
+					} );
 
-				// events
-				// prev slide
-				this.prevSlideEvent();
+					// create btns
+					$( '.' + saveData.classes.navigationWrapNext ).ready( function() {
 
-				// next slide
-				this.nextSlideEvent();
+						// create next button
+						ENGINEPLUGIN.nextBtn();
+
+					} );					
+
+					// events
+					// prev slide
+					this.prevSlideEvent();
+
+					// next slide
+					this.nextSlideEvent();
+
+				}
 
 			},
 
@@ -812,18 +819,7 @@
 
 				} )
 
-			},
-
-			resizeWindow: 	function() {				
-
-				$( window ).resize( function() {
-
-					// set slider height
-					ENGINEPLUGIN.setSliderHeight();
-
-				} );
-
-			},
+			},			
 
 			/***************************
 			*
@@ -1093,7 +1089,130 @@
 
 				},
 
-				mouseEnterOnElements: function() {
+				// resize window
+				resizeWindow: 	function() {				
+
+					$( window ).resize( function() {
+
+						clearTimeout( saveData.setTimeOut );
+
+						clearInterval( saveData.interval );						
+
+						saveData.setTimeOut = setTimeout( function() {
+
+							/*
+							* Systems
+							*/
+							// overwrite variables
+							ENGINEPLUGIN.overwriteVariables();
+
+							/*
+							* Building
+							*/
+								// set slider height
+								ENGINEPLUGIN.setSliderHeight();
+
+								// navigation
+								ENGINEPLUGIN.navigationArrows();
+
+								// direction
+								ENGINEPLUGIN.setSliderDirection();
+
+							// autoplay
+							ENGINEPLUGIN.autoplay();
+
+						},500 );
+
+					} );
+
+				},
+
+				// overwrite variables depending on the size of the window
+				overwriteVariables: 	function() {
+
+					var arrayOptions = [
+						'nav',
+						'vertical'
+					];
+				
+					if( typeof settings.responsive === 'object' ) {
+
+						if( Object.keys( settings.responsive ).length > 0 ) {
+
+							$.each( settings.responsive, function( _key, _object ) {
+
+								var _key = parseInt( _key );	
+
+								if( $( window ).innerWidth() >= _key ) {						
+
+									// if object has props
+									if( Object.keys( _object ).length > 0 ) {
+
+										$.each( _object, function( key, prop ) {
+
+											for( var i = 0; i < arrayOptions.length; i++ ) {
+												
+												if( _object.hasOwnProperty( arrayOptions[i] ) ) {
+
+													saveData[key] = prop;
+
+												} else {
+
+													saveData[arrayOptions[i]] = settings[arrayOptions[i]];
+
+												}
+
+											}
+											
+										} );
+
+									// if object has no props
+									} else {
+
+										for( var i = 0; i < arrayOptions.length; i++ ) {												
+											
+											saveData[arrayOptions[i]] = settings[arrayOptions[i]];
+											
+										}
+
+									}
+
+									// console.log( saveData.nav, saveData.vertical );
+
+								}
+
+							} );
+
+						// if responsive is an empty object
+						}  else {
+
+							for( var i = 0; i < arrayOptions.length; i++ ) {												
+								
+								saveData[arrayOptions[i]] = settings[arrayOptions[i]];
+								
+							}
+
+						}
+
+					// if responsive not object
+					} else {
+
+						for( var i = 0; i < arrayOptions.length; i++ ) {												
+							
+							saveData[arrayOptions[i]] = settings[arrayOptions[i]];
+							
+						}
+
+					}
+
+					console.log( saveData.nav, saveData.vertical );
+
+					// console.log( saveData.nav );
+
+				},
+
+				// check mouse enter
+				mouseEnterOnElements: 	function() {
 
 					if( settings.autoplay ) {
 
@@ -1561,18 +1680,39 @@
 				// get height of slide
 				saveData.heightOfSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
 
-				// get slider direction
-				if( settings.vertical ) {
+				// set slider direction
+				this.setSliderDirection();	
+
+			},
+
+			/*
+			* Resize
+			*/ 
+			setSliderDirection: 		function() {
+
+				if( saveData.vertical ) {
+
+					saveData.direction = 'top';
 
 					saveData.mouseDragOptions.offsetElement = 'clientY';
 
 					saveData.mouseDragOptions.direction 	= 'top';
 
+				} else {
+
+					saveData.direction = 'left';
+
+					saveData.mouseDragOptions.offsetElement = 'clientX';
+
+					saveData.mouseDragOptions.direction 	= 'left';
+
 				}
 
 			}
 
-		}
+		};
+
+		
 
 		/***************************
 		*
