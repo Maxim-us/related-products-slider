@@ -186,14 +186,14 @@
 		$( '.mx-product-slider' ).relatedProducts( {
 			// 'vertical': true,
 			'autoplay': false,
-			// 'dots': false,
+			'dots': false,
 			'dotsPosition': 'topLeft',
 			//'nav': false,
 			'slideInterval'		: 4000,
 			// 'bannerPosition': 'bottomRight',
 			//'bannerEnable':false,
 			//'bannerAnimated': false,
-			// 'eachBannerAnimated': ['zoomInUp', 'slideInLeft', 'rotateInUpLeft'],
+			'eachBannerAnimated': ['slideInDown', 'slideInRight', 'rotateInUpLeft'],
 			// 'bannerDurationAnimation': 'fast',
 			// 'bannerDelayAnimation': 2000,
 			'bannerInfiniteAnimation': true,
@@ -213,27 +213,35 @@
 					'items': 1
 				},
 
-				768	: 	{
+				500	: 	{
 					'items': 2
 				},
 
-				992	: 	{
+				768	: 	{
 					'items': 3
+				},
+
+				992	: 	{
+					'items': 4
 				}
 			},
 
 			'responsive': 	{
 				0	: 	{
-					'nav'		: 	true,
-					'vertical'	:	false
+					'nav'		: 	false,
+					'vertical'	:	false,
+					'dots'		: 	false,
+					'bannerEnable': false,
+					//'productSliderEnable': false
 				},
 				768	: 	{
-					'nav'		: 	true,
-					// 'vertical'	:	false
+					'nav'		: 	false,
+					// 'vertical'	:	false,
 				},
 				992	: 	{
 					'nav'		: 	true,
-					// 'vertical'	:	true
+					// 'vertical'	:	true,
+					'dots'		: 	true
 				},
 			}
 		} );

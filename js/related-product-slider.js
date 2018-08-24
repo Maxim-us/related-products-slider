@@ -419,6 +419,8 @@
 
 		};
 
+		// saveData.classes.visibleItem
+
 		/***************************
 		*
 		*  == ENGINE OF PLUGIN ==
@@ -452,6 +454,9 @@
 				// create navigation arrows
 				this.navigationArrows();
 
+				// set dots
+				this.dotsBox();
+
 				// set autoplay
 				if( settings.autoplay && saveData.countElems > 1 ) {
 
@@ -472,7 +477,7 @@
 				/*
 				* Banners
 				*/
-				if( settings.bannerEnable ) {
+				if( saveData.bannerEnable ) {
 
 					// enable banners
 					this.enableBanners();
@@ -499,7 +504,7 @@
 				/*
 				* Related products slider
 				*/
-				if( settings.productSliderEnable ) {
+				if( saveData.productSliderEnable ) {
 
 					this.enableRelatedProductsSlider();
 
@@ -535,14 +540,7 @@
 				$( root ).children( 'div' ).first().addClass( saveData.classes.visibleItem );
 
 				// check number of elements
-				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;				
-
-				// set dots
-				if( settings.dots && saveData.countElems > 1 ) {
-
-					this.dotsBox();
-
-				}				
+				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;							
 
 				// set slider height
 				this.setSliderHeight();
@@ -594,88 +592,93 @@
 			// create dots
 			dotsBox: 			function() {
 
-				// create style wrap
-				$( root ).before( '<style id="' + saveData.styleTagId.dots + '"></style>' );
+				$( root ).find( '.' + saveData.classes.dotsWrap ).remove();
 
-				$( '#' + saveData.styleTagId.dots ).ready( function() {
+				if( saveData.dots && saveData.countElems > 1 ) {
 
-					// create style
+					// create style wrap
+					$( root ).before( '<style id="' + saveData.styleTagId.dots + '"></style>' );
 
-						// active class
-						var styleDots = '.' + saveData.classes.dotItemActive + '{';
+					$( '#' + saveData.styleTagId.dots ).ready( function() {
 
-							styleDots += 'border: 2px solid ' + settings.dotsActiveColor + ' !important;';
+						// create style
 
-						styleDots += '}';
+							// active class
+							var styleDots = '.' + saveData.classes.dotItemActive + '{';
 
-						styleDots += 'button.' + saveData.classes.dotItem + '{';
+								styleDots += 'border: 2px solid ' + settings.dotsActiveColor + ' !important;';
 
-							styleDots += 'border: 2px solid ' + settings.dotsColor + ';';
+							styleDots += '}';
 
-						styleDots += '}';					
+							styleDots += 'button.' + saveData.classes.dotItem + '{';
 
-					$( '#' + saveData.styleTagId.dots ).append( styleDots );
+								styleDots += 'border: 2px solid ' + settings.dotsColor + ';';
 
-				} );				
+							styleDots += '}';					
 
-				// $( '.' + saveData.classes.dotItemActive ).
-				// .css( 'border', '2px solid ' + settings.dotsActiveColor );
+						$( '#' + saveData.styleTagId.dots ).append( styleDots );
 
-				// position of wrap of dots
-				var positionDots = saveData.classes.dotsPosition.bottomLeft;
+					} );
 
-				$.each( saveData.classes.dotsPosition, function( key, value ) {
+					// position of wrap of dots
+					var positionDots = saveData.classes.dotsPosition.bottomLeft;
 
-					if( key === settings.dotsPosition ) {
+					$.each( saveData.classes.dotsPosition, function( key, value ) {
 
-						positionDots = value;
+						if( key === settings.dotsPosition ) {
 
-					}
-
-				} );
-
-				// width of dots wrap
-				var widthDotsWrap = saveData.dotsWrapWidth + 'px';
-
-				// check is number
-				if( $.isNumeric( settings.dotsWrapWidth ) ) {
-
-					if( settings.dotsWrapWidth === 0 ) {
-
-						widthDotsWrap = '100%';
-
-					} else {
-
-						widthDotsWrap = settings.dotsWrapWidth + 'px';
-
-					}
-
-				}
-
-				// create dots wrap
-				$( root ).append( '<nav class="' + saveData.classes.dotsWrap + ' ' + positionDots + '" style="max-width:' + widthDotsWrap + ';"></nav>' );
-
-				// create btns
-				$( '.' + saveData.classes.dotsWrap ).ready( function() {
-
-					for( var i = 1; i <= saveData.countElems; i++ ) {
-
-						var activeItem = '';
-
-						if( i === 1 ) {
-
-							activeItem = saveData.classes.dotItemActive;
+							positionDots = value;
 
 						}
 
-						$( '.' + saveData.classes.dotsWrap ).append( ENGINEPLUGIN.dotBtn( i, activeItem ) );
+					} );
+
+					// width of dots wrap
+					var widthDotsWrap = saveData.dotsWrapWidth + 'px';
+
+					// check is number
+					if( $.isNumeric( settings.dotsWrapWidth ) ) {
+
+						if( settings.dotsWrapWidth === 0 ) {
+
+							widthDotsWrap = '100%';
+
+						} else {
+
+							widthDotsWrap = settings.dotsWrapWidth + 'px';
+
+						}
 
 					}
 
-				} );
+					// create dots wrap
+					$( root ).append( '<nav class="' + saveData.classes.dotsWrap + ' ' + positionDots + '" style="max-width:' + widthDotsWrap + ';"></nav>' );
 
-				// events
-				this.clickOnDot();
+					// create btns
+					$( '.' + saveData.classes.dotsWrap ).ready( function() {
+
+						var activeDotIndex = $( root ).find( '.' + saveData.classes.visibleItem ).index();
+
+						for( var i = 1; i <= saveData.countElems; i++ ) {
+
+							var activeItem = '';
+
+							if( i === activeDotIndex + 1 ) {
+
+								activeItem = saveData.classes.dotItemActive;
+
+							}
+
+							$( '.' + saveData.classes.dotsWrap ).append( ENGINEPLUGIN.dotBtn( i, activeItem ) );
+
+						}
+
+					} );
+
+					// events
+					this.clickOnDot();
+
+				}				
 
 			},
 
@@ -972,7 +975,7 @@
 							/*
 							* animation banner
 							*/
-							if( settings.bannerEnable && settings.bannerAnimated ) {
+							if( saveData.bannerEnable && settings.bannerAnimated ) {
 
 								setTimeout( function() {
 
@@ -985,7 +988,7 @@
 							/*
 							* run product animation
 							*/
-							if( settings.productSliderEnable && settings.productSliderAnimated ) {
+							if( saveData.productSliderEnable && settings.productSliderAnimated ) {
 
 
 								setTimeout( function() {
@@ -1055,7 +1058,7 @@
 							/*
 							* animation banner
 							*/						
-							if( settings.bannerEnable && settings.bannerAnimated ) {			
+							if( saveData.bannerEnable && settings.bannerAnimated ) {			
 
 								setTimeout( function() {
 
@@ -1068,7 +1071,7 @@
 							/*
 							* run product animation
 							*/
-							if( settings.productSliderEnable && settings.productSliderAnimated ) {
+							if( saveData.productSliderEnable && settings.productSliderAnimated ) {
 
 
 								setTimeout( function() {
@@ -1121,7 +1124,11 @@
 
 						clearTimeout( saveData.setTimeOut );
 
-						clearInterval( saveData.interval );						
+						if( settings.autoplay && saveData.countElems > 1 ) {
+
+							clearInterval( saveData.interval );
+
+						}
 
 						saveData.setTimeOut = setTimeout( function() {
 
@@ -1143,8 +1150,15 @@
 								// direction
 								ENGINEPLUGIN.setSliderDirection();
 
+								// set dots
+								ENGINEPLUGIN.dotsBox();
+
 							// autoplay
-							ENGINEPLUGIN.autoplay();
+							if( settings.autoplay && saveData.countElems > 1 ) {
+
+								ENGINEPLUGIN.autoplay();
+
+							}
 
 						},500 );
 
@@ -1157,7 +1171,10 @@
 
 					var arrayOptions = [
 						'nav',
-						'vertical'
+						'vertical',
+						'dots',
+						'bannerEnable',
+						'productSliderEnable'
 					];
 				
 					if( typeof settings.responsive === 'object' ) {
@@ -1323,7 +1340,7 @@
 							/*
 							* animation banner
 							*/
-							if( settings.bannerEnable && settings.bannerAnimated ) {
+							if( saveData.bannerEnable && settings.bannerAnimated ) {
 
 								setTimeout( function() {
 
@@ -1336,7 +1353,7 @@
 							/*
 							* run product animation
 							*/
-							if( settings.productSliderEnable && settings.productSliderAnimated ) {
+							if( saveData.productSliderEnable && settings.productSliderAnimated ) {
 
 
 								setTimeout( function() {
@@ -1473,7 +1490,7 @@
 
 				} );
 
-				if( settings.productSliderEnable && settings.productSliderAnimated ) {	
+				if( saveData.productSliderEnable && settings.productSliderAnimated ) {	
 
 					// initialization
 					this.initProductsAnimation();

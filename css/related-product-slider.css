@@ -350,3 +350,8 @@ nav.mx-prev-button-relation-slider {
 		background-size: 26px;
 	} 
 }
+@media only screen and ( max-width: 992px ) {
+	.mx-related-products-slider ul.mx-related-products {
+		height: 220px;
+	}
+}
