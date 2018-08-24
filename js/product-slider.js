@@ -374,6 +374,12 @@
 
 							$( root ).find( '.' + saveData.classes.prevButton ).removeClass( saveData.classes.displayNone );
 
+							setTimeout( function() {
+
+								saveData.slideKey = true;
+
+							},settings.slideSpeed );
+
 						}						
 
 					} );
@@ -391,6 +397,12 @@
 							ENGINECHILDPLUGIN.scrollBack();
 
 							ENGINECHILDPLUGIN.checkVisibleButtons();
+
+							setTimeout( function() {
+
+								saveData.slideKey = true;
+
+							},settings.slideSpeed );
 
 						}
 
@@ -414,7 +426,7 @@
 						saveData.numberVisibleItems = settings.numberVisibleItems;
 
 
-					} else if( typeof settings.numberVisibleItems ){
+					} else if( typeof settings.numberVisibleItems === 'object' ){
 
 						$.each( settings.numberVisibleItems, function( key, value ) {
 
@@ -481,13 +493,7 @@
 						saveData.saveDias = saveData.saveDias - saveData.saveWidthOneSlide;						
 
 						$( root ).find( '.' + saveData.classes.slidesWrapper )
-						.css( { 'margin-left': saveData.saveDias + 'px' } );
-
-						setTimeout( function() {
-
-							saveData.slideKey = true;
-
-						},settings.slideSpeed );
+						.css( { 'margin-left': saveData.saveDias + 'px' } );						
 						
 					}							
 
@@ -503,12 +509,6 @@
 
 						$( root ).find( '.' + saveData.classes.slidesWrapper )
 						.css( { 'margin-left': saveData.saveDias + 'px' } );						
-
-						setTimeout( function() {
-
-							saveData.slideKey = true;
-
-						},settings.slideSpeed );
 
 					}
 

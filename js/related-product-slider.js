@@ -218,7 +218,7 @@
 													*	},
 													*/
 
-			'productSliderAnimated'		: 'rotateIn',/*
+			'productSliderAnimated'		: 'slideInUp',/*
 													* 	SET THE TYPE OF ANIMATION
 													* 	Type: 				String 		| Bollean
 													* 	Default: 			'slideInUp' | false
@@ -436,6 +436,9 @@
 
 				// overwrite variables
 				this.overwriteVariables();
+
+				// get size of window
+				this.getSizeWindow();
 
 				// run the skeleton construction
 				this.skeletonSlider();
@@ -721,6 +724,8 @@
 				// mouse down
 				$( root ).on( 'mousedown', function( e ) {
 
+					// console.log( 'mousedown' );
+
 					// clear the interval and run a new one
 					// if autorun is stop
 					if( settings.autoplay ) {
@@ -742,16 +747,16 @@
 
 				// mouse up
 				$( document ).on( 'mouseup', function() {
+
+					// console.log( 'mouseup' );
 				
 					$( root ).off( 'mousemove', ENGINEPLUGIN.slideMotionDrag );
-
-					saveData.mouseDragOptions.mouseDragKey = false;					
 
 					// save the first position of the cursor
 					saveData.mouseDragOptions.startPointX = 0;
 
 					// if autorun is activated
-					if( settings.autoplay ) {
+					if( settings.autoplay && saveData.countElems > 1 ) {
 						
 						clearInterval( saveData.interval );
 
@@ -827,12 +832,25 @@
 			*
 			***************************/
 
+				// get size of window
+				getSizeWindow: 		function() {
+
+					// get width of slide
+					saveData.widthOfSlider = $( root ).innerWidth();
+
+					// get height of slide
+					saveData.heightOfSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
+
+				},
+
 				/*
 				* Calculate the height of the slider
 				*/
 				setSliderHeight: 		function() {
 
 					var heightSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
+
+					saveData.heightOfSlider = heightSlider;
 
 					var heightWindow = $( window ).innerHeight();
 
@@ -1079,7 +1097,11 @@
 
 							if( saveData.keySlideMotion === true ) {
 
-								ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
+								if( saveData.countElems > 1 ) {
+
+									ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
+
+								}		
 
 							}							
 
@@ -1093,6 +1115,9 @@
 				resizeWindow: 	function() {				
 
 					$( window ).resize( function() {
+
+						// get size of window
+						ENGINEPLUGIN.getSizeWindow();
 
 						clearTimeout( saveData.setTimeOut );
 
@@ -1205,9 +1230,7 @@
 
 					}
 
-					console.log( saveData.nav, saveData.vertical );
-
-					// console.log( saveData.nav );
+					// console.log( saveData.nav, saveData.vertical );					
 
 				},
 
@@ -1615,7 +1638,7 @@
 			// User move the slider with the mouse cursor
 			slideMotionDrag: 			function( e ) {
 
-				if( saveData.keySlideMotion === true ) {
+				if( saveData.keySlideMotion === true && saveData.countElems > 1 ) {
 
 					if( saveData.mouseDragOptions.mouseDragKey === true ) {
 
@@ -1642,6 +1665,8 @@
 
 								saveData.mouseDragOptions.startPointX = currentPosition;
 
+								saveData.mouseDragOptions.mouseDragKey = false;
+
 							}					
 
 						} else if( currentPosition < saveData.mouseDragOptions.startPointX ) {
@@ -1655,7 +1680,9 @@
 
 								percentPosition = 0;
 
-								saveData.mouseDragOptions.startPointX = currentPosition;						
+								saveData.mouseDragOptions.startPointX = currentPosition;
+
+								saveData.mouseDragOptions.mouseDragKey = false;					
 
 							}
 
@@ -1666,24 +1693,25 @@
 
 				}
 
+				// if autorun is activated
+				if( settings.autoplay && saveData.countElems > 1 ) {
+					
+					clearInterval( saveData.interval );
+
+				}
+
 			},
 
 			// Get bounding client rect
 			initMouseDrag: 		function() {
 
 				// get offset
-				saveData.mouseDragOptions.boundingClient = $( root ).offset();
-
-				// get width of slide
-				saveData.widthOfSlider = $( root ).innerWidth();
-
-				// get height of slide
-				saveData.heightOfSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
-
+				saveData.mouseDragOptions.boundingClient = $( root ).offset();				
+				
 				// set slider direction
 				this.setSliderDirection();	
 
-			},
+			},			
 
 			/*
 			* Resize
