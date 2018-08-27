@@ -31,7 +31,7 @@
 			<!-- banner -->
 			<div class="mx-slide-banner">
 				<a href="#">
-					<img src="./img/slide-1/banner-1.png" alt="" />
+					<img src="./img/slide-1/banner-1.png" alt="" data-new-image="true"  />
 				</a>
 			</div>
 
@@ -168,10 +168,11 @@
 </div>
 
 <!-- scripts -->
-<script
+<!-- <script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+  crossorigin="anonymous"></script> -->
+<script src="./_all/jquery-1.11.3.js"></script>
 <script src="./js/related-product-slider.js"></script>
 <script src="./js/banners.js"></script>
 <script src="./js/product-slider.js"></script>
@@ -190,7 +191,7 @@
 			'dotsPosition': 'topLeft',
 			//'nav': false,
 			'slideInterval'		: 4000,
-			// 'bannerPosition': 'bottomRight',
+			'bannerPosition': 'bottomRight',
 			//'bannerEnable':false,
 			//'bannerAnimated': false,
 			'eachBannerAnimated': ['slideInDown', 'slideInRight', 'rotateInUpLeft'],
@@ -202,46 +203,60 @@
 			'dotsWrapWidth': 600,
 			// 'productSliderEnable'		: false,
 			'bannerWrapWidth'		: 600,
+			'bannerWrapHeight'		: 300,
+			'productNumberVisible'  : 2,
+			// 'productHeightSlider'  : 300,
 
 			// 'dotsColor'			: 'green',
 			// 'slideSpeed': 			5000
 
 			// 'dotsActiveColor'	: 'red'
 			// 'productSlideSpeed'		: 3000
-			'productNumberVisible' : {
-				0	: 	{
-					'items': 1
-				},
+			// 'productPositionSlider' : 'bottomCenter',
+			'bannerEnable': true,
 
-				500	: 	{
-					'items': 2
-				},
-
-				768	: 	{
-					'items': 3
-				},
-
-				992	: 	{
-					'items': 4
-				}
-			},
+			'bannerSpaceAround': 60,
 
 			'responsive': 	{
 				0	: 	{
 					'nav'		: 	false,
 					'vertical'	:	false,
 					'dots'		: 	false,
-					'bannerEnable': false,
+					// 'bannerEnable': false,
 					//'productSliderEnable': false
+					'productNumberVisible'	: 1,
+					'productWidthSlider' 	: 200,
+					'bannerWrapHeight'		: 0,
+					'productHeightSlider'	: 150,
+					'productPositionSlider' : 'bottomCenter',
+					'bannerPosition'		: 'bottomLeft',
+					'bannerWrapWidth'		: 0,
+					'bannerSpaceAround' 	: 30,
+					// 'productSliderEnable'	: false
 				},
 				768	: 	{
 					'nav'		: 	false,
 					// 'vertical'	:	false,
+					'productNumberVisible'	: 2,
+					'productWidthSlider' 	: 300,
+					'productHeightSlider'	: 250,
+					'productPositionSlider' : 'bottomCenter',					
+					// 'bannerEnable' 			: false,
+					'bannerPosition'		: 'topleft',
+					'bannerWrapWidth'		: 1000,
+					'bannerWrapHeight'		: 200,
+					'bannerSpaceAround'		: 30
 				},
 				992	: 	{
 					'nav'		: 	true,
 					// 'vertical'	:	true,
-					'dots'		: 	true
+					'dots'		: 	true,
+					'productNumberVisible'	: 3,
+					'productWidthSlider' 	: 400,
+					'productHeightSlider'	: 200,
+					'bannerPosition'		: 'topRight',
+					'bannerWrapWidth'		: 400
+					
 				},
 			}
 		} );

@@ -32,9 +32,25 @@
 											* 	Type: 		Number 
 											* 	Default: 	900
 											*	Units of measurement - pixels
-											*		(Default width = 900px)
+											*		(Default max-width = 900px)
 											*	If 0 is set, the width will be 100%.
 											*	In this case, the points will always be centered
+											*/
+
+			'wrapHeight' 	: 400,			/*
+											* 	SET THE WIDTH OF THE WRAPPER DOTS
+											* 	Type: 		Number 
+											* 	Default: 	400
+											*	Units of measurement - pixels
+											*		(Default max-width = 400px)
+											*	If 0 is set, the width will be 100%.
+											*	In this case, the points will always be centered
+											*/
+
+			'spaceAround'	: 30			/*
+											*	SET THE SPACE AROUND THE BANNER
+											*	Type: 		Number 
+											* 	Default: 	30
 											*/
 			
 		};
@@ -68,7 +84,13 @@
 			},
 
 			// set the width of the banner wrap
-			'wrapWidth'			: 900
+			'wrapWidth'			: 900,
+
+			// set the height of the banner wrap
+			'wrapHeight' 		: 400,
+
+			// Set the space around the banner
+			'spaceAround'		: 30
 
 		};
 
@@ -89,6 +111,12 @@
 
 				// set width of banner wrap
 				this.setWidthBannerWrap();
+
+				// set height of banner wrap
+				this.setHeightBannerWrap();
+
+				// set space around
+				this.setSpaceAround();
 
 			},
 
@@ -116,6 +144,7 @@
 
 			},
 
+			// set width
 			setWidthBannerWrap: 		function() {
 
 				// width of banner wrap
@@ -146,6 +175,54 @@
 				$( root ).css( 'max-width', wrapWidth );
 
 			},
+			
+			// set width
+			setHeightBannerWrap: 		function() {
+
+				// width of banner wrap
+				var wrapHeight 				= saveData.wrapHeight + 'px';
+
+				// check is number
+				if( $.isNumeric( settings.wrapHeight ) ) {
+
+					if( settings.wrapHeight === 0 ) {
+
+						wrapHeight 				= '100%';
+
+						// save data
+						saveData.wrapHeight 	= '100%';
+
+					} else {
+
+						wrapHeight 				= settings.wrapHeight + 'px';
+
+						// save data
+						saveData.wrapHeight 	= settings.wrapHeight
+
+					}
+
+				}
+
+				// add style
+				$( root ).css( 'max-height', wrapHeight );
+
+			},
+
+			// set space
+			setSpaceAround: 		function() {
+
+				var spaceAround 	= saveData.spaceAround + 'px';
+
+				// check is number
+				if( $.isNumeric( settings.spaceAround ) ) {
+
+					spaceAround 	= settings.spaceAround + 'px';
+
+				}
+
+				$( root ).css( 'padding', spaceAround );
+
+			}
 
 		}
 

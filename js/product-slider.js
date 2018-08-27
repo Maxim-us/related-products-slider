@@ -28,7 +28,10 @@
 											*						'topRight'
 											*						'bottomLeft'
 											*						'bottomRight'
+											*						'topCenter'
+											*						'bottomCenter'
 											*/
+
 
 			'widthSlider'			: 900,	/*
 											* 	SET THE WIDTH OF THE SLIDER
@@ -36,6 +39,15 @@
 											* 	Default: 	900
 											*	Units of measurement - pixels
 											*		(Default width = 900px)
+											*	If 0 is set, the width will be 100%.
+											*/
+
+			'heightSlider'			: 290,	/*
+											* 	SET THE WIDTH OF THE SLIDER
+											* 	Type: 		Number 
+											* 	Default: 	290
+											*	Units of measurement - pixels
+											*		(Default width = 290px)
 											*	If 0 is set, the width will be 100%.
 											*/
 
@@ -87,7 +99,9 @@
 					'topLeft' 		: 'mx-related-product-top-left',
 					'topRight' 		: 'mx-related-product-top-right',
 					'bottomLeft'	: 'mx-related-product-bottom-left',
-					'bottomRight' 	: 'mx-related-product-bottom-right'
+					'bottomRight' 	: 'mx-related-product-bottom-right',
+					'topCenter'		: 'mx-related-product-top-center',
+					'bottomCenter'	: 'mx-related-product-bottom-center'
 
 				},
 
@@ -109,10 +123,13 @@
 			},
 
 			// set the width of the slider
-			'widthSlider'			: 900,
+			'widthSlider'			: 900,			
 
 			// save slider width
 			'saveWidthSlider'		: 0,
+
+			// set the height of the slider
+			'heightSlider'			: 290,
 
 			// keep width of wrap of slides
 			'saveWidthSlidesWrap'	: 0,
@@ -171,13 +188,16 @@
 			* BUILD THE SLIDER SKELETON
 			*
 			***************************/
-			skeletonChildSlider: 	function() {
+			skeletonChildSlider: 	function() {				
+
+				// set width of slider
+				this.setWidthSlider();
 
 				// set position
 				this.setPosition();
 
-				// set width of slider
-				this.setWidthSlider();
+				// set height of slider
+				this.setHeightSlider();
 
 				// wrap slide
 				this.wrapSlides();
@@ -197,7 +217,7 @@
 				this.setStyle();
 
 				// resize window
-				this.resizeWindow();
+				// this.resizeWindow();
 
 			},
 
@@ -219,8 +239,18 @@
 				// set position class
 				$( root ).addClass( positionClassSlider );
 
+				// centering
+				if( settings.position === 'topCenter' || settings.position === 'bottomCenter' ) {
+
+					var _marginLeft = $( root ).width() / 2;
+					
+					$( root ).css( 'margin-left', '-' + _marginLeft + 'px' );
+
+				}
+
 			},
 
+			// set width
 			setWidthSlider: 		function() {
 
 				// width of dots wrap
@@ -271,6 +301,57 @@
 
 				// set width of slide
 				this.setWidthSlides();
+
+			},
+
+			// set height
+			setHeightSlider: 		function() {
+
+				// width of dots wrap
+				var heightSlider = saveData.heightSlider + 'px';
+
+				if( $( window ).innerHeight() <= saveData.heightSlider ) {
+
+					heightSlider = $( window ).innerHeight() + 'px';
+
+					saveData.heightSlider = $( window ).innerHeight();
+
+				}
+
+				// check is number
+				if( $.isNumeric( settings.heightSlider ) ) {
+
+					if( settings.heightSlider === 0 ) {
+
+						heightSlider 			= '100%';
+
+						// save data
+						saveData.heightSlider 	= '100%';
+
+					} else {
+
+						if( $( window ).innerHeight() <= settings.heightSlider ) {
+
+							heightSlider 			= $( window ).innerHeight() + 'px';
+
+							// save data
+							saveData.heightSlider 	= $( window ).innerHeight();
+
+						} else {
+
+							heightSlider 			= settings.heightSlider + 'px';
+
+							// save data
+							saveData.heightSlider 	= settings.heightSlider;
+
+						}						
+
+					}
+
+				}
+
+				// add style
+				$( root ).css( 'max-height', heightSlider );
 
 			},
 
@@ -330,22 +411,22 @@
 			},
 
 			// resize window
-			resizeWindow: 	function() {				
+			// resizeWindow: 	function() {				
 
-				$( window ).resize( function() {
+			// 	$( window ).resize( function() {
 
-					clearTimeout( saveData.setTimeOut );
+			// 		clearTimeout( saveData.setTimeOut );
 
-					saveData.setTimeOut = setTimeout( function() {
+			// 		saveData.setTimeOut = setTimeout( function() {
 
-						// 
-						ENGINECHILDPLUGIN.setWidthSlider();
+			// 			// 
+			// 			ENGINECHILDPLUGIN.setWidthSlider();
 
-					},500 );
+			// 		},500 );
 
-				} );
+			// 	} );
 
-			},
+			// },
 
 			/***************************
 			*
@@ -439,7 +520,6 @@
 						} )
 
 					}
-
 
 					// if width 100%
 					if( saveData.widthSlider === '100%' ) {

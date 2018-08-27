@@ -84,7 +84,7 @@
 											* 	Type: 		Number 
 											* 	Default: 	400
 											*	Units of measurement - pixels
-											*		(Default width = 400px)
+											*		(Default max-width = 400px)
 											*	If 0 is set, the width will be 100%.
 											*	In this case, the points will always be centered
 											*/
@@ -105,7 +105,7 @@
 													* 	Default: 	true
 													*/
 
-			'bannerPosition' 		: '', 			/*
+			'bannerPosition' 		: 'topRight', 	/*
 													* 	SET THE BANNER POSITION
 													* 	Type: 				String 
 													* 	Default: 			'topRight'
@@ -163,10 +163,27 @@
 													* 	Type: 		Number 
 													* 	Default: 	900
 													*	Units of measurement - pixels
-													*		(Default width = 900px)
+													*		(Default max-width = 900px)
 													*	If 0 is set, the width will be 100%.
 													*	In this case, the points will always be centered
 													*/
+
+			'bannerWrapHeight'			: 400,		/*
+													* 	SET THE WIDTH OF THE WRAPPER DOTS
+													* 	Type: 		Number 
+													* 	Default: 	400
+													*	Units of measurement - pixels
+													*		(Default max-width = 400px)
+													*	If 0 is set, the width will be 100%.
+													*	In this case, the points will always be centered
+													*/
+
+			'bannerSpaceAround'			: 30,		/*
+													*	SET THE SPACE AROUND THE BANNER
+													*	Type: 		Number 
+													* 	Default: 	30
+													*/
+													
 
 		/***************************
 		* Related products slider 
@@ -197,25 +214,7 @@
 			'productNumberVisible'		: 3,		/*
 													* 	SET THE NUMBER OF VISIBLE SLIDES
 													* 	Type: 		Number | Object
-													* 	Default: 	3
-													*
-													*	Possible options :
-													*	'productNumberVisible' : {
-													*		// breakpoint from 0 up
-													*		0	: 	{
-													*			'items': 1
-													*		},
-													*
-													*		// breakpoint from 768 up
-													*		768	: 	{
-													*			'items': 2
-													*		},
-													*
-													*		// breakpoint from 992 up
-													*		992	: 	{
-													*			'items': 3
-													*		}
-													*	},
+													* 	Default: 	3													*
 													*/
 
 			'productSliderAnimated'		: 'slideInUp',/*
@@ -265,7 +264,16 @@
 													* 	Type: 		Number 
 													* 	Default: 	900
 													*	Units of measurement - pixels
-													*		(Default width = 900px)
+													*		(Default max-width = 900px)
+													*	If 0 is set, the width will be 100%.
+													*/
+
+			'productHeightSlider'		: 290,		/*
+													* 	SET THE WIDTH OF THE SLIDER
+													* 	Type: 		Number 
+													* 	Default: 	290
+													*	Units of measurement - pixels
+													*		(Default max-width = 290px)
 													*	If 0 is set, the width will be 100%.
 													*/
 
@@ -1174,7 +1182,15 @@
 						'vertical',
 						'dots',
 						'bannerEnable',
-						'productSliderEnable'
+						'bannerPosition',,
+						'bannerWrapWidth',
+						'bannerWrapHeight',
+						'bannerSpaceAround',
+						'productSliderEnable',
+						'productNumberVisible',
+						'productWidthSlider',
+						'productHeightSlider',
+						'productPositionSlider'
 					];
 				
 					if( typeof settings.responsive === 'object' ) {
@@ -1382,9 +1398,13 @@
 
 				$( root ).find( '.' + saveData.bannerItemClass ).bannerProduct( {
 
-					'position'	: settings.bannerPosition,
+					'position'		: saveData.bannerPosition,
 
-					'wrapWidth'	: settings.bannerWrapWidth
+					'wrapWidth'		: saveData.bannerWrapWidth,
+
+					'wrapHeight' 	: saveData.bannerWrapHeight,
+
+					'spaceAround' 	: saveData.bannerSpaceAround
 
 				} );
 
@@ -1483,9 +1503,10 @@
 
 				$( root ).find( '.' + saveData.childSliderClass ).childrenProductSlider( {
 
-					'numberVisibleItems': 	settings.productNumberVisible,
-					'widthSlider' 		: 	settings.productWidthSlider,
-					'position' 			: 	settings.productPositionSlider,
+					'numberVisibleItems': 	saveData.productNumberVisible,
+					'widthSlider' 		: 	saveData.productWidthSlider,
+					'heightSlider' 		: 	saveData.productHeightSlider,
+					'position' 			: 	saveData.productPositionSlider,
 					'slideSpeed'		: 	settings.productSlideSpeed
 
 				} );

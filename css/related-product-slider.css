@@ -151,38 +151,44 @@ nav.mx-dots-wrap.mx-dots-position-bottom-right {
     width: 100%;
     max-width: 992px;
     z-index: 888;
-    height: 50%;
+    height: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 	/*top - left*/
 	.mx-banner-top-left {
-		top: 40px;
-		left: 70px;
+		top: 0px;
+		left: 0px;
 		text-align: center;
 	}
 
 	/*top - right*/
 	.mx-banner-top-right {
-		top: 40px;
-    	right: 70px;
+		top: 0px;
+    	right: 0px;
         text-align: center;
 	}
 
 	/*bottom - left*/
 	.mx-banner-bottom-left {
-		bottom: 60px;
-		left: 70px;
+		bottom: 0px;
+		left: 0px;
 		text-align: center;
 	}
 
 	/*bottom - right*/
 	.mx-banner-bottom-right {
-		bottom: 60px;
-		right: 70px;
+		bottom: 0px;
+		right: 0px;
 		text-align: center;
 	}
 
 .mx-slide-banner img {
-	height: 100%;	
+    height: auto;
+    width: auto;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 /*
@@ -254,11 +260,17 @@ nav.mx-dots-wrap.mx-dots-position-bottom-right {
 	top: 0px;
 	right: 0px;
 }
-	.mx-related-products-slider ul.mx-related-products.mx-related-product-top-right li img {
+	.mx-related-products-slider ul.mx-related-products.mx-related-product-top-right li img,
+	.mx-related-products-slider ul.mx-related-products.mx-related-product-top-center li img {
 	    -webkit-align-self: flex-start;
 	    -ms-flex-item-align: start;
 	    align-self: flex-start;
 	}
+
+.mx-related-product-top-center {
+	top: 0px;
+    left: 50%;
+}
 
 .mx-related-products-slider ul.mx-related-products.mx-related-product-bottom-left {
 	bottom: 0px;
@@ -267,6 +279,10 @@ nav.mx-dots-wrap.mx-dots-position-bottom-right {
 .mx-related-products-slider ul.mx-related-products.mx-related-product-bottom-right {
 	bottom: 0px;
 	right: 0px;
+}
+.mx-related-product-bottom-center {
+	bottom: 0px;
+    left: 50%;
 }
 
 /*nav*/
@@ -303,6 +319,8 @@ nav.mx-next-button-relation-slider {
 }
 	nav.mx-next-button-relation-slider button {
 		background-image: url(../img/related-slider-arrow-next.png);
+		-webkit-background-size: 11px;
+		background-size: 11px;
 	}
 
 nav.mx-prev-button-relation-slider {
@@ -310,6 +328,8 @@ nav.mx-prev-button-relation-slider {
 }
 	nav.mx-prev-button-relation-slider button {
 		background-image: url(../img/related-slider-arrow-prev.png);
+		-webkit-background-size: 11px;
+		background-size: 11px;
 	}
 
 /*mouseDrag*/
@@ -349,9 +369,4 @@ nav.mx-prev-button-relation-slider {
 		-webkit-background-size: 26px;
 		background-size: 26px;
 	} 
-}
-@media only screen and ( max-width: 992px ) {
-	.mx-related-products-slider ul.mx-related-products {
-		height: 220px;
-	}
 }
