@@ -147,11 +147,15 @@
 				$( root ).addClass( bannerClass );
 
 				// centering
-				if( settings.position === 'topCenter' || settings.position === 'bottomCenter' ) {
-
-					// console.log( settings.wrapWidth );
+				if( settings.position === 'topCenter' || settings.position === 'bottomCenter' ) {					
 
 					var _marginLeft = settings.wrapWidth / 2;
+
+					if( settings.wrapWidth === 0 ) {
+
+						_marginLeft = $( root ).innerWidth() / 2;
+
+					}
 					
 					$( root ).css( 'margin-left', '-' + _marginLeft + 'px' );
 

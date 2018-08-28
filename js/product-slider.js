@@ -351,7 +351,7 @@
 				}
 
 				// add style
-				$( root ).css( 'max-height', heightSlider );
+				$( root ).css( 'height', heightSlider );
 
 			},
 

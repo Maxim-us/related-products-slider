@@ -185,80 +185,135 @@
 	$( document ).ready( function() {
 
 		$( '.mx-product-slider' ).relatedProducts( {
-			'vertical': true,
-			'autoplay': false,
-			'dots': false,
-			'dotsPosition': 'topLeft',
-			//'nav': false,
-			'slideInterval'		: 4000,
-			'bannerPosition': 'bottomRight',
-			//'bannerEnable':false,
-			//'bannerAnimated': false,
-			'eachBannerAnimated': ['slideInDown', 'slideInRight', 'rotateInUpLeft'],
-			// 'bannerDurationAnimation': 'fast',
-			// 'bannerDelayAnimation': 2000,
+
+			'dots': false,			
+
+			// banners
 			'bannerInfiniteAnimation': true,
-			'productInfiniteAnimation' 	: true,	
-			// 'dotsPosition': 'bottomRight',
-			'dotsWrapWidth': 600,
-			// 'productSliderEnable'		: false,
-			'bannerWrapWidth'		: 600,
-			'bannerWrapHeight'		: 300,
-			'productNumberVisible'  : 2,
-			// 'productHeightSlider'  : 300,
+			'bannerPosition': 'topRight',
+			'bannerEachAnimated': ['slideInDown', 'slideInRight', 'rotateInUpLeft'],
 
-			// 'dotsColor'			: 'green',
-			// 'slideSpeed': 			5000
+			// products
+			'productNumberVisible'  	: 3,
+			'productPositionSlider' 	: 'bottomRight',
+			'productSlideSpeed'			: 900,
+			'productWidthSlider'		: 1100,
+			'productInfiniteAnimation' 	: true,
+			'productEachSliderAnimated'	: ['slideInDown', 'slideInRight', 'rotateInUpLeft'],
 
-			// 'dotsActiveColor'	: 'red'
-			// 'productSlideSpeed'		: 3000
-			// 'productPositionSlider' : 'bottomCenter',
-			'bannerEnable': true,
-
-			'bannerSpaceAround': 60,
-
+			// responsive
 			'responsive': 	{
+
 				0	: 	{
-					'nav'		: 	false,
-					'vertical'	:	true,
-					'dots'		: 	false,
-					// 'bannerEnable': false,
-					//'productSliderEnable': false
-					'productNumberVisible'	: 1,
-					'productWidthSlider' 	: 300,
+
+					'nav'	: false,
+
+					// banners
+					'bannerWrapWidth'		: 0,
 					'bannerWrapHeight'		: 300,
-					'productHeightSlider'	: 250,
-					'productPositionSlider' : 'bottomCenter',
+					'bannerSpaceAround'		: 20,
 					'bannerPosition'		: 'bottomCenter',
-					'bannerWrapWidth'		: 300,
-					'bannerSpaceAround' 	: 60,
-					// 'productSliderEnable'	: false
-				},
-				768	: 	{
-					'nav'		: 	false,
-					// 'vertical'	:	false,
-					'productNumberVisible'	: 2,
-					'productWidthSlider' 	: 300,
-					'productHeightSlider'	: 250,
-					'productPositionSlider' : 'bottomCenter',					
-					// 'bannerEnable' 			: false,
-					'bannerPosition'		: 'topRight',
-					'bannerWrapWidth'		: 500,
-					'bannerWrapHeight'		: 300,
-					'bannerSpaceAround'		: 30
-				},
-				992	: 	{
-					'nav'		: 	true,
-					// 'vertical'	:	true,
-					'dots'		: 	true,
-					'productNumberVisible'	: 3,
-					'productWidthSlider' 	: 400,
-					'productHeightSlider'	: 200,
-					'bannerPosition'		: 'topRight',
-					'bannerWrapWidth'		: 400
+
+					// products
+					'productHeightSlider'  	: 300,
+					'productWidthSlider'	: 0,
+					'productNumberVisible'  : 1,
+					'productPositionSlider'	: 'topCenter'
 					
 				},
+				400	: 	{
+
+					'nav'	: false,
+
+					// banners
+					'bannerWrapWidth'		: 0,
+					'bannerWrapHeight'		: 440,
+					'bannerSpaceAround'		: 20,
+					'bannerPosition'		: 'bottomCenter',
+
+					// products
+					'productHeightSlider'  	: 300,
+					'productWidthSlider'	: 0,
+					'productNumberVisible'  : 2,
+					'productPositionSlider'	: 'topCenter'
+
+				},
+				768	: 	{
+
+					// banners
+					'bannerWrapWidth'		: 540,
+					'bannerWrapHeight'		: 260,
+					'bannerSpaceAround'		: 20,
+
+					// products
+					'productHeightSlider'  	: 190,
+					'productWidthSlider'	: 400,
+					'productNumberVisible'  : 2
+					
+				},
+				992	: 	{
+
+					// banners
+					'bannerWrapWidth'		: 700,
+					'bannerWrapHeight'		: 300,
+					'bannerSpaceAround'		: 30,
+
+					// products
+					'productHeightSlider'  	: 200,
+					'productWidthSlider'	: 700
+					
+				},
+				1170: 	{
+
+					// banners
+					'bannerWrapWidth'		: 800,
+					'bannerWrapHeight'		: 400,
+					'bannerSpaceAround'		: 40,
+
+					// products
+					'productHeightSlider'  	: 250,
+					'productWidthSlider'	: 700
+					
+				},
+				1366: 	{
+					
+					// banners
+					'bannerWrapWidth'		: 700,
+					'bannerWrapHeight'		: 400,
+					'bannerSpaceAround'		: 30,
+
+					// products
+					'productHeightSlider'  	: 250,
+					'productWidthSlider'	: 800
+
+				},
+				1500: 	{
+
+					// banners
+					'bannerWrapWidth'		: 1200,
+					'bannerWrapHeight'		: 500,
+					'bannerSpaceAround'		: 60,
+
+					// products
+					'productHeightSlider'  	: 350,
+					'productWidthSlider'	: 1000
+					
+				},
+				1660: 	{
+
+					// banners
+					'bannerWrapWidth'		: 1200,
+					'bannerWrapHeight'		: 564,
+					'bannerSpaceAround'		: 80,
+
+					// products					
+					'productHeightSlider'  	: 330,
+					'productNumberVisible'  : 4				
+					
+				}
+
 			}
+
 		} );
 
 	} );

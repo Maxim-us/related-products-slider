@@ -112,8 +112,10 @@
 													*
 													* 	Possible options : 	'topLeft'
 													*						'topRight'
+													*						'topCenter'
 													*						'bottomLeft'
 													*						'bottomRight'
+													*						'bottomCenter'
 													*/
 
 			'bannerAnimated'		: 'slideInUp',	/*
@@ -125,13 +127,13 @@
 													*	https://daneden.github.io/animate.css/
 													*/
 
-			'eachBannerAnimated' : [				/*
+			'bannerEachAnimated' : [				/*
 													*	SET A SPECIFIC ANIMATION FOR EACH SLIDE 		*/
 				/*1 slide has:*/ 'slideInDown',		/*	Type: 				Array 						*/
 				/*2 slide has:*/ 'slideInLeft'		/*	Specify a specific animation for each slide.	*/
 													/*	The names of the animations are 				*/
 			],										/*	comma separated. For example:					*/
-													/*	'eachBannerAnimated' : ['slideInDown',			*/
+													/*	'bannerEachAnimated' : ['slideInDown',			*/
 													/*		'slideInLeft',								*/
 													/*		'slideInRight']								*/				
 
@@ -203,6 +205,8 @@
 													*						'topRight'
 													*						'bottomLeft'
 													*						'bottomRight'
+													*						'topCenter'
+													*						'bottomCenter'
 													*/
 
 			'productSlideSpeed'			: 600, 	/*
@@ -249,7 +253,7 @@
 				/*2 slide has:*/ 'slideInLeft'		/*	Specify a specific animation for each slide.	*/
 													/*	The names of the animations are 				*/
 			],										/*	comma separated. For example:					*/
-													/*	'eachBannerAnimated' : ['slideInDown',			*/
+													/*	'productEachSliderAnimated' : ['slideInDown',	*/
 													/*		'slideInLeft',								*/
 													/*		'slideInRight']								*/	
 
@@ -885,19 +889,8 @@
 					var heightSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
 
 					saveData.heightOfSlider = heightSlider;
-
-					var heightWindow = $( window ).innerHeight();
-
-					// check height of the window
-					if( heightWindow >= 650 && heightSlider > heightWindow ) {						
-
-						$( root ).css( 'height', heightWindow + 'px' );
-
-					} else {
-
-						$( root ).css( 'height', heightSlider + 'px' );
-
-					}
+					
+					$( root ).css( 'height', heightSlider + 'px' );
 
 				},
 
@@ -1445,18 +1438,18 @@
 			enableBannerAnimated: function( element ) {
 
 				// set a specific animation for each slide
-				if( Array.isArray( settings.eachBannerAnimated ) ) {
+				if( Array.isArray( settings.bannerEachAnimated ) ) {
 
 					var index = element.index();
 
 					// if index exists
-					if( settings.eachBannerAnimated[index] !== undefined ) {
+					if( settings.bannerEachAnimated[index] !== undefined ) {
 
 						// set infinite animation
 						if( settings.bannerInfiniteAnimation ) {
 
 							$( root ).find( '.' + saveData.bannerItemClass + ' img' )
-							.removeClass( settings.eachBannerAnimated[index] );
+							.removeClass( settings.bannerEachAnimated[index] );
 
 							$( root ).find( '.' + saveData.bannerItemClass + ' img' )
 							.addClass( saveData.classes.displayNone );
@@ -1467,7 +1460,7 @@
 						.removeClass( saveData.classes.displayNone );
 						
 						element.find( '.' + saveData.bannerItemClass + ' img' )
-						.addClass( settings.eachBannerAnimated[index] );
+						.addClass( settings.bannerEachAnimated[index] );
 
 					// if index does not exist
 					} else {
