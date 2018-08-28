@@ -23,8 +23,10 @@
 											*
 											* 	Possible options : 	'topLeft'
 											*						'topRight'
+											*						'topCenter'
 											*						'bottomLeft'
 											*						'bottomRight'
+											*						'bottomCenter'
 											*/
 
 			'wrapWidth' 	: 900,			/*
@@ -78,8 +80,10 @@
 				// position slasses
 				'topLeft' 		: 'mx-banner-top-left',
 				'topRight' 		: 'mx-banner-top-right',
+				'topCenter'		: 'mx-banner-top-center',
 				'bottomLeft'	: 'mx-banner-bottom-left',
-				'bottomRight' 	: 'mx-banner-bottom-right'
+				'bottomRight' 	: 'mx-banner-bottom-right',
+				'bottomCenter'	: 'mx-banner-bottom-center'
 
 			},
 
@@ -141,6 +145,17 @@
 				} )
 
 				$( root ).addClass( bannerClass );
+
+				// centering
+				if( settings.position === 'topCenter' || settings.position === 'bottomCenter' ) {
+
+					// console.log( settings.wrapWidth );
+
+					var _marginLeft = settings.wrapWidth / 2;
+					
+					$( root ).css( 'margin-left', '-' + _marginLeft + 'px' );
+
+				}
 
 			},
 

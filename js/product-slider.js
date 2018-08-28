@@ -410,24 +410,6 @@
 
 			},
 
-			// resize window
-			// resizeWindow: 	function() {				
-
-			// 	$( window ).resize( function() {
-
-			// 		clearTimeout( saveData.setTimeOut );
-
-			// 		saveData.setTimeOut = setTimeout( function() {
-
-			// 			// 
-			// 			ENGINECHILDPLUGIN.setWidthSlider();
-
-			// 		},500 );
-
-			// 	} );
-
-			// },
-
 			/***************************
 			*
 			* INTERACTION WITH THE USER

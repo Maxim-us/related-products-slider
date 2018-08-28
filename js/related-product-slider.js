@@ -423,11 +423,14 @@
 			},
 
 			// perion resize
-			'setTimeOut'			: null
+			'setTimeOut'			: null,
+
+			// change img array
+			'changeImgObj' 			: {}
 
 		};
 
-		// saveData.classes.visibleItem
+		// saveData.changeImgObj
 
 		/***************************
 		*
@@ -442,13 +445,13 @@
 			*
 			******************************************************************/
 			// initialize
-			init: 			function() {
+			init: 			function() {				
 
 				// overwrite variables
 				this.overwriteVariables();
 
 				// get size of window
-				this.getSizeWindow();
+				this.getSizeWindow();						
 
 				// run the skeleton construction
 				this.skeletonSlider();
@@ -523,7 +526,10 @@
 				}
 
 				// check mouse enter
-				this.mouseEnterOnElements();				
+				this.mouseEnterOnElements();
+
+				// change image
+				this.changeImageSmallScreen();				
 
 			},
 
@@ -548,12 +554,15 @@
 				$( root ).children( 'div' ).first().addClass( saveData.classes.visibleItem );
 
 				// check number of elements
-				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;							
+				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;				
+
+				// get src img slides
+				this.getSrcImg();
 
 				// set slider height
-				this.setSliderHeight();
+				this.setSliderHeight();									
 
-			},
+			},			
 
 			// navigation arrows
 			navigationArrows: 	function() {
@@ -735,8 +744,6 @@
 				// mouse down
 				$( root ).on( 'mousedown', function( e ) {
 
-					// console.log( 'mousedown' );
-
 					// clear the interval and run a new one
 					// if autorun is stop
 					if( settings.autoplay ) {
@@ -758,8 +765,6 @@
 
 				// mouse up
 				$( document ).on( 'mouseup', function() {
-
-					// console.log( 'mouseup' );
 				
 					$( root ).off( 'mousemove', ENGINEPLUGIN.slideMotionDrag );
 
@@ -842,6 +847,24 @@
 			*      HELP FUNCTIONS
 			*
 			***************************/
+
+				// get image src
+				getSrcImg: 			function() {
+
+					// check data attr
+					var slides 		= $( root ).find( '.' + saveData.classes.slideItem );
+
+					slides.each( function() {
+
+						var _index 	= $( this ).index();
+
+						var _src 	= $( this ).children( 'img' ).attr( 'src' )
+
+						saveData.changeImgObj[_index] = _src;
+
+					} );
+
+				},
 
 				// get size of window
 				getSizeWindow: 		function() {
@@ -1136,7 +1159,7 @@
 
 							clearInterval( saveData.interval );
 
-						}
+						}						
 
 						saveData.setTimeOut = setTimeout( function() {
 
@@ -1148,7 +1171,8 @@
 
 							/*
 							* Building
-							*/
+							*/								
+
 								// set slider height
 								ENGINEPLUGIN.setSliderHeight();
 
@@ -1167,6 +1191,9 @@
 								ENGINEPLUGIN.autoplay();
 
 							}
+
+							// change img
+							ENGINEPLUGIN.changeImageSmallScreen();
 
 						},500 );
 
@@ -1771,6 +1798,73 @@
 					saveData.mouseDragOptions.offsetElement = 'clientX';
 
 					saveData.mouseDragOptions.direction 	= 'left';
+
+				}
+
+			},
+
+			/*
+			*	Change img for small screen
+			*/
+			changeImageSmallScreen: 	function() {
+
+				// check data attr
+				var slides = $( root ).find( '.' + saveData.classes.slideItem );
+
+				// you need to change the image
+				var needToChange = $( root ).attr( 'data-new-image' );
+
+				if( needToChange === 'true' ) {
+
+					// each slides
+					slides.each( function() {
+							
+						// run function
+						ENGINEPLUGIN.changeImage( $( this ) );
+
+						// set height
+						setTimeout( function() {
+
+							// set slider height
+							ENGINEPLUGIN.setSliderHeight();	
+
+						}, 500 );
+
+					} );
+
+				}
+
+			},
+
+			changeImage: 		function( _this  ) {
+
+				var _index 		= _this.index();
+
+				var screenSize 	= _this.parent().attr( 'data-max-width' );
+
+				var newSrc 		= _this.children( 'img' ).attr( 'data-image-src' );
+
+				if( newSrc === undefined || newSrc === '' ) {
+
+					newSrc = _this.children( 'img' ).attr( 'src' );
+
+				}
+
+				screenSize = parseInt( screenSize );
+
+				if( isNaN( screenSize ) ) {
+
+					screenSize = 768;					
+
+				}
+
+				if( $( root ).innerWidth() <= screenSize ) {
+
+					_this.children( 'img' ).attr( 'src', newSrc );					
+
+				} else {
+
+					_this.children( 'img' ).attr( 'src', saveData.changeImgObj[_index] );
 
 				}
 

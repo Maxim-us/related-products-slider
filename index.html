@@ -22,16 +22,16 @@
 <div class="mx-test_wrap">
 	
 	<!-- .mx-product-slider -->
-	<div class="mx-product-slider">
+	<div class="mx-product-slider" data-new-image="true" data-max-width="768">
 		
 		<!-- item 1 -->
 		<div>
-			<img src="./img/slide-1/slide-1.jpg" alt="">
+			<img src="./img/slide-1/slide-1.jpg" alt="" data-image-src="./img/slide-1/bg-768.jpg" />
 
 			<!-- banner -->
 			<div class="mx-slide-banner">
 				<a href="#">
-					<img src="./img/slide-1/banner-1.png" alt="" data-new-image="true"  />
+					<img src="./img/slide-1/banner-1.png" alt="" />
 				</a>
 			</div>
 
@@ -72,7 +72,7 @@
 
 		<!-- item 2 -->
 		<div>
-			<img src="./img/slide-2/slide-2.jpg" alt="">
+			<img src="./img/slide-2/slide-2.jpg" alt="" data-image-src="./img/slide-2/bg-768.jpg" />
 
 			<!-- banner -->
 			<div class="mx-slide-banner">
@@ -118,7 +118,7 @@
 		
 		<!-- item 3 -->
 		<div>
-			<img src="./img/slide-3/slide-3.jpg" alt="">
+			<img src="./img/slide-3/slide-3.jpg" alt="" data-image-src="./img/slide-3/bg-768.jpg">
 
 			<!-- banner -->
 			<div class="mx-slide-banner">
@@ -168,11 +168,11 @@
 </div>
 
 <!-- scripts -->
-<!-- <script
+<script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script> -->
-<script src="./_all/jquery-1.11.3.js"></script>
+  crossorigin="anonymous"></script>
+<!-- <script src="./_all/jquery-1.11.3.js"></script> -->
 <script src="./js/related-product-slider.js"></script>
 <script src="./js/banners.js"></script>
 <script src="./js/product-slider.js"></script>
@@ -185,7 +185,7 @@
 	$( document ).ready( function() {
 
 		$( '.mx-product-slider' ).relatedProducts( {
-			// 'vertical': true,
+			'vertical': true,
 			'autoplay': false,
 			'dots': false,
 			'dotsPosition': 'topLeft',
@@ -220,18 +220,18 @@
 			'responsive': 	{
 				0	: 	{
 					'nav'		: 	false,
-					'vertical'	:	false,
+					'vertical'	:	true,
 					'dots'		: 	false,
 					// 'bannerEnable': false,
 					//'productSliderEnable': false
 					'productNumberVisible'	: 1,
-					'productWidthSlider' 	: 200,
-					'bannerWrapHeight'		: 0,
-					'productHeightSlider'	: 150,
+					'productWidthSlider' 	: 300,
+					'bannerWrapHeight'		: 300,
+					'productHeightSlider'	: 250,
 					'productPositionSlider' : 'bottomCenter',
-					'bannerPosition'		: 'bottomLeft',
-					'bannerWrapWidth'		: 0,
-					'bannerSpaceAround' 	: 30,
+					'bannerPosition'		: 'bottomCenter',
+					'bannerWrapWidth'		: 300,
+					'bannerSpaceAround' 	: 60,
 					// 'productSliderEnable'	: false
 				},
 				768	: 	{
@@ -242,9 +242,9 @@
 					'productHeightSlider'	: 250,
 					'productPositionSlider' : 'bottomCenter',					
 					// 'bannerEnable' 			: false,
-					'bannerPosition'		: 'topleft',
-					'bannerWrapWidth'		: 1000,
-					'bannerWrapHeight'		: 200,
+					'bannerPosition'		: 'topRight',
+					'bannerWrapWidth'		: 500,
+					'bannerWrapHeight'		: 300,
 					'bannerSpaceAround'		: 30
 				},
 				992	: 	{

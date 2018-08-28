@@ -170,6 +170,13 @@ nav.mx-dots-wrap.mx-dots-position-bottom-right {
         text-align: center;
 	}
 
+	/*top - center*/
+	.mx-banner-top-center {
+		top: 0px;
+    	left: 50%;
+        text-align: center;
+	}
+
 	/*bottom - left*/
 	.mx-banner-bottom-left {
 		bottom: 0px;
@@ -182,6 +189,13 @@ nav.mx-dots-wrap.mx-dots-position-bottom-right {
 		bottom: 0px;
 		right: 0px;
 		text-align: center;
+	}
+
+	/*bottom - center*/
+	.mx-banner-bottom-center {
+		bottom: 0px;
+    	left: 50%;
+        text-align: center;
 	}
 
 .mx-slide-banner img {
