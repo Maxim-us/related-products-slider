@@ -359,7 +359,7 @@
 			wrapSlides: 			function() {
 
 				$( root ).children( 'li' ).wrapAll( '<div class="' + saveData.classes.slidesWrapper + '"></div>' );
-
+		
 			},
 
 			// everyone slide

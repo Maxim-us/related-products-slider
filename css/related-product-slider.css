@@ -302,6 +302,42 @@ nav.mx-dots-wrap.mx-dots-position-bottom-right {
 	bottom: 0px;
     left: 50%;
 }
+/*price*/
+span.mx-price {
+	position: absolute;
+	font-size: 50px;
+	font-family: 'Merienda', cursive;
+	z-index: 777;
+	color: #fff;
+	text-shadow: 3px 2px 4px #000000;
+	-webkit-transition: 0.3s all ease;
+    transition: 0.3s all ease;
+    -o-transition: 0.3s all ease;
+}
+.mx-related-product-slide a:hover span.mx-price {
+	font-size: 45px;
+	text-shadow: 2px 2px 0px #000000;
+	-webkit-transition: 0.3s all ease;
+    transition: 0.3s all ease;
+    -o-transition: 0.3s all ease;
+}
+.mx-related-product-bottom-right span.mx-price {
+	margin-left: -51px;
+}
+.mx-related-product-top-left span.mx-price {
+    bottom: 0;
+    margin-left: 51px;
+}
+.mx-related-product-top-right span.mx-price {
+	bottom: 0;
+    margin-left: -51px;
+}
+.mx-related-product-bottom-left span.mx-price {
+    margin-left: 51px;
+}
+.mx-related-product-top-center span.mx-price {
+	bottom: 0;
+}
 
 /*nav*/
 nav.mx-next-button-relation-slider,
@@ -378,25 +414,45 @@ nav.mx-prev-button-relation-slider {
 }
 
 /*media*/
+@media only screen and ( max-width: 1600px ) {
+	span.mx-price {
+		font-size: 40px;
+	}
+	.mx-related-product-slide a:hover span.mx-price {
+		font-size: 45px;
+	}
+}
 @media only screen and ( max-width: 1400px ) {
-
 	nav.mx-navigation-wrap-prev button,
 	nav.mx-navigation-wrap-next button {
 		width: 75px;
 		height: 170px;
 		-webkit-background-size: 26px;
 		background-size: 26px;
-	} 
+	}	
 }
 @media only screen and ( max-width: 1200px ) {
-
 	nav.mx-navigation-wrap-prev button,
 	nav.mx-navigation-wrap-next button {
 		width: 50px;
 		height: 135px;
 		-webkit-background-size: 18px;
 		background-size: 18px;
-	} 
+	}
+	span.mx-price {
+		font-size: 30px;
+	}
+	.mx-related-product-slide a:hover span.mx-price {
+		font-size: 35px;
+	}
+}
+@media only screen and ( max-width: 992px ) {
+	span.mx-price {
+		font-size: 25px;
+	}
+	.mx-related-product-slide a:hover span.mx-price {
+		font-size: 30px;
+	}
 }
 @media only screen and ( max-width: 768px ) {
 	.mx-related-products-slider ul.mx-related-products {

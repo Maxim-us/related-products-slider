@@ -434,7 +434,7 @@
 
 		};
 
-		// saveData.changeImgObj
+		// saveData.classes.visibleItem
 
 		/***************************
 		*
@@ -492,42 +492,12 @@
 				/*
 				* Banners
 				*/
-				if( saveData.bannerEnable ) {
-
-					// enable banners
-					this.enableBanners();
-
-					// animation activation
-					if( settings.bannerAnimated ) {
-
-						this.initAnimation();						
-
-						setTimeout( function() {
-
-							ENGINEPLUGIN.enableBannerAnimated( $( '.' + saveData.classes.visibleItem ) );
-
-						},settings.bannerDelayAnimation );
-
-					}
-
-				} else {
-
-					$( root ).find( '.' + saveData.bannerItemClass ).addClass( saveData.classes.displayNone );
-
-				}
+				this.bannersBeing();				
 
 				/*
 				* Related products slider
 				*/
-				if( saveData.productSliderEnable ) {
-
-					this.enableRelatedProductsSlider();
-
-				} else {
-
-					$( root ).find( '.' + saveData.childSliderClass ).addClass( saveData.classes.displayNone );
-					
-				}
+				this.relatedProductsSliderBeing();				
 
 				// check mouse enter
 				this.mouseEnterOnElements();
@@ -1014,7 +984,6 @@
 							*/
 							if( saveData.productSliderEnable && settings.productSliderAnimated ) {
 
-
 								setTimeout( function() {
 
 									var productSlider = nextSlide.find( '.' + saveData.childSliderClass );
@@ -1178,6 +1147,12 @@
 								// set dots
 								ENGINEPLUGIN.dotsBox();
 
+								// banners
+								ENGINEPLUGIN.bannersBeing();
+
+								// related slider
+								ENGINEPLUGIN.relatedProductsSliderBeing();
+
 							// autoplay
 							if( settings.autoplay && saveData.countElems > 1 ) {
 
@@ -1219,9 +1194,9 @@
 
 							$.each( settings.responsive, function( _key, _object ) {
 
-								var _key = parseInt( _key );	
+								var _key = parseInt( _key );
 
-								if( $( window ).innerWidth() >= _key ) {						
+								if( $( root ).innerWidth() >= _key ) {						
 
 									// if object has props
 									if( Object.keys( _object ).length > 0 ) {
@@ -1430,6 +1405,48 @@
 
 			},
 
+			// This feature will help the slider when resizing.
+			bannersBeing: 		function() {
+
+				if( saveData.bannerEnable ) {
+
+					// destroy banner
+					$( root ).find( '.' + saveData.bannerItemClass ).attr( 'class', '' )
+					.addClass( saveData.bannerItemClass );
+
+					$( root ).find( '.' + saveData.bannerItemClass + ' img' ).attr( 'class', '' );
+
+					$( root ).find( '.' + saveData.bannerItemClass ).removeAttr( 'style' );
+
+					setTimeout( function() {
+
+						// enable banners
+						ENGINEPLUGIN.enableBanners();
+
+						// animation activation
+						if( settings.bannerAnimated ) {
+
+							ENGINEPLUGIN.initAnimation();
+
+							setTimeout( function() {
+
+								ENGINEPLUGIN.enableBannerAnimated( $( '.' + saveData.classes.visibleItem ) );
+
+							},settings.bannerDelayAnimation );
+
+						}
+
+					},500 );
+					
+
+				} else {
+
+					$( root ).find( '.' + saveData.bannerItemClass ).addClass( saveData.classes.displayNone );
+
+				}
+
+			},
+
 			/*
 			* Enable animation of banners
 			* var element - This is a certain slide
@@ -1548,6 +1565,51 @@
 					
 					},settings.productDelayAnimation );
 
+				}
+
+			},
+
+			// This feature will help the slider when resizing.
+			relatedProductsSliderBeing: 	function() {
+
+				if( saveData.productSliderEnable ) {
+
+					// destroy slider
+					// class
+					$( root ).find( '.' + saveData.childSliderClass )
+					.attr( 'class', '' )
+					.addClass( saveData.childSliderClass );
+
+					// style attr
+					$( root ).find( '.' + saveData.childSliderClass )
+					.removeAttr( 'style' );
+
+					// navigation
+					$( root ).find( '.' + saveData.childSliderClass + ' nav' ).remove();
+
+					// style attr for li tag
+					$( root ).find( '.' + saveData.childSliderClass + ' li').removeAttr( 'style' );
+
+					// class attr for li tag
+					$( root ).find( '.' + saveData.childSliderClass + ' li').removeAttr( 'class' );
+
+					// clear wrapper
+					$( root ).find( '.mx-related-product-wrap-box' ).removeAttr( 'style' );
+
+					// clear images
+					$( root ).find( '.' + saveData.childSliderClass + ' img' ).removeAttr( 'class' );
+
+					// create slider
+					setTimeout( function() {
+
+						ENGINEPLUGIN.enableRelatedProductsSlider();
+
+					},500 );
+
+				} else {
+
+					$( root ).find( '.' + saveData.childSliderClass ).addClass( saveData.classes.displayNone );
+					
 				}
 
 			},
