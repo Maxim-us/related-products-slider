@@ -127,7 +127,7 @@ nav.mx-dots-wrap.mx-dots-position-top-left {
 nav.mx-dots-wrap.mx-dots-position-top-center {
 	top: 20px;
 	left: 0px;
-	max-width: 100%;
+	max-width: 100% !important;
 }
 nav.mx-dots-wrap.mx-dots-position-top-right {
 	top: 40px;
@@ -140,7 +140,7 @@ nav.mx-dots-wrap.mx-dots-position-bottom-left {
 nav.mx-dots-wrap.mx-dots-position-bottom-center {
 	bottom: 40px;
 	left: 0px;
-	max-width: 100%;
+	max-width: 100% !important;
 }
 nav.mx-dots-wrap.mx-dots-position-bottom-right {
 	bottom: 40px;

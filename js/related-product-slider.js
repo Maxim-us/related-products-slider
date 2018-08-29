@@ -1,11 +1,11 @@
 /****************************************************
 * ###################################################
 * #                                                 #
-* #              Author: Marko Maksym               #
-* M                                                 M
-* #               MAIN PRODUCT SLIDER               #
-* #            This plugin is a container           #
-* X               of all child plugins              X
+* #         	     MAIN SLIDER                    #
+* M           This plugin is a container            M
+* #            of all support programs              #
+* #                                                 #
+* #             Author: Marko Maksym                X
 * #                                                 #
 * #                                                 #
 * ###################################################
@@ -18,19 +18,19 @@
 	$.defaultConfig = {
 
 		'nav'				: true, 		/*
-											* 	SET THE "NEXT" AND "PREVIOUS" ARROWS
+											* 	SET "NEXT" AND "PREVIOUS" ARROWS
 											* 	Type: 		Boolean 
 											* 	Default: 	true
 											*/
 
 		'autoplay'			: true,			/*
-											* 	SCROLL SLIDER AUTOMATICALLY
+											* 	SET AUTOPLAY
 											* 	Type: 		Boolean 
 											* 	Default: 	true
 											*/
 
 		'slideInterval'		: 8000,			/*
-											* 	SLIDER SCROLL INTERVAL
+											* 	SCROLL SLIDER INTERVAL
 											* 	Type: 		Number 
 											* 	Default: 	8000
 											*/ 
@@ -127,15 +127,14 @@
 													*	https://daneden.github.io/animate.css/
 													*/
 
-			'bannerEachAnimated' : [				/*
-													*	SET A SPECIFIC ANIMATION FOR EACH SLIDE 		*/
+			'bannerEachAnimated' : [				/*													*/
+													/*	SET A SPECIFIC ANIMATION FOR EACH SLIDE 		*/
 				/*1 slide has:*/ 'slideInDown',		/*	Type: 				Array 						*/
 				/*2 slide has:*/ 'slideInLeft'		/*	Specify a specific animation for each slide.	*/
 													/*	The names of the animations are 				*/
 			],										/*	comma separated. For example:					*/
-													/*	'bannerEachAnimated' : ['slideInDown',			*/
-													/*		'slideInLeft',								*/
-													/*		'slideInRight']								*/				
+													/*	'bannerEachAnimated' : 							*/
+													/*	['slideInDown','slideInLeft','slideInRight']	*/			
 
 			'bannerDurationAnimation' 	: 'fast',	/*
 													* 	SET ANIMATION DURATION
@@ -161,7 +160,7 @@
 													*/
 
 			'bannerWrapWidth'			: 900,		/*
-													* 	SET THE WIDTH OF THE WRAPPER DOTS
+													* 	SET THE WIDTH OF THE WRAPPER TO THE BANNER
 													* 	Type: 		Number 
 													* 	Default: 	900
 													*	Units of measurement - pixels
@@ -171,7 +170,7 @@
 													*/
 
 			'bannerWrapHeight'			: 400,		/*
-													* 	SET THE WIDTH OF THE WRAPPER DOTS
+													* 	SET THE HEIGHT OF THE WRAPPER TO THE BANNER
 													* 	Type: 		Number 
 													* 	Default: 	400
 													*	Units of measurement - pixels
@@ -191,21 +190,21 @@
 		* Related products slider 
 		*/
 			'productSliderEnable'		: true,		/*
-													* 	Enable child slider products 
+													* 	ENABLE SLIDER WITH PRODUCTS
 													* 	Type: 				Boolean 
 													* 	Default: 			true
 													*/
 
 			'productPositionSlider' : 'bottomRight',/*
-													* 	SET THE SLIDER POSITION
+													* 	SET THE POSITION OF THE SLIDER WITH THE PRODUCTS
 													* 	Type: 				String 
-													* 	Default: 			'topRight'
+													* 	Default: 			'bottomRight'
 													*
 													* 	Possible options : 	'topLeft'
 													*						'topRight'
+													*						'topCenter'
 													*						'bottomLeft'
 													*						'bottomRight'
-													*						'topCenter'
 													*						'bottomCenter'
 													*/
 
@@ -253,11 +252,10 @@
 				/*2 slide has:*/ 'slideInLeft'		/*	Specify a specific animation for each slide.	*/
 													/*	The names of the animations are 				*/
 			],										/*	comma separated. For example:					*/
-													/*	'productEachSliderAnimated' : ['slideInDown',	*/
-													/*		'slideInLeft',								*/
-													/*		'slideInRight']								*/	
+													/*	'productEachSliderAnimated' : 					*/
+													/*	['slideInDown','slideInLeft','slideInRight']	*/
 
-			'productInfiniteAnimation' 	: false,		/*
+			'productInfiniteAnimation' 	: false,	/*
 													* 	SET AN ENDLESS ANIMATION CYCLE
 													* 	Type: 				Boolean 
 													* 	Default: 			false
@@ -273,7 +271,7 @@
 													*/
 
 			'productHeightSlider'		: 290,		/*
-													* 	SET THE WIDTH OF THE SLIDER
+													* 	SET SLIDER HEIGHT
 													* 	Type: 		Number 
 													* 	Default: 	290
 													*	Units of measurement - pixels
@@ -282,15 +280,13 @@
 													*/
 
 			'responsive'				: {}		/*
-													* 	SET CERTAIN STYLES DEPENDING ON SCREEN SIZE
+													* 	set certain styles depending on screen size
 													* 	Type: 		Object 
 													* 	Default: 	{}
 													*	Note: An object must have at least one property.
 													*/
 
 	};
-
-	// settings.dotsActiveColor
 
 	/***************************
 	* Basic Plugin Authoring.
@@ -434,8 +430,6 @@
 
 		};
 
-		// saveData.classes.visibleItem
-
 		/***************************
 		*
 		*  == ENGINE OF PLUGIN ==
@@ -449,19 +443,19 @@
 			*
 			******************************************************************/
 			// initialize
-			init: 			function() {				
+			init: 			function() {
 
 				// overwrite variables
 				this.overwriteVariables();
 
 				// get size of window
-				this.getSizeWindow();						
+				this.getSizeWindow();
 
 				// run the skeleton construction
 				this.skeletonSlider();
 
 				// number of slides
-				this.countElements();			
+				this.countElements();
 
 				// set slider direction
 				this.setSliderDirection();
@@ -492,25 +486,25 @@
 				/*
 				* Banners
 				*/
-				this.bannersBeing();				
+				this.bannersBeing();
 
 				/*
 				* Related products slider
 				*/
-				this.relatedProductsSliderBeing();				
+				this.relatedProductsSliderBeing();
 
 				// check mouse enter
 				this.mouseEnterOnElements();
 
 				// change image
-				this.changeImageSmallScreen();				
+				this.changeImageSmallScreen();
 
 			},
 
 			// get the number of items
 			countElements: 		function() {
 
-				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;				
+				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;
 
 			},
 
@@ -528,13 +522,13 @@
 				$( root ).children( 'div' ).first().addClass( saveData.classes.visibleItem );
 
 				// check number of elements
-				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;				
+				saveData.countElems = $( root ).find( '.' + saveData.classes.slideItem ).length;
 
 				// get src img slides
 				this.getSrcImg();
 
 				// set slider height
-				this.setSliderHeight();									
+				this.setSliderHeight();
 
 			},			
 
@@ -567,7 +561,7 @@
 						// create next button
 						ENGINEPLUGIN.nextBtn();
 
-					} );					
+					} );
 
 					// events
 					// prev slide
@@ -669,7 +663,7 @@
 					// events
 					this.clickOnDot();
 
-				}				
+				}
 
 			},
 
@@ -759,14 +753,14 @@
 			},
 
 			// click the "Next" button
-			nextSlideEvent: 	function() {								
+			nextSlideEvent: 	function() {
 
 				$( root ).on( 'click', '.' + saveData.classes.nextBtn, function( e ) {
 
 					e.preventDefault();
 
 					// Scroll the slider forward
-					ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );					
+					ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
 
 				} );
 
@@ -780,14 +774,14 @@
 					e.preventDefault();
 
 					// Scroll the slider backwards
-					ENGINEPLUGIN.scrollBack( ENGINEPLUGIN );									
+					ENGINEPLUGIN.scrollBack( ENGINEPLUGIN );
 
 				} );
 
 			},			
 
 			// click on the dot
-			clickOnDot: 	function() {								
+			clickOnDot: 	function() {
 
 				$( root ).on( 'click', '.' + saveData.classes.dotItem, function( e ) {
 
@@ -810,11 +804,11 @@
 
 						}
 
-					}					
+					}
 
 				} )
 
-			},			
+			},
 
 			/***************************
 			*
@@ -885,7 +879,7 @@
 
 					}
 
-					return returnElement;				
+					return returnElement;
 
 				},
 
@@ -927,7 +921,7 @@
 					if( saveData.keySlideMotion === true ) {
 
 						// disable nav
-						saveData.keySlideMotion 	= false;						
+						saveData.keySlideMotion 	= false;
 
 						// move the current slide
 						optionsAmimateCurrentSlide[saveData.direction] = '-100%';
@@ -949,7 +943,7 @@
 
 						nextSlide.css( saveData.direction, '50%' );
 
-						nextSlide.addClass( saveData.classes.nextVisibleItem );					
+						nextSlide.addClass( saveData.classes.nextVisibleItem );
 
 						optionsAmimateNextSlide[saveData.direction] = '0';
 						nextSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
@@ -1006,10 +1000,10 @@
 					var optionsAmimateCurrentSlide 	= {};
 					var optionsAmimateNextSlide 	= {};
 
-					if( saveData.keySlideMotion === true ) {						
+					if( saveData.keySlideMotion === true ) {
 
 						// disable nav
-						saveData.keySlideMotion 	= false;						
+						saveData.keySlideMotion 	= false;
 
 						// move the current slide
 						optionsAmimateCurrentSlide[saveData.direction] = '100%';
@@ -1031,7 +1025,7 @@
 
 						prevSlide.css( saveData.direction, '-50%' );
 
-						prevSlide.addClass( saveData.classes.nextVisibleItem );					
+						prevSlide.addClass( saveData.classes.nextVisibleItem );
 
 						optionsAmimateNextSlide[saveData.direction] = '0';
 						prevSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
@@ -1051,7 +1045,7 @@
 							/*
 							* animation banner
 							*/						
-							if( saveData.bannerEnable && settings.bannerAnimated ) {			
+							if( saveData.bannerEnable && settings.bannerAnimated ) {
 
 								setTimeout( function() {
 
@@ -1065,7 +1059,6 @@
 							* run product animation
 							*/
 							if( saveData.productSliderEnable && settings.productSliderAnimated ) {
-
 
 								setTimeout( function() {
 
@@ -1084,9 +1077,9 @@
 				},
 
 				// autoplay
-				autoplay: 			function() {					
+				autoplay: 			function() {
 
-					saveData.interval = setInterval( function() {						
+					saveData.interval = setInterval( function() {
 
 						// Verify that the cursor is pointing to the slider on related products
 						if( saveData.enableScroll === true ) {
@@ -1097,18 +1090,18 @@
 
 									ENGINEPLUGIN.scrollForward( ENGINEPLUGIN );
 
-								}		
+								}
 
-							}							
+							}
 
 						}
 
-					}, settings.slideInterval );					
+					}, settings.slideInterval );
 
 				},
 
 				// resize window
-				resizeWindow: 	function() {				
+				resizeWindow: 	function() {
 
 					$( window ).resize( function() {
 
@@ -1121,7 +1114,7 @@
 
 							clearInterval( saveData.interval );
 
-						}						
+						}
 
 						saveData.setTimeOut = setTimeout( function() {
 
@@ -1133,7 +1126,7 @@
 
 							/*
 							* Building
-							*/								
+							*/
 
 								// set slider height
 								ENGINEPLUGIN.setSliderHeight();
@@ -1153,6 +1146,9 @@
 								// related slider
 								ENGINEPLUGIN.relatedProductsSliderBeing();
 
+									// help for relatedProductsSlider
+									ENGINEPLUGIN.prouctResizeShow();
+
 							// autoplay
 							if( settings.autoplay && saveData.countElems > 1 ) {
 
@@ -1163,7 +1159,7 @@
 							// change img
 							ENGINEPLUGIN.changeImageSmallScreen();
 
-						},500 );
+						},1000 );
 
 					} );
 
@@ -1196,7 +1192,7 @@
 
 								var _key = parseInt( _key );
 
-								if( $( root ).innerWidth() >= _key ) {						
+								if( $( root ).innerWidth() >= _key ) {
 
 									// if object has props
 									if( Object.keys( _object ).length > 0 ) {
@@ -1222,15 +1218,13 @@
 									// if object has no props
 									} else {
 
-										for( var i = 0; i < arrayOptions.length; i++ ) {												
+										for( var i = 0; i < arrayOptions.length; i++ ) {
 											
 											saveData[arrayOptions[i]] = settings[arrayOptions[i]];
 											
 										}
 
 									}
-
-									// console.log( saveData.nav, saveData.vertical );
 
 								}
 
@@ -1239,7 +1233,7 @@
 						// if responsive is an empty object
 						}  else {
 
-							for( var i = 0; i < arrayOptions.length; i++ ) {												
+							for( var i = 0; i < arrayOptions.length; i++ ) {
 								
 								saveData[arrayOptions[i]] = settings[arrayOptions[i]];
 								
@@ -1250,15 +1244,13 @@
 					// if responsive not object
 					} else {
 
-						for( var i = 0; i < arrayOptions.length; i++ ) {												
+						for( var i = 0; i < arrayOptions.length; i++ ) {
 							
 							saveData[arrayOptions[i]] = settings[arrayOptions[i]];
 							
 						}
 
 					}
-
-					// console.log( saveData.nav, saveData.vertical );					
 
 				},
 
@@ -1304,7 +1296,7 @@
 				},
 
 				// get a certain slide
-				findSlide: 			function( index ) {								
+				findSlide: 			function( index ) {
 
 					// set up animation function
 					var optionsAmimateCurrentSlide 	= {};
@@ -1313,7 +1305,7 @@
 					if( saveData.keySlideMotion === true ) {
 
 						// disable nav
-						saveData.keySlideMotion 	= false;						
+						saveData.keySlideMotion 	= false;
 
 						// move the current slide
 						optionsAmimateCurrentSlide[saveData.direction] = '-100%';
@@ -1335,7 +1327,7 @@
 
 						certainSlide.css( saveData.direction, '50%' );
 
-						certainSlide.addClass( saveData.classes.nextVisibleItem );					
+						certainSlide.addClass( saveData.classes.nextVisibleItem );
 
 						optionsAmimateNextSlide[saveData.direction] = '0';
 						certainSlide.animate( optionsAmimateNextSlide, settings.slideSpeed - 100, function() {
@@ -1366,7 +1358,6 @@
 							*/
 							if( saveData.productSliderEnable && settings.productSliderAnimated ) {
 
-
 								setTimeout( function() {
 
 									var productSlider = certainSlide.find( '.' + saveData.childSliderClass );
@@ -1382,7 +1373,6 @@
 					}
 
 				},
-
 			
 			/***************************************************************
 			*
@@ -1497,7 +1487,7 @@
 						.removeClass( saveData.classes.displayNone );
 						
 						element.find( '.' + saveData.bannerItemClass + ' img' )
-						.addClass( settings.bannerAnimated );							
+						.addClass( settings.bannerAnimated );
 
 					}
 
@@ -1548,7 +1538,7 @@
 
 				} );
 
-				if( saveData.productSliderEnable && settings.productSliderAnimated ) {	
+				if( saveData.productSliderEnable && settings.productSliderAnimated ) {
 
 					// initialization
 					this.initProductsAnimation();
@@ -1564,6 +1554,10 @@
 						ENGINEPLUGIN.enableProductsAnimated( firstElement );
 					
 					},settings.productDelayAnimation );
+
+				} else {
+
+					$( '.' + saveData.childSliderClass ).find( 'nav' ).removeClass( 'mx-opacity-0' );
 
 				}
 
@@ -1614,6 +1608,28 @@
 
 			},
 
+			// this function helps to display the corresponding product slider on the screen when resizing
+			prouctResizeShow: 				function() {
+
+				setTimeout( function() {
+
+					$( '.' + saveData.classes.visibleItem )
+					.find( '.' + saveData.childSliderClass + ' nav' )
+					.removeClass( 'mx-opacity-0' );
+
+					$( '.' + saveData.classes.visibleItem )
+					.find( '.' + saveData.childSliderClass + ' img' )
+					.removeAttr( 'class' );
+
+					$( '.' + saveData.classes.visibleItem )
+					.find( '.' + saveData.childSliderClass + ' img' )
+					.parent().find( 'span' )
+					.removeClass( saveData.classes.displayNone );
+
+				}, settings.productDelayAnimation + 2000 );
+
+			},
+
 			/*
 			* Enable animation of related products
 			* var element - This is a certain slide
@@ -1634,13 +1650,20 @@
 					if( settings.productEachSliderAnimated[index] !== undefined ) {
 
 						// set infinite animation
-						if( settings.productInfiniteAnimation ){
+						if( settings.productInfiniteAnimation ) {
 
 							$( root ).find( '.' + saveData.childSliderClass + ' img' )
 							.removeClass( settings.productEachSliderAnimated[index] );
 
 							$( root ).find( '.' + saveData.childSliderClass + ' img' )
 							.addClass( saveData.classes.displayNone );
+
+							// price
+							$( root ).find( '.' + saveData.childSliderClass + ' img' ).parent()
+							.find( 'span' ).removeClass( settings.productEachSliderAnimated[index] );
+
+							$( root ).find( '.' + saveData.childSliderClass + ' img' ).parent()
+							.find( 'span' ).addClass( saveData.classes.displayNone );
 
 						}
 
@@ -1651,6 +1674,13 @@
 								element.find( 'img' ).eq( el ).removeClass( saveData.classes.displayNone );
 
 								element.find( 'img' ).eq( el ).addClass( settings.productEachSliderAnimated[index] );
+
+								// price
+								element.find( 'img' ).eq( el ).parent()
+								.find( 'span' ).removeClass( saveData.classes.displayNone );
+
+								element.find( 'img' ).eq( el ).parent()
+								.find( 'span' ).addClass( settings.productEachSliderAnimated[index] );
 
 								el += 1;
 
@@ -1673,6 +1703,13 @@
 							$( root ).find( '.' + saveData.childSliderClass + ' img' )
 							.addClass( saveData.classes.displayNone );
 
+							// price
+							$( root ).find( '.' + saveData.childSliderClass + ' img' ).parent()
+							.find( 'span' ).removeClass( settings.productSliderAnimated );
+
+							$( root ).find( '.' + saveData.childSliderClass + ' img' ).parent()
+							.find( 'span' ).addClass( saveData.classes.displayNone );
+
 						}
 
 						element.find( 'img' ).each( function() {
@@ -1682,6 +1719,13 @@
 								element.find( 'img' ).eq( el ).removeClass( saveData.classes.displayNone );
 
 								element.find( 'img' ).eq( el ).addClass( settings.productSliderAnimated );
+
+								// price
+								element.find( 'img' ).eq( el ).parent()
+								.find( 'span' ).removeClass( saveData.classes.displayNone );
+
+								element.find( 'img' ).eq( el ).parent()
+								.find( 'span' ).addClass( settings.productSliderAnimated );
 
 								el += 1;
 
@@ -1703,6 +1747,13 @@
 
 							element.find( 'img' ).eq( el ).addClass( settings.productSliderAnimated );
 
+							// price
+							element.find( 'img' ).eq( el ).parent()
+							.find( 'span' ).removeClass( saveData.classes.displayNone );
+
+							element.find( 'img' ).eq( el ).parent()
+							.find( 'span' ).addClass( settings.productSliderAnimated );
+
 							el += 1;
 
 						}, delay );
@@ -1723,6 +1774,9 @@
 
 				$( root ).find( '.' + saveData.childSliderClass + ' img')
 				.addClass( saveData.classes.displayNone + ' animated ' + settings.productDurationAnimation );
+
+				$( root ).find( '.' + saveData.childSliderClass + ' img' ).parent()
+				.find( 'span' ).addClass( saveData.classes.displayNone + ' animated ' + settings.productDurationAnimation );
 
 			},
 
@@ -1787,7 +1841,7 @@
 
 								saveData.mouseDragOptions.mouseDragKey = false;
 
-							}					
+							}
 
 						} else if( currentPosition < saveData.mouseDragOptions.startPointX ) {
 
@@ -1802,7 +1856,7 @@
 
 								saveData.mouseDragOptions.startPointX = currentPosition;
 
-								saveData.mouseDragOptions.mouseDragKey = false;					
+								saveData.mouseDragOptions.mouseDragKey = false;
 
 							}
 
@@ -1826,7 +1880,7 @@
 			initMouseDrag: 		function() {
 
 				// get offset
-				saveData.mouseDragOptions.boundingClient = $( root ).offset();				
+				saveData.mouseDragOptions.boundingClient = $( root ).offset();
 				
 				// set slider direction
 				this.setSliderDirection();	
@@ -1901,21 +1955,21 @@
 
 				if( newSrc === undefined || newSrc === '' ) {
 
-					newSrc = _this.children( 'img' ).attr( 'src' );
+					newSrc 		= _this.children( 'img' ).attr( 'src' );
 
 				}
 
-				screenSize = parseInt( screenSize );
+				screenSize 		= parseInt( screenSize );
 
 				if( isNaN( screenSize ) ) {
 
-					screenSize = 768;					
+					screenSize = 768;
 
 				}
 
 				if( $( root ).innerWidth() <= screenSize ) {
 
-					_this.children( 'img' ).attr( 'src', newSrc );					
+					_this.children( 'img' ).attr( 'src', newSrc );
 
 				} else {
 
@@ -1925,9 +1979,7 @@
 
 			}
 
-		};
-
-		
+		};		
 
 		/***************************
 		*
