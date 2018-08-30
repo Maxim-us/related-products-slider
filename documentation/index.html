@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Related Product Slider documentation</title>
+	<link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+
+<div class="mx-content">
+	
+	<h3>
+		<i>
+			<span class="mx-bold">"Related Product Slider"</span> Documentation by Maksym Marko
+		</i>
+	</h3>
+
+	<h2>
+		RELATED PRODUCT SLIDER <br> <i>Responsive jQuery Slider Plugin</i>
+	</h2>
+
+	<div class="mx-info_by">
+		<div class="mx-info_by1">
+			<p>
+				Created: 29.08.2018
+			</p>
+			<p>
+				By: Maksym Marko
+			</p>
+			<p>
+				Facebook: <a href="https://www.facebook.com/profile.php?id=100011204207772" target="_blank">Maksym Marko</a>
+			</p>
+		</div>
+		<div class="mx-info_by2">
+			<p>
+				This is a step by step guide to installing "RELATED PRODUCT SLIDER". It includes a list of properties for customizing a beautiful slider for your website.
+			</p>
+			<p>
+				Thank you for purchasing this product. If you have any questions, write to me in the <a href="https://www.facebook.com/profile.php?id=100011204207772" target="_blank">facebook</a>. <br>
+				I will be glad to help.
+			</p>
+		</div>
+	</div>
+	<div class="clearFix"></div>
+
+	<h3 id="toTable">
+		<i>
+			Table of content
+		</i>
+	</h3>
+
+	<p>
+		A. <a href="#introduction">Introduction</a>
+	</p>
+
+	<p>
+		B. <a href="#features">Features</a>
+	</p>
+
+	<p>
+		C. <a href="#installation">Installation</a>
+	</p>
+
+	<p>
+		D. <a href="#basic_calling">Basic calling</a>
+	</p>
+
+	<p>
+		E. <a href="#advanced_settings">Advanced settings</a>
+	</p>
+
+	<p>
+		F. <a href="#properties_list">Properties list</a>
+	</p>
+	
+
+	<!-- ################################## -->
+
+	<!-- A. Introduction -->
+	<h3 id="introduction">
+		<i>
+			Introduction
+		</i>
+	</h3>
+
+	<!-- ################################## -->
+
+	<!-- B. Features -->
+	<h3 id="features">
+		<i>
+			Features
+		</i>
+	</h3>
+
+	<!-- ################################## -->
+
+	<!-- C. -->
+	<h3 id="installation">
+		<i>
+			Installation
+		</i>
+	</h3>
+
+	<h5>
+		Include CSS
+	</h5>
+	<p>
+		First, add CSS files to the <span class="mx-p_code"><span><</span>head></span> tag:
+	</p>
+
+	<code>
+		
+		<span><</span>head> <br>
+
+			<span class="mx-code_child">
+				<span class="mx-code_comment"><span><</span>!-- Style --></span> <br>
+				<span><</span>link rel="stylesheet" href="./assets/css/related-product-slider.css"> <br> <br>
+				
+				<span class="mx-code_comment"><span><</span>!-- Animate --></span> <br>
+				<span><</span>link rel="stylesheet" href="./assets/css/animate.css">
+			</span>
+
+		<span><</span>/head> <br>
+	</code>
+	<!--  -->
+
+	<h5>
+		Include JS
+	</h5>
+
+	<p>		
+		The next step is to connect the JavaScript files. You need to add the <span class="mx-p_code">related-product-slider.min.js</span> script after the jQuery library. <br>
+		To make the page load faster, you can include this file at the bottom of your site.
+	</p>
+
+	<code>
+		
+		<span><</span>body> <br>
+
+			<span class="mx-code_child">
+				<span class="mx-code_comment"><span><</span>!-- jQuery --></span> <br>
+				<span><</span>script src="./assets/jquery/jquery-3.3.1.min.js"><span><</span>/script> <br> <br>
+				
+				<span class="mx-code_comment"><span><</span>!-- Related Product Slider --></span> <br>
+				<span><</span>script src="./assets/js/related-product-slider.min.js"><span><</span>/script>
+			</span>
+
+		<span><</span>/body> <br>
+	</code>
+	<!--  -->
+
+	<h5>
+		Set HTML
+	</h5>
+
+	<p>
+		Use the following HTML markup to begin installing the slider:
+	</p>
+
+	<code>
+		
+		<span><</span>div class="mx-product-slider">
+
+			<!-- 1 -->
+			<span class="mx-code_child">
+				
+				<span><</span>div>
+					
+					<span class="mx-code_child">
+						
+						<span><</span>img src="./assets/img/slide-1/slide-1.jpg" alt="" />
+
+					</span>
+
+				<span><</span>/div>
+
+			</span>
+			<!-- 1 -->
+
+			<!-- 2 -->
+			<span class="mx-code_child">
+				
+				<span><</span>div>
+					
+					<span class="mx-code_child">
+						
+						<span><</span>img src="./assets/img/slide-2/slide-2.jpg" alt="" />
+
+					</span>
+
+				<span><</span>/div>
+
+			</span>
+			<!-- 2 -->
+
+			<!-- 3 -->
+			<span class="mx-code_child">
+				
+				<span><</span>div>
+					
+					<span class="mx-code_child">
+						
+						<span><</span>img src="./assets/img/slide-3/slide-3.jpg" alt="" />
+
+					</span>
+
+				<span><</span>/div>
+
+			</span>
+			<!-- 3 -->
+
+		<span><</span>/div>
+
+	</code>
+
+	<p>
+		If you need to add a banner on a slide, you will use the following code:
+	</p>
+
+	<code>
+		
+		<span><</span>div class="mx-product-slider">
+			
+			<br><br>
+			<!-- 1 -->
+			<span class="mx-code_child">
+				
+				<span class="mx-code_comment"><span><</span>!-- first slide --></span><br>
+				<span><</span>div>
+					
+					<br><br>
+					<!-- slide -->					
+					<span class="mx-code_child">
+						
+						<span class="mx-code_comment"><span><</span>!-- main image --></span><br>
+						<span><</span>img src="./assets/img/slide-1/slide-1.jpg" alt="" />
+
+					</span>
+
+					<br>
+					<!-- banner -->					
+					<span class="mx-code_child">
+
+						<span class="mx-code_comment"><span><</span>!-- banner --></span><br>
+						<span><</span>div class="mx-slide-banner">
+
+							<span class="mx-code_child">
+
+								<span><</span>a href="#">
+
+									<span class="mx-code_child">
+										<span><</span>img src="./assets/img/slide-2/banner-2.png" alt="">
+									</span>
+
+								<span><</span>/a>
+
+							</span>
+
+						<span><</span>/div>
+
+					</span>
+					<br>
+
+				<span><</span>/div>
+
+			</span>
+			<!-- 1 -->			
+			<br><br>
+
+			<span class="mx-code_child">
+
+				<span class="mx-code_comment"><span><</span>!-- next slide ... --></span><br>
+
+			</span>
+			<br>
+
+		<span><</span>/div>
+
+	</code>
+
+	<p>
+		You can also add products for each slide.
+	</p>
+
+	<code>
+		
+		<span><</span>div class="mx-product-slider">
+			
+			<br><br>
+			<!-- 1 -->
+			<span class="mx-code_child">
+				
+				<span class="mx-code_comment"><span><</span>!-- first slide --></span><br>
+				<span><</span>div>
+					
+					<br><br>
+					<!-- slide -->					
+					<span class="mx-code_child">
+						
+						<span class="mx-code_comment"><span><</span>!-- main image --></span><br>
+						<span><</span>img src="./assets/img/slide-1/slide-1.jpg" alt="" />
+
+					</span>
+
+					<br>
+					<!-- banner -->					
+					<span class="mx-code_child">
+
+						<span class="mx-code_comment"><span><</span>!-- banner --></span><br>
+						<span><</span>div class="mx-slide-banner">
+
+							<span class="mx-code_child">
+
+								<span><</span>a href="#">
+
+									<span class="mx-code_child">
+										<span><</span>img src="./assets/img/slide-2/banner-2.png" alt="">
+									</span>
+
+								<span><</span>/a>
+
+							</span>
+
+						<span><</span>/div>
+
+					</span>
+
+					<br>
+					<!-- Related products slider -->
+					<span class="mx-code_child">
+
+						<span class="mx-code_comment"><span><</span>!-- Related products slider --></span><br>
+
+						<span><</span>ul class="mx-related-products"><br><br>
+
+							<!-- product 1 -->
+							<span class="mx-code_child">
+							
+								<span class="mx-code_comment"><span><</span>!-- product 1 --></span><br>
+								<span><</span>li>
+
+									<span class="mx-code_child">
+
+										<span><</span>a href="#">
+
+											<span class="mx-code_child">
+
+												<span><</span>span class="mx-price">$7.90<span><</span>/span>
+												<span><</span>img src="./assets/img/slide-2/product1.png" alt="" />
+
+											</span>
+										<span><</span>/a>
+
+									</span>
+
+								<span><</span>/li>
+
+							</span><br>
+
+							<!-- product 2 -->
+							<span class="mx-code_child">
+							
+								<span class="mx-code_comment"><span><</span>!-- product 2 --></span><br>
+								<span><</span>li>
+
+									<span class="mx-code_child">
+
+										<span><</span>a href="#">
+
+											<span class="mx-code_child">
+
+												<span><</span>span class="mx-price">$7.90<span><</span>/span>
+												<span><</span>img src="./assets/img/slide-2/product1.png" alt="" />
+
+											</span>
+										<span><</span>/a>
+
+									</span>
+
+								<span><</span>/li>
+
+							</span><br>
+
+							<!-- product 3 ... -->
+							<span class="mx-code_child">
+							
+								<span class="mx-code_comment"><span><</span>!-- product 3 ... --></span><br>
+
+							</span> <br>
+							
+						<span><</span>/ul> <br><br>
+
+					</span>
+
+				<span><</span>/div>
+
+			</span>
+			<!-- 1 -->			
+			<br>
+
+			<span class="mx-code_child">
+
+				<span class="mx-code_comment"><span><</span>!-- next slide ... --></span><br>
+
+			</span>
+			<br>
+
+		<span><</span>/div>
+
+	</code>
+
+	<!-- ################################## -->
+
+	<!-- D. Basic calling -->
+	<h3 id="basic_calling">
+		<i>
+			Basic calling
+		</i>
+	</h3>
+
+	<p>
+		Once you have installed HTML markup, you can run the plugin. <br>
+		The main call of the plugin looks like this: <span class="mx-p_code">$( '.mx-product-slider' ).relatedProducts();</span>. Where <span class="mx-p_code">$( '.mx-product-slider' )</span> is a slider wrapper and <span class="mx-p_code">.relatedProducts();</span> is the main function of the slider. <br>
+		In general, the structure of the code looks like this:
+	</p>
+
+	<code>
+		<span><</span>!DOCTYPE html> <br>
+		<span><</span>html lang="en"> <br>
+
+			<span><</span>head> <br>
+
+				<span class="mx-code_child">
+					<span class="mx-code_comment"><span><</span>!-- Style --></span> <br>
+					<span><</span>link rel="stylesheet" href="./assets/css/related-product-slider.css"> <br> <br>
+					
+					<span class="mx-code_comment"><span><</span>!-- Animate --></span> <br>
+					<span><</span>link rel="stylesheet" href="./assets/css/animate.css">
+				</span>
+
+			<span><</span>/head> <br>
+
+		<span><</span>body> <br><br>
+
+			<span class="mx-code_child">
+
+				<span><</span>div class="mx-product-slider">
+
+					<span class="mx-code_child">
+						
+						<span class="mx-code_comment"><span><</span>!-- Slider body... --></span>
+
+					</span>
+					
+				<span><</span>/div>
+
+			</span> <br>
+		
+			<span class="mx-code_child">
+				<span class="mx-code_comment"><span><</span>!-- jQuery --></span> <br>
+				<span><</span>script src="./assets/jquery/jquery-3.3.1.min.js"><span><</span>/script> <br> <br>
+				
+				<span class="mx-code_comment"><span><</span>!-- Related Product Slider --></span> <br>
+				<span><</span>script src="./assets/js/related-product-slider.min.js"><span><</span>/script>
+			</span>
+			<br>
+
+			<span class="mx-code_child">
+
+				<span><</span>script>
+
+					<span class="mx-code_child"> <br>
+		
+						<span class="mx-code_php_function">$</span>( <span class="mx-code_php_number">document</span> ).<span class="mx-code_php_number">ready</span>( <span class="mx-code_php_number">function</span>() {
+
+							<span class="mx-code_child"> <br>
+
+								$( '<span class="mx-code_str">.mx-product-slider</span>' ).<span class="mx-code_php_number">relatedProducts</span>();
+
+							</span> <br>
+
+						} );
+
+					</span><br>
+
+				<span><</span>/script> <br><br>
+
+			</span>
+			
+		<span><</span>/body> <br>
+		<span><</span>/html>
+	</code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<p>
+		<a href="#toTable">Go To Table of Contents</a>
+	</p>
+
+
+</div><!-- end -->
+	
+</body>
+</html>
