@@ -162,3 +162,31 @@ code{
     color: #f8f8f8;
 	padding: 0px 5px;
 }
+
+/*table*/
+table {
+	width: 100%;
+}
+table, th, td {
+	border: 1px solid #ddd;
+	border-collapse: collapse;
+}
+table th {
+	padding: 20px;
+}
+table td {
+	padding: 10px;
+	text-align: center;
+}
+td.mx_ff-bold {
+	font-weight: bold;
+}
+.mx-is-responsive {
+	color: #16ab0d;
+    font-size: 22px;
+}
+table td p,
+table td ul {
+	text-align: left;
+	color: #9a9a9a;
+}

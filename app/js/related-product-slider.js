@@ -216,7 +216,7 @@
 
 			'productNumberVisible'		: 3,		/*
 													* 	SET THE NUMBER OF VISIBLE SLIDES
-													* 	Type: 		Number | Object
+													* 	Type: 		Number
 													* 	Default: 	3													*
 													*/
 
@@ -280,7 +280,7 @@
 													*/
 
 			'responsive'				: {}		/*
-													* 	set certain styles depending on screen size
+													* 	SET CERTAIN STYLES DEPENDING ON SCREEN SIZE
 													* 	Type: 		Object 
 													* 	Default: 	{}
 													*	Note: An object must have at least one property.

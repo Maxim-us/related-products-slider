@@ -41,6 +41,7 @@ gulp.task( 'minify-css', () => {
   return gulp.src('./app/css/related-product-slider.css')
     .pipe(cleanCSS({compatibility: 'ie8'}))
     .pipe( gulp.dest('./build/assets/css') )
+    .pipe(cleanCSS({compatibility: 'ie8'}))
     .pipe( gulp.dest('./demo/assets/css') )
 } );
 

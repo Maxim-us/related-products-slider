@@ -92,6 +92,39 @@
 		</i>
 	</h3>
 
+	<ul>
+		<li>
+			<b>100% Responsive And Mobiles friendly</b>. You can customize the slider for any device.
+		</li>
+		<li>
+			You can put your <b>company banner</b> on each slide.
+		</li>
+		<li>
+			You can install an <b>additional slider</b> with products for each slide.
+		</li>
+		<li>
+			<b>77 Animation</b> Effects. 
+		</li>		
+		<li>
+			Easy to Customize.
+		</li>		
+		<li>
+			You will get <b>32 properties</b> for creating a unique and creative slider.
+		</li>
+		<li>
+			Directional navigation.
+		</li>
+		<li>
+			Touch screen support.
+		</li>
+		<li>
+			30+ slider variations.
+		</li>
+		<li>
+			Documentation included.
+		</li>
+	</ul>
+
 	<!-- ################################## -->
 
 	<!-- C. -->
@@ -475,7 +508,7 @@
 
 							<span class="mx-code_child"> <br>
 
-								$( '<span class="mx-code_str">.mx-product-slider</span>' ).<span class="mx-code_php_number">relatedProducts</span>();
+								<span class="mx-code_php_function">$</span>( '.mx-product-slider' ).<span class="mx-code_php_number">relatedProducts</span>();
 
 							</span> <br>
 
@@ -490,6 +523,982 @@
 		<span><</span>/body> <br>
 		<span><</span>/html>
 	</code>
+
+	<!-- ################################## -->
+
+	<!-- E. Advanced settings -->
+	<h3 id="advanced_settings">
+		<i>
+			Advanced settings
+		</i>
+	</h3>
+
+	<h5>
+		Set properties
+	</h5>
+
+	<p>
+		You can customize your slider by simply setting the property object in the main function.
+	</p>
+
+	<code>
+		
+		<span class="mx-code_php_function">$</span>( '.mx-product-slider' ).<span class="mx-code_php_number">relatedProducts</span>( {
+
+			<span class="mx-code_child"> <br>
+
+				'dots': <span class="mx-code_php_number">false</span>, <br>
+				'autoplay'	: <span class="mx-code_php_number">true</span>, <br>
+				<span class="mx-code_comment">// ... </span>
+
+			</span><br>
+
+		} );
+
+	</code>
+
+	<h5>
+		Responsive
+	</h5>
+
+	<p>
+		You can also customize the slider for any screen size. To do this, you need to add a "responsive" property to your main function.
+	</p>
+
+	<code>
+		
+		<span class="mx-code_php_function">$</span>( '.mx-product-slider' ).<span class="mx-code_php_number">relatedProducts</span>( {
+
+			<span class="mx-code_child"> <br>
+
+				'dots': <span class="mx-code_php_number">false</span>, <br>
+				'autoplay'	: <span class="mx-code_php_number">true</span>, <br>
+				<span class="mx-code_comment">// ... </span> <br><br>
+
+				<span class="mx-code_comment">// responsive </span> <br>
+				'responsive': 	{}
+
+			</span><br>
+
+		} );
+
+	</code>
+
+	<p>
+		For example, you need to set up a banner position on screens of sizes 768, 992 and larger. Use this code for this task:
+	</p>
+
+	<code>
+		
+		<span class="mx-code_php_function">$</span>( '.mx-product-slider' ).<span class="mx-code_php_number">relatedProducts</span>( {
+
+			<span class="mx-code_child"> <br>
+
+				<span class="mx-code_comment">// these properties will work by default</span> <br>
+				'dots': <span class="mx-code_php_number">false</span>, <br>
+				'autoplay'	: <span class="mx-code_php_number">true</span>, <br>
+				<span class="mx-code_comment">// ... </span> <br>
+				
+				'bannerPosition'		: '<span class="mx-code_str">topRight</span>',
+				<span class="mx-code_comment">// In this case, this property will be ignored on screens larger than 768 pixels.</span>
+
+				<br><br>
+
+				<span class="mx-code_comment">// responsive </span> <br>
+				'responsive': 	{
+
+					<!--  -->
+					<span class="mx-code_child"><br>
+
+						<span class="mx-code_comment">// breakpoint from 768 up</span><br>
+						<span class="mx-code_php_number">768</span>	: 	{
+
+							<span class="mx-code_child"> <br>
+
+								'bannerPosition'		: '<span class="mx-code_str">topLeft</span>'
+
+							</span><br>
+
+						},
+
+					</span> <br>
+
+					<!--  -->
+					<span class="mx-code_child">
+
+						<span class="mx-code_comment">// breakpoint from 992 up</span><br>
+						<span class="mx-code_php_number">992</span>	: 	{
+
+							<span class="mx-code_child"> <br>
+
+								'bannerPosition'		: '<span class="mx-code_str">bottomRight</span>'
+
+							</span><br>
+
+						}
+
+					</span> <br>
+
+				}
+
+			</span><br>
+
+		} );
+
+	</code>
+
+	<p>
+		A list of properties that you can use for a <span class="mx-p_code">"responsive"</span> object can be found <a href="#properties_list">here</a>.
+	</p>
+
+	<h5>
+		Change the main image of the slide
+	</h5>
+
+	<p>
+		Sometimes you will have to change the main images of slides if a user comes to your website using a mobile device. "Related Product Slider" plugin has this feature. <br>
+		First of all, set the proper properties of the slider wrap: <br>
+		- Enable Image Changer - <span class="mx-p_code">data-new-image="true"</span> <br>
+		- Set the maximum width of the device where these images appear - <span class="mx-p_code">data-max-width="768"</span> <br>
+		- And finally, you need to specify the source of the additional image for each main image - <span><</span>img src="./assets/img/slide-1/slide-1.jpg" alt="" <span class="mx-p_code">data-image-src="./assets/img/slide-1/bg-768.jpg"</span> />
+	</p>
+
+	<p>
+		In general, it looks like this:
+	</p>
+
+	<code>
+		
+		<span><</span>div class="mx-product-slider" data-new-image="true" data-max-width="768">
+			
+			<br><br>
+			<!-- 1 -->
+			<span class="mx-code_child">
+				
+				<span class="mx-code_comment"><span><</span>!-- first slide --></span><br>
+				<span><</span>div>
+					
+					<br><br>
+					<!-- slide -->					
+					<span class="mx-code_child">
+						
+						<span class="mx-code_comment"><span><</span>!-- main image --></span><br>
+						<span><</span>img src="./assets/img/slide-1/slide-1.jpg" alt="" data-image-src="./assets/img/slide-1/bg-768.jpg" />
+
+					</span><br>
+
+				<span><</span>/div>
+
+			</span>
+			<!-- 1 -->			
+			<br>
+
+			<span class="mx-code_child">
+
+				<span class="mx-code_comment"><span><</span>!-- next slide ... --></span><br>
+
+			</span>
+			<br>
+
+		<span><</span>/div>
+
+	</code>
+
+
+	<!-- ################################## -->
+
+	<!-- F. Properties list -->
+	<h3 id="properties_list">
+		<i>
+			Properties list
+		</i>
+	</h3>
+
+	<p>
+		In the table below, you can find all the properties that you can use in the "Related Product Slider" plugin. <br>
+		The "Responsive" column indicates whether you can use this property from the table in the <span class="mx-p_code">responsive: {}</span> object.
+	</p>
+
+	<table>
+
+		<thead>
+
+			<tr>
+
+				<th>Property name</th>
+
+				<th>Type</th>
+
+				<th>Default value</th>
+
+				<th>Description</th>
+
+				<th>Responsive</th>
+				
+			</tr>
+			
+		</thead>
+
+		<tbody>
+
+			<!-- center td -->
+			<tr>
+				
+				<td class="mx_ff-bold" colspan="5">Main Settings</td>
+
+			</tr>
+			<!-- center td -->
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'nav'</span>
+				</td>
+
+				<td>Boolean</td>
+
+				<td>true</td>
+
+				<td>SET "NEXT" AND "PREVIOUS" ARROWS</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'autoplay'</span>
+				</td>
+
+				<td>Boolean</td>
+
+				<td>true</td>
+
+				<td>SET AUTOPLAY</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'slideInterval'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>8000</td>
+
+				<td>SCROLL SLIDER INTERVAL</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'slideSpeed'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>1000</td>
+
+				<td>SLIDER SCROLLING SPEED</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'vertical'</span>
+				</td>
+
+				<td>Boolean</td>
+
+				<td>false</td>
+
+				<td>VERTICAL MOVEMENT</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'mouseDrag'</span>
+				</td>
+
+				<td>Boolean</td>
+
+				<td>true</td>
+
+				<td>MOUSE DRAG ENABLED</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!-- Dots center td -->
+			<tr>
+				
+				<td class="mx_ff-bold" colspan="5">Dots Settings</td>
+
+			</tr>
+			<!-- Dots center td -->
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'dots'</span>
+				</td>
+
+				<td>Boolean</td>
+
+				<td>true</td>
+
+				<td>ENABLE DOTS</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'dotsColor'</span>
+				</td>
+
+				<td>String</td>
+
+				<td>'#ffffff'</td>
+
+				<td>SET THE DOTS COLOR</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'dotsActiveColor'</span>
+				</td>
+
+				<td>String</td>
+
+				<td>'#757373'</td>
+
+				<td>SET THE COLOR OF THE ACTIVE DOT</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'dotsPosition'</span>
+				</td>
+
+				<td>String</td>
+
+				<td>'bottomLeft'</td>
+
+				<td>
+					SET THE POSITION OF THE DOTS
+					<p>
+						Possible options:
+						<ul>
+							<li>'topLeft'</li>
+							<li>'topCenter'</li>
+							<li>'topRight'</li>
+							<li>'bottomLeft'</li>
+							<li>'bottomCenter'</li>
+							<li>'bottomRight'</li>
+						</ul>
+					</p>
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'dotsWrapWidth'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>400</td>
+
+				<td>
+					SET THE WIDTH OF THE WRAPPER DOTS
+					<p>
+						Units of measurement - pixels. <br>
+						(Default max-width = 400px) <br>
+						If 0 is set, the width will be 100%. In this case, the points will always be centered.
+					</p>
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!-- center td -->
+			<tr>
+				
+				<td class="mx_ff-bold" colspan="5">Banner Settings</td>
+
+			</tr>
+			<!-- center td -->
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerEnable'</span>
+				</td>
+
+				<td>Boolean</td>
+
+				<td>true</td>
+
+				<td>ENABLE BANNERS</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerPosition'</span>
+				</td>
+
+				<td>String</td>
+
+				<td>'topRight'</td>
+
+				<td>
+					SET THE BANNER POSITION
+					<p>
+						Possible options:
+						<ul>
+							<li>'topLeft'</li>
+							<li>'topCenter'</li>
+							<li>'topRight'</li>
+							<li>'bottomLeft'</li>
+							<li>'bottomCenter'</li>
+							<li>'bottomRight'</li>
+						</ul>
+					</p>
+				</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerAnimated'</span>
+				</td>
+
+				<td>String<br>Bollean</td>
+
+				<td>'slideInUp'</td>
+
+				<td>
+					SET THE TYPE OF ANIMATION
+					<p>
+						More animation types can be found on the official site: <a href="https://daneden.github.io/animate.css/" target="_blank">Animate.css by Daniel Eden</a>.
+					</p>
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerEachAnimated'</span>
+				</td>
+
+				<td>Array</td>
+
+				<td>['slideInDown', 'slideInLeft']</td>
+
+				<td>
+					SET A SPECIFIC ANIMATION FOR EACH SLIDE
+					<p>
+						Specify a specific animation for each slide. The names of the animations are comma separated. <br><br>
+						For example:
+						'bannerEachAnimated': ['slideInDown','slideInLeft','slideInRight'] <br><br>
+						Now the first three slides of your slider will have a new type of animation. <br>
+						If you have more than three slides, starting with the fourth, they will have the default animation.
+					</p>
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerDurationAnimation'</span>
+				</td>
+
+				<td>String</td>
+
+				<td>'fast'</td>
+
+				<td>
+					SET ANIMATION DURATION
+					<p>
+						Possible options:
+						<ul>
+							<li>'slow' = 2s</li>
+							<li>'slower' = 3s</li>
+							<li>'fast' = 800ms</li>
+							<li>'faster' = 500ms</li>
+						</ul>
+					</p>
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerDelayAnimation'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>500</td>
+
+				<td>
+					SET ANIMATION DELAY
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerInfiniteAnimation'</span>
+				</td>
+
+				<td>Boolean</td>
+
+				<td>false</td>
+
+				<td>
+					SET AN ENDLESS ANIMATION CYCLE
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerWrapWidth'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>900</td>
+
+				<td>
+					SET THE WIDTH OF THE WRAPPER TO THE BANNER
+					<p>
+						Units of measurement - pixels. <br>
+						(Default max-width = 900px) <br>
+						If 0 is set, the width will be 100%. In this case, the points will always be centered.
+					</p>
+				</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerWrapHeight'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>400</td>
+
+				<td>
+					SET THE WIDTH OF THE WRAPPER TO THE BANNER
+					<p>
+						Units of measurement - pixels. <br>
+						(Default max-width = 400px) <br>
+						If 0 is set, the width will be 100%. In this case, the points will always be centered.
+					</p>
+				</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'bannerSpaceAround'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>30</td>
+
+				<td>
+					SET THE SPACE AROUND THE BANNER
+					<p>
+						Units of measurement - pixels. <br>
+						(Space around by default = 30px)
+						
+					</p>
+				</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!-- Configure the product slider center td -->
+			<tr>
+				
+				<td class="mx_ff-bold" colspan="5">Configure the product slider</td>
+
+			</tr>
+			<!-- center td -->
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productSliderEnable'</span>
+				</td>
+
+				<td>Boolean</td>
+
+				<td>true</td>
+
+				<td>
+					ENABLE SLIDER WITH PRODUCTS
+				</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productPositionSlider'</span>
+				</td>
+
+				<td>String</td>
+
+				<td>'bottomRight'</td>
+
+				<td>
+					SET THE POSITION OF THE SLIDER WITH THE PRODUCTS
+					<p>
+						Possible options:
+						<ul>
+							<li>'topLeft'</li>
+							<li>'topCenter'</li>
+							<li>'topRight'</li>
+							<li>'bottomLeft'</li>
+							<li>'bottomCenter'</li>
+							<li>'bottomRight'</li>
+						</ul>
+					</p>
+				</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productSlideSpeed'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>600</td>
+
+				<td>
+					SLIDER SCROLLING SPEED
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productNumberVisible'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>3</td>
+
+				<td>
+					SET THE NUMBER OF VISIBLE SLIDES
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productSliderAnimated'</span>
+				</td>
+
+				<td>String</td>
+
+				<td>'slideInUp'</td>
+
+				<td>
+					SET THE TYPE OF ANIMATION
+					<p>
+						More animation types can be found on the official site: <a href="https://daneden.github.io/animate.css/" target="_blank">Animate.css by Daniel Eden</a>.
+					</p>
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productDurationAnimation'</span>
+				</td>
+
+				<td>String</td>
+
+				<td>'fast'</td>
+
+				<td>
+					SET ANIMATION DURATION
+					<p>
+						Possible options:
+						<ul>
+							<li>'slow' = 2s</li>
+							<li>'slower' = 3s</li>
+							<li>'fast' = 800ms</li>
+							<li>'faster' = 500ms</li>
+						</ul>
+					</p>
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productDelayAnimation'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>500</td>
+
+				<td>
+					SET ANIMATION DELAY
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productEachSliderAnimated'</span>
+				</td>
+
+				<td>Array</td>
+
+				<td>['slideInDown', 'slideInLeft']</td>
+
+				<td>
+					SET A SPECIFIC ANIMATION FOR EACH SLIDER
+					<p>
+						Specify a specific animation for each slide. The names of the animations are comma separated. <br><br>
+						For example:
+						'bannerEachAnimated': ['slideInDown','slideInLeft','slideInRight'] <br><br>
+						Now the first three slides of your slider will have a new type of animation. <br>
+						If you have more than three slides, starting with the fourth, they will have the default animation.
+					</p>
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productInfiniteAnimation'</span>
+				</td>
+
+				<td>Boolean</td>
+
+				<td>false</td>
+
+				<td>
+					SET AN ENDLESS ANIMATION CYCLE
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productWidthSlider'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>900</td>
+
+				<td>
+					SET THE WIDTH OF THE WRAPPER TO THE BANNER
+					<p>
+						Units of measurement - pixels. <br>
+						(Default max-width = 900px) <br>
+						If 0 is set, the width will be 100%. In this case, the points will always be centered.
+					</p>
+				</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'productHeightSlider'</span>
+				</td>
+
+				<td>Number</td>
+
+				<td>290</td>
+
+				<td>
+					SET THE WIDTH OF THE WRAPPER TO THE BANNER
+					<p>
+						Units of measurement - pixels. <br>
+						(Default max-width = 290px) <br>
+						If 0 is set, the width will be 100%. In this case, the points will always be centered.
+					</p>
+				</td>
+
+				<td><span class="mx-is-responsive">&#10004;</span></td>
+				
+			</tr>
+
+			<!-- center td -->
+			<tr>
+				
+				<td class="mx_ff-bold" colspan="5">Responsive</td>
+
+			</tr>
+			<!-- center td -->
+
+			<!--  -->
+			<tr>
+
+				<td>
+					<span class="mx-code_php_number">'responsive'</span>
+				</td>
+
+				<td>Object</td>
+
+				<td>{}</td>
+
+				<td>
+					SET CERTAIN STYLES DEPENDING ON SCREEN SIZE
+					<p>
+						Note: An object must have at least one property.
+					</p>
+				</td>
+
+				<td></td>
+				
+			</tr>
+
+		</tbody>
+		
+	</table>
+
+	
+
+	
 
 
 
