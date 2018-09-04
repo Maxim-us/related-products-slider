@@ -485,11 +485,9 @@
 					// check is number
 					if( $.isNumeric( settings.numberVisibleItems ) ) {
 
-
 						saveData.numberVisibleItems = settings.numberVisibleItems;
 
-
-					} else if( typeof settings.numberVisibleItems === 'object' ){
+					} else if( typeof settings.numberVisibleItems === 'object' ){						
 
 						$.each( settings.numberVisibleItems, function( key, value ) {
 
@@ -521,18 +519,18 @@
 					saveData.saveWidthSlidesWrap = saveData.saveWidthOneSlide * saveData.numberAllItems;
 
 					// wrap is ready
-					$( root ).find( '.' + saveData.classes.slidesWrapper ).ready( function() {
+					$( root ).find( '.' + saveData.classes.slidesWrapper ).ready( function() {						
 
 						// width of slides wrap
 						$( root ).find( '.' + saveData.classes.slidesWrapper ).css( 'width', saveData.saveWidthSlidesWrap + 'px' );
-											
-					} );
+					
+						setTimeout( function() {
+												
+							// width of evaryone slide
+							$( root ).find( '.' + saveData.classes.slideClass ).css( 'width', saveData.saveWidthOneSlide + 'px' );
 
-					// slides is ready
-					$( root ).find( '.' + saveData.classes.slidesWrapper ).ready( function() {
-
-						// width of evaryone slide
-						$( root ).find( '.' + saveData.classes.slideClass ).css( 'width', saveData.saveWidthOneSlide + 'px' );
+						},500 );						
+						
 
 					} );					
 

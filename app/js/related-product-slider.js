@@ -426,9 +426,12 @@
 			'setTimeOut'			: null,
 
 			// change img array
-			'changeImgObj' 			: {}
+			'changeImgObj' 			: {},
 
-		};
+			// resize window (save width of window)
+			'windowWidth'			: 0
+
+		};		
 
 		/***************************
 		*
@@ -444,6 +447,9 @@
 			******************************************************************/
 			// initialize
 			init: 			function() {
+
+				// width of window
+				this.preventVerticalResize();			
 
 				// overwrite variables
 				this.overwriteVariables();
@@ -710,7 +716,7 @@
 				$( root ).find( '.' + saveData.classes.slideItem ).addClass( saveData.classes.mouseDragClass );
 
 				// mouse down
-				$( root ).on( 'mousedown', function( e ) {
+				$( root ).on( 'mousedown touchstart', function( e ) {
 
 					// clear the interval and run a new one
 					// if autorun is stop
@@ -723,18 +729,25 @@
 					saveData.mouseDragOptions.mouseDragKey = true;
 
 					// save the first position of the cursor
-					saveData.mouseDragOptions.startPointX = e[saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
+					if( e.touches === undefined ) {
+
+						saveData.mouseDragOptions.startPointX = e[saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
+
+					} else {
+
+						saveData.mouseDragOptions.startPointX = e.touches[0][saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
+
+					}
 
 					// mouse move
-					$( root ).on( 'mousemove', ENGINEPLUGIN.slideMotionDrag );
-
+					$( root ).on( 'mousemove touchmove', ENGINEPLUGIN.slideMotionDrag );
 
 				} );
 
 				// mouse up
-				$( document ).on( 'mouseup', function() {
-				
-					$( root ).off( 'mousemove', ENGINEPLUGIN.slideMotionDrag );
+				$( document ).on( 'mouseup touchend', function() {
+
+					$( root ).off( 'mousemove touchmove', ENGINEPLUGIN.slideMotionDrag );
 
 					// save the first position of the cursor
 					saveData.mouseDragOptions.startPointX = 0;
@@ -838,12 +851,13 @@
 				getSizeWindow: 		function() {
 
 					// get width of slide
-					saveData.widthOfSlider = $( root ).innerWidth();
+					saveData.widthOfSlider = $( root ).innerWidth();					
 
 					// get height of slide
 					saveData.heightOfSlider = $( '.' + saveData.classes.slideItem ).first().find( 'img' ).innerHeight();
 
 				},
+
 
 				/*
 				* Calculate the height of the slider
@@ -1103,71 +1117,90 @@
 				// resize window
 				resizeWindow: 	function() {
 
-					$( window ).resize( function() {
+					$( window ).resize( function() {						
 
-						// get size of window
-						ENGINEPLUGIN.getSizeWindow();
+						// current width of window
+						var widthOfWindow = $( window ).innerWidth();
 
-						clearTimeout( saveData.setTimeOut );
+						if( saveData.windowWidth !== widthOfWindow ) {
 
-						if( settings.autoplay && saveData.countElems > 1 ) {
+							// save width of window
+							ENGINEPLUGIN.preventVerticalResize();
 
-							clearInterval( saveData.interval );
+							// get size of window
+							ENGINEPLUGIN.getSizeWindow();
 
-						}
+							clearTimeout( saveData.setTimeOut );
 
-						saveData.setTimeOut = setTimeout( function() {
-
-							/*
-							* Systems
-							*/
-							// overwrite variables
-							ENGINEPLUGIN.overwriteVariables();
-
-							/*
-							* Building
-							*/
-
-								// set slider height
-								ENGINEPLUGIN.setSliderHeight();
-
-								// navigation
-								ENGINEPLUGIN.navigationArrows();
-
-								// direction
-								ENGINEPLUGIN.setSliderDirection();
-
-								// set dots
-								ENGINEPLUGIN.dotsBox();
-
-								// banners
-								ENGINEPLUGIN.bannersBeing();
-
-								// related slider
-								ENGINEPLUGIN.relatedProductsSliderBeing();
-
-									// help for relatedProductsSlider
-									ENGINEPLUGIN.prouctResizeShow();
-
-							// autoplay
 							if( settings.autoplay && saveData.countElems > 1 ) {
 
-								ENGINEPLUGIN.autoplay();
+								clearInterval( saveData.interval );
 
 							}
 
-							// change img
-							ENGINEPLUGIN.changeImageSmallScreen();
+							saveData.setTimeOut = setTimeout( function() {
 
-						},1000 );
+								/*
+								* Systems
+								*/
+								// overwrite variables
+								ENGINEPLUGIN.overwriteVariables();
+
+								/*
+								* Building
+								*/
+
+									// set slider height
+									ENGINEPLUGIN.setSliderHeight();
+
+									// navigation
+									ENGINEPLUGIN.navigationArrows();
+
+									// direction
+									ENGINEPLUGIN.setSliderDirection();
+
+									// set dots
+									ENGINEPLUGIN.dotsBox();
+
+									// banners
+									ENGINEPLUGIN.bannersBeing();
+
+									// related slider
+									ENGINEPLUGIN.relatedProductsSliderBeing();
+
+										// help for relatedProductsSlider
+										ENGINEPLUGIN.prouctResizeShow();
+
+								// autoplay
+								if( settings.autoplay && saveData.countElems > 1 ) {
+
+									ENGINEPLUGIN.autoplay();
+
+								}
+
+								// change img
+								ENGINEPLUGIN.changeImageSmallScreen();
+
+							},1000 );
+
+						}						
 
 					} );
 
 				},
 
-				// overwrite variables depending on the size of the window
-				overwriteVariables: 	function() {
+				// prevent vertical resize
+				preventVerticalResize: 	function() {
 
+					// get size window
+					saveData.windowWidth = $( window ).innerWidth();										
+
+				},
+
+				// overwrite variables depending on the size of the window
+				overwriteVariables: 	function() {					
+
+					// available props
 					var arrayOptions = [
 						'nav',
 						'vertical',
@@ -1824,7 +1857,14 @@
 
 						}
 
+						// custom position
 						var currentPosition = e[saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
+
+						if( e.touches !== undefined ) {
+
+							currentPosition = e.touches[0][saveData.mouseDragOptions.offsetElement] - saveData.mouseDragOptions.boundingClient[saveData.mouseDragOptions.direction];
+
+						}						
 
 						if( currentPosition > saveData.mouseDragOptions.startPointX ) {
 

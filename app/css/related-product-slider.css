@@ -459,3 +459,11 @@ nav.mx-prev-button-relation-slider {
 		margin: 20px 0px;
 	}
 }
+
+/*jquery mobile*/
+.ui-loader-default h1{
+	font-size:0;
+	width:0;
+	height:0;
+	overflow:hidden
+}

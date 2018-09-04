@@ -5,16 +5,16 @@ let minify      = require( 'gulp-minify' );
 let cleanCSS    = require( 'gulp-clean-css');
  
 // clean directories
-gulp.task( 'clean-scripts', () => {
-  return gulp.src( [
-                        './tmp/compile/js/*.js',
-                        './build/assets/js/*.js',
-                        './demo/assets/js/*.js',
-                        './build/assets/css/related-product-slider.css',
-                        './demo/assets/css/related-product-slider.css'
-                    ], {read: false} )
-    .pipe( clean() );
-});
+// gulp.task( 'clean-scripts', () => {
+//   return gulp.src( [
+//                         './tmp/compile/js/*.js',
+//                         './build/assets/js/*.js',
+//                         './demo/assets/js/*.js',
+//                         './build/assets/css/related-product-slider.css',
+//                         './demo/assets/css/related-product-slider.css'
+//                     ], {read: false} )
+//     .pipe( clean() );
+// });
 
 // concatination and minify
 gulp.task( 'concat-scripts', () => {  
@@ -46,4 +46,4 @@ gulp.task( 'minify-css', () => {
 } );
 
 // run
-gulp.task( 'default', ['clean-scripts','concat-scripts','compress-script','minify-css'] );
+gulp.task( 'default', ['concat-scripts','compress-script','minify-css'] );
