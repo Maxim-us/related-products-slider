@@ -2,7 +2,7 @@
 * ###################################################
 * #                                                 #
 * #         	    jQuery Slider                   #
-* M             RELATED PRODUCT SLIDER              M
+* M            RELATED PRODUCTS SLIDER              M
 * #                     v-1.0                       #
 * #                                                 #
 * #             Created on 08/29/2018               #
